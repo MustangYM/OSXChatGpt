@@ -28,9 +28,6 @@ class Conversation: Identifiable, Codable, Equatable, ObservableObject {
         self.messages = messages
     }
     
-    
-    
-    
     enum CodingKeys: String, CodingKey {
         case id
         case sessionId
@@ -67,10 +64,6 @@ class Message: Identifiable, Codable, ObservableObject{
         self.role = role
     }
     
-    
-    
-    
-    
     enum CodingKeys: String, CodingKey {
         case id
         case content
@@ -91,8 +84,6 @@ class Message: Identifiable, Codable, ObservableObject{
         try container.encode(role, forKey: .role)
     }
 }
-
-
 
 class ConversationData: Codable, ObservableObject {
     @Published var datas: [Conversation]

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppKit
 /// main View
 struct ContentView: View {
     
@@ -20,7 +21,6 @@ struct ContentView: View {
                     SearchBar(text: $searchText)
                         .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: 40, idealHeight: 40, maxHeight: 40)
                         .padding(.init(top: 10, leading: 10, bottom: 0, trailing: 0))
-                    
                     
                     NavigationLink(destination: ChatView(chat: Conversation(name: "新会话", sessionId: ChatGPTManager.shared.createNewSessionId(), messages: [])), isActive: $shouldNavigate) {
                         Button {
@@ -65,7 +65,7 @@ struct SearchBar: View {
                 .padding(.vertical, 5)
                 .padding(.horizontal, 8)
                 .padding(.leading, 15)
-                .background(.gray)
+                .background(.clear)
                 .cornerRadius(5)
                 .overlay(
                     HStack {
@@ -109,27 +109,67 @@ struct ChatRow: View {
 struct ChatView: View {
     let chat: Conversation
     @State private var newMessageText = ""
-//    @State var messages: [Message] = self.chat.messages
+    @State private var scrollView: ScrollViewProxy?
+    @State private var scrollID = UUID()
+    
     var body: some View {
         VStack(spacing: 0) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 8) {
-                    ForEach(chat.messages) { message in
-                        MessageView(message: message)
+            GeometryReader { geometry in
+                ScrollView {
+                    ScrollViewReader { scrollView in
+                        VStack(alignment: .trailing, spacing: 8) {
+                            ForEach(chat.messages) { message in
+                                MessageView(message: message)
+                                    .id(message.id) // 添加唯一标识符
+                                    .padding(.trailing, 30)
+                            }
+                        }
+                        .onChange(of: scrollID) { _ in
+                            // 滚动到最后一条消息
+                            scrollView.scrollTo(chat.messages.last?.id, anchor: .bottom)
+                        }
+                        .background(Color.clear)
+                        .onAppear {
+                            // 将 ScrollViewProxy 存储在状态中
+                            self.scrollView = scrollView
+                        }
+                    }
+                    .background(Color.clear)
+                    .onAppear {
+                        // 将 ScrollView 存储在状态中
+                        self.scrollView = scrollView
+                    }
+                    .onChange(of: chat.messages.count) { _ in
+                        // 每次添加新消息时，更新 ID 以便滚动
+                        self.scrollID = UUID()
                     }
                 }
+                .frame(maxHeight: geometry.size.height) // 限制高度以便滚动
             }
             Divider()
             HStack {
-                TextField("Type a message...", text: $newMessageText)
-                    .textFieldStyle(PlainTextFieldStyle())
-                Button(action: sendMessage) {
-                    Text("Send")
+//                TextField("Type a message...", text: $newMessageText, onCommit: {
+//                    sendMessage(scrollView: scrollView)
+//                })
+//                .textFieldStyle(PlainTextFieldStyle())
+//                .lineLimit(30)
+                GeometryReader { geometry in
+                    TextEditor(text: $newMessageText)
+                        .font(.title3)
+                        .lineSpacing(5)
+                        .disableAutocorrection(true)
+                        .padding()
+                        .background(Color.clear)
+                        .cornerRadius(10)
+                        .frame(maxHeight: geometry.size.height)
+                        .onChange(of: newMessageText) { _ in
+                            let words = newMessageText.split { $0 == " " || $0.isNewline }
+                        }
                 }
             }
-            .padding(8)
+            .padding(0)
+            .frame(maxHeight: 200)
         }
-        
         .onAppear {
             print("View appeared!")
         }
@@ -139,14 +179,16 @@ struct ChatView: View {
         }
     }
     
-    private func sendMessage() {
+    private func sendMessage(scrollView: ScrollViewProxy?) {
         guard !newMessageText.isEmpty else { return }
         chat.messages.append(Message(content: newMessageText, role: .mine))
-        newMessageText = ""
         if chat.messages.count == 1 {
         }
         ChatGPTManager.shared.updateConversation(conversation: chat)//更新侧边栏列表
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            newMessageText = ""
+            scrollView?.scrollTo(chat.messages.last?.id, anchor: .bottom)
+        }
     }
 }
 
@@ -161,13 +203,13 @@ struct MessageView: View {
                     .padding(12)
                     .background(Color.blue)
                     .foregroundColor(.white)
-                    .cornerRadius(16)
+                    .cornerRadius(14)
             } else {
                 Text(message.content)
                     .padding(12)
                     .background(Color.gray)
                     .foregroundColor(.white)
-                    .cornerRadius(16)
+                    .cornerRadius(14)
                 Spacer()
             }
         }
