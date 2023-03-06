@@ -30,10 +30,9 @@ struct ContentView: View {
                                 .padding(5)
                             Spacer()
                         }.background(Color.clear)
-                            
                         
-                    }.frame(minWidth: 40, idealWidth: 50, maxWidth: 50, minHeight: 40, idealHeight: 40, maxHeight: 40)
-//                        .background(.clear)
+                        
+                    }.frame(minWidth: 30, idealWidth: 30, maxWidth: 30, minHeight: 30, idealHeight: 30, maxHeight: 30)
                         .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 10))
                     
                 }.frame(minHeight: 40, idealHeight: 40, maxHeight: 50)
@@ -148,11 +147,6 @@ struct ChatView: View {
             }
             Divider()
             HStack {
-//                TextField("Type a message...", text: $newMessageText, onCommit: {
-//                    sendMessage(scrollView: scrollView)
-//                })
-//                .textFieldStyle(PlainTextFieldStyle())
-//                .lineLimit(30)
                 GeometryReader { geometry in
                     if #available(macOS 13.0, *) {
                         TextEditor(text: $newMessageText)
