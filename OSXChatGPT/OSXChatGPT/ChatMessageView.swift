@@ -22,12 +22,12 @@ struct ContentView: View {
                         .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: 40, idealHeight: 40, maxHeight: 40)
                         .padding(.init(top: 10, leading: 10, bottom: 0, trailing: 0))
                     
-                    NavigationLink(destination: ChatView(chat: Conversation(name: "新会话", sessionId: ChatGPTManager.shared.createNewSessionId(), messages: [])), isActive: $shouldNavigate) {
+                    NavigationLink(destination: ChatView(chat: Conversation(name: "New", sessionId: ChatGPTManager.shared.createNewSessionId(), messages: [])), isActive: $shouldNavigate) {
                         Button {
                             self.shouldNavigate = true
                         } label: {
-                            Text("新会话")
-                                .padding(0)
+                            Text("New")
+                                .padding(5)
                             Spacer()
                         }.background(Color.clear)
                             
@@ -154,17 +154,25 @@ struct ChatView: View {
 //                .textFieldStyle(PlainTextFieldStyle())
 //                .lineLimit(30)
                 GeometryReader { geometry in
-                    TextEditor(text: $newMessageText)
-                        .font(.title3)
-                        .lineSpacing(5)
-                        .disableAutocorrection(true)
-                        .padding()
-                        .background(Color.clear)
-                        .cornerRadius(10)
-                        .frame(maxHeight: geometry.size.height)
-                        .onChange(of: newMessageText) { _ in
-                            let words = newMessageText.split { $0 == " " || $0.isNewline }
-                        }
+                    if #available(macOS 13.0, *) {
+                        TextEditor(text: $newMessageText)
+                            .font(.title3)
+                            .lineSpacing(5)
+                            .disableAutocorrection(true)
+                            .padding()
+                            .background(Color.clear)
+                            .scrollContentBackground(.hidden)
+                            .cornerRadius(10)
+                            .frame(maxHeight: geometry.size.height)
+                            .onChange(of: newMessageText) { _ in
+                                if newMessageText.contains("\n") {
+                                    sendMessage(scrollView: scrollView)
+                                }
+                            }
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                        
                 }
             }
             .padding(0)
@@ -181,11 +189,14 @@ struct ChatView: View {
     
     private func sendMessage(scrollView: ScrollViewProxy?) {
         guard !newMessageText.isEmpty else { return }
-        chat.messages.append(Message(content: newMessageText, role: .mine))
+        
+        let temp = NSMutableString(string: newMessageText)
+        let replaceStr = temp.replacingOccurrences(of: "\n", with: "")
+        chat.messages.append(Message(content: replaceStr, role: .mine))
         if chat.messages.count == 1 {
         }
         ChatGPTManager.shared.updateConversation(conversation: chat)//更新侧边栏列表
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             newMessageText = ""
             scrollView?.scrollTo(chat.messages.last?.id, anchor: .bottom)
         }
