@@ -86,9 +86,9 @@ struct ChatRow: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "person.circle.fill")
+            Image("openAI_icon")
                 .resizable()
-                .frame(width: 40, height: 40)
+                .frame(width: 30, height: 30)
             
             VStack(alignment: .leading) {
                 Text(chat.message)
