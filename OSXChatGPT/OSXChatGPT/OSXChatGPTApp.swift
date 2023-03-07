@@ -2,7 +2,7 @@
 //  OSXChatGPTApp.swift
 //  OSXChatGPT
 //
-//  Created by 陈连辰 on 2023/3/5.
+//  Created by CoderChan on 2023/3/5.
 //
 
 import SwiftUI
