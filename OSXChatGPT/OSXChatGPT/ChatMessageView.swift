@@ -9,8 +9,7 @@ import SwiftUI
 import AppKit
 /// main View
 struct ContentView: View {
-    
-    @EnvironmentObject var chats: ConversationData
+    @EnvironmentObject var viewModel: ViewModel
     @State private var searchText = ""
     @State private var shouldNavigate = false
     
@@ -21,8 +20,7 @@ struct ContentView: View {
                     SearchBar(text: $searchText)
                         .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: 40, idealHeight: 40, maxHeight: 40)
                         .padding(.init(top: 10, leading: 10, bottom: 0, trailing: 0))
-                    
-                    NavigationLink(destination: ChatView(chat: Conversation(name: "New", sessionId: ChatGPTManager.shared.createNewSessionId(), messages: [])), isActive: $shouldNavigate) {
+                    NavigationLink(destination: ChatView(sesstionId: viewModel.createSesstionId()).environmentObject(viewModel), isActive: $shouldNavigate) {
                         Button {
                             self.shouldNavigate = true
                         } label: {
@@ -30,16 +28,16 @@ struct ContentView: View {
                                 .padding(5)
                             Spacer()
                         }.background(Color.clear)
-                        
-                        
+
+
                     }.frame(minWidth: 30, idealWidth: 30, maxWidth: 30, minHeight: 30, idealHeight: 30, maxHeight: 30)
                         .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 10))
                     
                 }.frame(minHeight: 40, idealHeight: 40, maxHeight: 50)
                 Divider()
-                List(chats.datas.filter({ searchText.isEmpty ? true : $0.name.localizedCaseInsensitiveContains(searchText) })) { chat in
-                    NavigationLink(destination: ChatView(chat: chat)) {
-                        ChatRow(chat: chat)
+                List(viewModel.conversations.filter({ searchText.isEmpty ? true : $0.sesstionId.localizedCaseInsensitiveContains(searchText) })) { chat in
+                    NavigationLink(destination: ChatView(sesstionId: chat.sesstionId).environmentObject(viewModel)) {
+                        ChatRowContent(chat: chat)
                     }
                 }
                 .listStyle(SidebarListStyle())
@@ -81,32 +79,107 @@ struct SearchBar: View {
     }
 }
 /// 左边会话列表
+struct ChatRowContent: View {
+    @State var chat: Conversation
+    var body: some View {
+        MyView(chat: chat)
+            .frame(minHeight: 50, idealHeight: 50, maxHeight: 50)
+    }
+}
+/// 左边会话列表
 struct ChatRow: View {
-    var chat: Conversation
-    
+    @State var chat: Conversation
     var body: some View {
         HStack {
             Image("openAI_icon")
                 .resizable()
                 .frame(width: 30, height: 30)
-            
+
             VStack(alignment: .leading) {
-                Text(chat.message)
+                Text(chat.lastMessage?.text ?? "newChat")
                     .font(.headline)
-                
-//                Text(chat.message)
-//                    .font(.subheadline)
-//                    .foregroundColor(.gray)
+
+                //                Text(chat.message)
+                //                    .font(.subheadline)
+                //                    .foregroundColor(.gray)
             }
-            
+
             Spacer()
         }
         .padding(.vertical, 4)
     }
 }
+struct MyView: NSViewRepresentable {
+    @State var chat: Conversation
+    func updateNSView(_ nsView: NSView, context: Context) {
+        // Update view properties and state here.
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject {
+        var parent: MyView
+        
+        init(_ parent: MyView) {
+            self.parent = parent
+            super.init()
+        }
+        
+        @objc func handleRightClick(_ sender: NSClickGestureRecognizer) {
+            if sender.state == .ended {
+                print("Right mouse button clicked!")
+            }
+        }
+    }
+    
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+        view.wantsLayer = true
+        view.layer?.cornerRadius = 3
+        let swiftUIView = ChatRow(chat: chat)
+            .frame(width: 300, height: 50)
+        let hostingView = NSHostingView(rootView: swiftUIView)
+        view.addSubview(hostingView)
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        let gestureRecognizer = NSClickGestureRecognizer(target: context.coordinator,
+                                                          action: #selector(Coordinator.handleRightClick(_:)))
+        gestureRecognizer.buttonMask = 0x2 // 双击事件
+        view.addGestureRecognizer(gestureRecognizer)
+        
+        return view
+    }
+}
+struct MessageView: View {
+    let message: Message
+    
+    var body: some View {
+        HStack {
+            if message.role != ChatGPTManager.shared.gptRoleString {
+                Spacer()
+                Text(message.text ?? "")
+                    .padding(12)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(6)
+            } else {
+                Text(message.text ?? "")
+                    .padding(12)
+                    .background(Color.gray)
+                    .foregroundColor(.white)
+                    .cornerRadius(6)
+                Spacer()
+            }
+        }.padding(.trailing, (message.role == ChatGPTManager.shared.gptRoleString) ? 70 : 0)
+        .padding(.leading, (message.role != ChatGPTManager.shared.gptRoleString) ? 70 : 0)
+    }
+}
+
 /// 聊天框
 struct ChatView: View {
-    let chat: Conversation
+    var sesstionId: String
+    @EnvironmentObject var viewModel: ViewModel
     @State private var newMessageText = ""
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
@@ -117,15 +190,15 @@ struct ChatView: View {
                 ScrollView {
                     ScrollViewReader { scrollView in
                         VStack(alignment: .trailing, spacing: 8) {
-                            ForEach(chat.messages) { message in
+                            ForEach(viewModel.messages) { message in
                                 MessageView(message: message)
                                     .id(message.id) // 添加唯一标识符
-                                    .padding(.trailing, 30)
+                                    .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
                             }
                         }
                         .onChange(of: scrollID) { _ in
                             // 滚动到最后一条消息
-                            scrollView.scrollTo(chat.messages.last?.id, anchor: .bottom)
+                            scrollView.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
                         }
                         .background(Color.clear)
                         .onAppear {
@@ -135,10 +208,11 @@ struct ChatView: View {
                     }
                     .background(Color.clear)
                     .onAppear {
+                        viewModel.fetchMessage(sesstionId: sesstionId)
                         // 将 ScrollView 存储在状态中
                         self.scrollView = scrollView
                     }
-                    .onChange(of: chat.messages.count) { _ in
+                    .onChange(of: viewModel.messages.count) { _ in
                         // 每次添加新消息时，更新 ID 以便滚动
                         self.scrollID = UUID()
                     }
@@ -148,25 +222,20 @@ struct ChatView: View {
             Divider()
             HStack {
                 GeometryReader { geometry in
-                    if #available(macOS 13.0, *) {
-                        TextEditor(text: $newMessageText)
-                            .font(.title3)
-                            .lineSpacing(5)
-                            .disableAutocorrection(true)
-                            .padding()
-                            .background(Color.clear)
-                            .scrollContentBackground(.hidden)
-                            .cornerRadius(10)
-                            .frame(maxHeight: geometry.size.height)
-                            .onChange(of: newMessageText) { _ in
-                                if newMessageText.contains("\n") {
-                                    sendMessage(scrollView: scrollView)
-                                }
+                    TextEditor(text: $newMessageText)
+                        .font(.title3)
+                        .lineSpacing(5)
+                        .disableAutocorrection(true)
+                        .padding()
+                        .background(Color.clear)
+                        .scrollContentBackground(.hidden)
+                        .cornerRadius(10)
+                        .frame(maxHeight: geometry.size.height)
+                        .onChange(of: newMessageText) { _ in
+                            if newMessageText.contains("\n") {
+                                sendMessage(scrollView: scrollView)
                             }
-                    } else {
-                        // Fallback on earlier versions
-                    }
-                        
+                        }
                 }
             }
             .padding(0)
@@ -174,10 +243,14 @@ struct ChatView: View {
         }
         .onAppear {
             print("View appeared!")
+            viewModel.fetchMessage(sesstionId: sesstionId)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                
+            }
         }
         .onDisappear {
             print("View disappeared!")
-            ChatGPTManager.shared.updateConversation(conversation: chat)
         }
     }
     
@@ -186,40 +259,21 @@ struct ChatView: View {
         
         let temp = NSMutableString(string: newMessageText)
         let replaceStr = temp.replacingOccurrences(of: "\n", with: "")
-        chat.messages.append(Message(content: replaceStr, role: .mine))
-        if chat.messages.count == 1 {
+        viewModel.addNewMessage(sesstionId: sesstionId, text: replaceStr, role: "user") {
+            scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
         }
-        ChatGPTManager.shared.updateConversation(conversation: chat)//更新侧边栏列表
+        if viewModel.messages.count == 1 {
+            //有点问题
+            viewModel.fetchConversations()
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             newMessageText = ""
-            scrollView?.scrollTo(chat.messages.last?.id, anchor: .bottom)
+            scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+            
         }
     }
 }
 
-struct MessageView: View {
-    let message: Message
-    
-    var body: some View {
-        HStack {
-            if message.role == .mine {
-                Spacer()
-                Text(message.content)
-                    .padding(12)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(14)
-            } else {
-                Text(message.content)
-                    .padding(12)
-                    .background(Color.gray)
-                    .foregroundColor(.white)
-                    .cornerRadius(14)
-                Spacer()
-            }
-        }
-    }
-}
 
 
 struct ChatView_Previews: PreviewProvider {
