@@ -68,9 +68,8 @@ struct UserInitializeView: View {
             Spacer().frame(height: 30)
         }
     }
-    
-
 }
+
 extension Color {
     static func gradient(
         _ gradient: Gradient,
@@ -84,7 +83,6 @@ extension Color {
         )
     }
 }
-
 
 struct UserInitializeView_Previews: PreviewProvider {
     static var previews: some View {

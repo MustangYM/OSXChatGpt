@@ -33,7 +33,6 @@
 		182B42B529BBA82800F06778 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		182B42BA29BBAE5F00F06778 /* SessionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsView.swift; sourceTree = "<group>"; };
 		182B42BC29BBAEAA00F06778 /* UserInitializeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInitializeView.swift; sourceTree = "<group>"; };
-		182B42C329BBB00500F06778 /* Colorful */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Colorful; path = Third/Colorful; sourceTree = "<group>"; };
 		182B42CA29BBBCE800F06778 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB1DCAC129B4F09D00B1D4E1 /* OSXChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSXChatGPTApp.swift; sourceTree = "<group>"; };
@@ -79,7 +78,6 @@
 		182B42C229BBB00500F06778 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				182B42C329BBB00500F06778 /* Colorful */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
