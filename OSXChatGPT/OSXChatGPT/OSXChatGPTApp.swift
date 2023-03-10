@@ -13,7 +13,9 @@ struct OSXChatGPTApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(viewModel)
-//            ContentView().environment(\.managedObjectContext, CoreDataManager.shared.container.viewContext).environmentObject(viewModel)
-        }
+        }//toolBar的大小样式
+        .windowToolbarStyle(.expanded)
+        .commands { SidebarCommands() }
+        .commands { CommandGroup(replacing: CommandGroupPlacement.newItem) {} }
     }
 }
