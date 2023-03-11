@@ -12,6 +12,7 @@
 		182B42BD29BBAEAA00F06778 /* UserInitializeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B42BC29BBAEAA00F06778 /* UserInitializeView.swift */; };
 		182B42C929BBB1C500F06778 /* Colorful in Frameworks */ = {isa = PBXBuildFile; productRef = 182B42C829BBB1C500F06778 /* Colorful */; };
 		182B42CB29BBBCE800F06778 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B42CA29BBBCE800F06778 /* View.swift */; };
+		182B435B29BC596A00F06778 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B435A29BC596A00F06778 /* AppDelegate.swift */; };
 		CB1DCAC229B4F09D00B1D4E1 /* OSXChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1DCAC129B4F09D00B1D4E1 /* OSXChatGPTApp.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		182B42BA29BBAE5F00F06778 /* SessionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsView.swift; sourceTree = "<group>"; };
 		182B42BC29BBAEAA00F06778 /* UserInitializeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInitializeView.swift; sourceTree = "<group>"; };
 		182B42CA29BBBCE800F06778 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		182B435A29BC596A00F06778 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB1DCAC129B4F09D00B1D4E1 /* OSXChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSXChatGPTApp.swift; sourceTree = "<group>"; };
 		CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				182B42B929BBAE5F00F06778 /* InterfaceView */,
 				CBC4B11429B8CB1B00650296 /* Models */,
 				CB1DCAC129B4F09D00B1D4E1 /* OSXChatGPTApp.swift */,
+				182B435A29BC596A00F06778 /* AppDelegate.swift */,
 				182B42B529BBA82800F06778 /* Storyboard.storyboard */,
 				CB1DCAD029B4F0C800B1D4E1 /* ChatMessageView.swift */,
 				CB1DCAD229B4F0EF00B1D4E1 /* ChatGPTManager.swift */,
@@ -232,6 +235,7 @@
 				CBC4B12629B8D28D00650296 /* Conversation+CoreDataProperties.swift in Sources */,
 				CBC4B11C29B8D23C00650296 /* ViewModel.swift in Sources */,
 				CBC4B12529B8D28D00650296 /* Conversation+CoreDataClass.swift in Sources */,
+				182B435B29BC596A00F06778 /* AppDelegate.swift in Sources */,
 				CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

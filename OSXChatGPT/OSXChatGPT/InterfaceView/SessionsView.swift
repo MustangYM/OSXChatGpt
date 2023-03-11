@@ -12,6 +12,7 @@ struct SessionsView: View {
     @EnvironmentObject var viewModel: ViewModel
     @State private var searchText = ""
     @State private var shouldNavigate = false
+    
     var body: some View {
         ZStack {
             ColorfulView(colors: [.accentColor], colorCount: 4)
