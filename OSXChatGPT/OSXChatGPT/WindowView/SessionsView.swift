@@ -25,8 +25,8 @@ struct SessionsView: View {
                     NavigationLink(destination: ChatView(conversation: newConversaion).environmentObject(viewModel), isActive: $shouldNavigate) {
                         Button(action: {
                             // 点击 New Chat 按钮的操作
-                            self.shouldNavigate = true
                             viewModel.conversations.insert(newConversaion, at: 0)
+                            self.shouldNavigate = true
                         }) {
                             HStack(spacing: 10) {
                                 Image(systemName: "plus.bubble")
@@ -63,17 +63,6 @@ struct SessionsView: View {
                     }
                     .cornerRadius(5)
                 }
-//                .toolbar {
-//                    let aa = viewModel.addNewConversation()
-//                    NavigationLink(destination: ChatView(conversation: aa)) {
-//                        Button(action: {
-//                            viewModel.conversations.insert(aa, at: 0)
-//                            showNewConversationSheet = true
-//                        }) {
-//                            Label("New Conversation", systemImage: "plus")
-//                        }
-//                    }
-//                }
             }
             .frame(minWidth: 250, idealWidth: 300, maxWidth: 300)
         }

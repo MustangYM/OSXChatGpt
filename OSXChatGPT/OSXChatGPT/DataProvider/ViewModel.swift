@@ -24,11 +24,14 @@ import CoreData
             con?.sesstionId = sesstionId
             con?.id = UUID()
         }
-        con?.lastMessage = message
-        con?.updateData = Date()
+        con!.lastMessage = message
+        con!.updateData = Date()
         CoreDataManager.shared.saveData()
+        
         if let index = conversations.firstIndex(where: { $0.sesstionId == sesstionId}) {
             conversations[index] = con!
+        } else {
+            conversations.insert(con!, at: 0)
         }
     }
     func updateConversation(sesstionId: String, remark: String?) {
