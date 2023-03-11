@@ -18,24 +18,6 @@ struct SessionsView: View {
             ColorfulView(colors: [.accentColor], colorCount: 4)
                 .ignoresSafeArea()
             VStack {
-//                HStack {
-//                    SearchBar(text: $searchText)
-//                        .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: 40, idealHeight: 40, maxHeight: 40)
-//                        .padding(.init(top: 10, leading: 10, bottom: 0, trailing: 0))
-//                    NavigationLink(destination: ChatRoomView(sesstionId: viewModel.createSesstionId()).environmentObject(viewModel), isActive: $shouldNavigate) {
-//                        Button {
-//                            self.shouldNavigate = true
-//                        } label: {
-//                            Text("New")
-//                                .padding(5)
-//                            Spacer()
-//                        }.background(Color.clear)
-//
-//
-//                    }.frame(minWidth: 30, idealWidth: 30, maxWidth: 30, minHeight: 30, idealHeight: 30, maxHeight: 30)
-//                        .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 10))
-//
-//                }.frame(minHeight: 40, idealHeight: 40, maxHeight: 50)
                 VStack(spacing: 0) {
                     HStack(spacing: 20, content: {
                         NavigationLink(destination: ChatRoomView(sesstionId: viewModel.createSesstionId()).environmentObject(viewModel), isActive: $shouldNavigate) {
@@ -70,12 +52,9 @@ struct SessionsView: View {
                         
                     })
                     .frame(height: 30)
-                    .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 0))
-                    SearchBar(text: $searchText)
-                        .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: 40, idealHeight: 40, maxHeight: 40)
-                        .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 0))
+                    .padding(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
-                .frame(width: 300, height: 90)
+                .frame(width: 300, height: 40)
                 
                 Divider()
                 List(viewModel.conversations.filter({ searchText.isEmpty ? true : $0.sesstionId.localizedCaseInsensitiveContains(searchText) })) { chat in

@@ -44,7 +44,7 @@ struct UserInitializeView: View {
                             .fixedSize(horizontal: true, vertical: false)
                     }
                     HStack {
-                        Text("✅ Prompt Library        ✅ Run locally on browser")
+                        Text("✅ Prompt Library        ✅ Run locally on desktop")
                             .fixedSize(horizontal: true, vertical: false)
                     }
                     HStack {
@@ -52,7 +52,7 @@ struct UserInitializeView: View {
                             .fixedSize(horizontal: true, vertical: false)
                     }
                     HStack {
-                        Text("✅ No monthly fee       ✅ and more soon")
+                        Text("✅ No monthly fee        and more soon...")
                             .fixedSize(horizontal: true, vertical: false)
                     }
                 }
