@@ -10,13 +10,13 @@ import CoreData
 
 class CoreDataManager {
     static var shared = CoreDataManager()
-    let container: NSPersistentCloudKitContainer!
+    let container: NSPersistentContainer!
 
     private init() {
-        container = NSPersistentCloudKitContainer(name: "OSXChatGPT")
+        container = NSPersistentContainer(name: "OSXChatGPT")
         let storeURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent("OSXChatGPT.sqlite")
         let description = NSPersistentStoreDescription(url: storeURL)
-        description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        description.setOption(true as NSNumber, forKey: NSPersistentStoreURLKey)
         container.persistentStoreDescriptions = [description]
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -56,10 +56,12 @@ class CoreDataManager {
         withAnimation {
             objects.forEach { container.viewContext.delete($0) }
             saveData()
+            container.viewContext.refreshAllObjects()
         }
     }
 
     func saveData() {
+        print("saveData")
         do {
             try container.viewContext.save()
         } catch {

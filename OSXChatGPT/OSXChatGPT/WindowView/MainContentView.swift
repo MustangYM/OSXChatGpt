@@ -1,5 +1,5 @@
 //
-//  ChatMessageView.swift
+//  ChatRoomView.swift
 //  OSXChatGPT
 //
 //  Created by CoderChan on 2023/3/5.

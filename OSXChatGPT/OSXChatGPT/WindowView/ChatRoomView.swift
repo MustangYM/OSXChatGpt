@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MessageView: View {
+struct ChatRoomView: View {
     let message: Message
     
     var body: some View {
@@ -19,7 +19,21 @@ struct MessageView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(6)
+                VStack {
+                    Image("User")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(0)
+                    Spacer()
+                }
             } else {
+                VStack {
+                    Image("openAI_icon")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(0)
+                    Spacer()
+                }
                 Text(message.text ?? "")
                     .padding(12)
                     .background(Color.gray)
@@ -33,13 +47,13 @@ struct MessageView: View {
 }
 
 /// 聊天框
-struct ChatRoomView: View {
-    var sesstionId: String
+struct ChatView: View {
+    var conversation: Conversation
+    var isNewConversation: Bool = false
     @EnvironmentObject var viewModel: ViewModel
     @State private var newMessageText = ""
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
-    
     var body: some View {
         VStack(spacing: 0) {
             GeometryReader { geometry in
@@ -47,13 +61,12 @@ struct ChatRoomView: View {
                     ScrollViewReader { scrollView in
                         VStack(alignment: .trailing, spacing: 8) {
                             ForEach(viewModel.messages) { message in
-                                MessageView(message: message)
+                                ChatRoomView(message: message)
                                     .id(message.id) // 添加唯一标识符
-                                    .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
+                                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
                             }
                         }
                         .onChange(of: scrollID) { _ in
-                            // 滚动到最后一条消息
                             scrollView.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
                         }
                         .background(Color.clear)
@@ -64,9 +77,13 @@ struct ChatRoomView: View {
                     }
                     .background(Color.clear)
                     .onAppear {
-                        viewModel.fetchMessage(sesstionId: sesstionId)
+//                        viewModel.fetchMessage(sesstionId: sesstionId)
                         // 将 ScrollView 存储在状态中
                         self.scrollView = scrollView
+                        
+                    }
+                    .onDisappear {
+                        
                     }
                     .onChange(of: viewModel.messages.count) { _ in
                         // 每次添加新消息时，更新 ID 以便滚动
@@ -99,34 +116,31 @@ struct ChatRoomView: View {
         }
         .onAppear {
             print("View appeared!")
-            viewModel.fetchMessage(sesstionId: sesstionId)
+            viewModel.fetchMessage(sesstionId: conversation.sesstionId)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
                 
             }
+            
         }
         .onDisappear {
             print("View disappeared!")
-        }
+        }.navigationTitle(conversation.remark ?? conversation.lastMessage?.text ?? "New Chat")
     }
     
     private func sendMessage(scrollView: ScrollViewProxy?) {
         guard !newMessageText.isEmpty else { return }
-        
         let temp = NSMutableString(string: newMessageText)
         let replaceStr = temp.replacingOccurrences(of: "\n", with: "")
-        viewModel.addNewMessage(sesstionId: sesstionId, text: replaceStr, role: "user") {
+        viewModel.addNewMessage(sesstionId: conversation.sesstionId, text: replaceStr, role: "user") {
             scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
-        }
-        if viewModel.messages.count == 1 {
-            //有点问题
-            viewModel.fetchConversations()
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            //清空
             newMessageText = ""
             scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
-            
         }
     }
 }
+
 

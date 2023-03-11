@@ -12,11 +12,31 @@ class ChatGPTManager {
     static let shared = ChatGPTManager()
     private var messagesDict: [String:[Message]] = [:]
     private let httpClient: HTTPClient = HTTPClient()
-    private let apiKey : String = "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"
+    private lazy var apiKey : String = {
+        let key = UserDefaults.standard.value(forKey: "OSXChatGPT_apiKey_key") as? String
+        return key ?? ""
+    }()
     let gptRoleString: String = "assistant"
     private init() {
-        
+        let _  = getMaskApiKey()
     }
+    func updateApiKey(apiKey: String) {
+        if apiKey.contains("********") {
+            //没有修改
+            return
+        }
+        self.apiKey = apiKey
+        UserDefaults.standard.set(apiKey, forKey: "OSXChatGPT_apiKey_key")
+    }
+    func getMaskApiKey() -> String {
+        var key = String(self.apiKey)
+        if key.count < 10 {
+            return ""
+        }
+        maskString(&key, startIndex: 4, endIndex: key.count - 4)
+        return key
+    }
+    
 }
 
 /// Chat GTP
@@ -24,7 +44,8 @@ extension ChatGPTManager {
     /// 提问
     func askChatGPT(messages: [Message], complete:(([String: Any]?, String?) -> ())?) {
         var arr: [Message] = messages
-        arr = checkMaxAskMsgCount(maxCount: 6, messages: arr)
+        //来回两次算一次对话，上下文传最多传5次对话
+        arr = checkMaxAskMsgCount(maxCount: 10, messages: arr)
         var temp: [[String: String]] = []
         arr.forEach { msg in
             temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])
@@ -59,6 +80,9 @@ extension ChatGPTManager {
         }
     }
     
+}
+
+extension ChatGPTManager {
     private func checkMaxAskMsgCount(maxCount: Int, messages: [Message]) -> [Message] {
         var msg = messages
         if msg.count > maxCount {
@@ -68,5 +92,10 @@ extension ChatGPTManager {
             return msg
         }
     }
-    
+    private func maskString(_ string: inout String, startIndex: Int, endIndex: Int, maskCharacter: Character = "*") {
+        guard startIndex < endIndex else { return }
+        let range = string.index(string.startIndex, offsetBy: startIndex) ..< string.index(string.startIndex, offsetBy: endIndex)
+        let replacement = String(repeating: maskCharacter, count: endIndex - startIndex)
+        string.replaceSubrange(range, with: replacement)
+    }
 }
