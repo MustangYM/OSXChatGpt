@@ -12,6 +12,7 @@
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
 		CB1DCAD129B4F0C800B1D4E1 /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1DCAD029B4F0C800B1D4E1 /* ChatMessageView.swift */; };
 		CB1DCAD329B4F0EF00B1D4E1 /* ChatGPTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1DCAD229B4F0EF00B1D4E1 /* ChatGPTManager.swift */; };
+		CB28A51129BCC56200F0286A /* LocalNoCommitFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A51029BCC56200F0286A /* LocalNoCommitFile.swift */; };
 		CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
 		CBC4B11629B8CB5300650296 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11529B8CB5300650296 /* HTTPClient.swift */; };
 		CBC4B11A29B8D11500650296 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11929B8D11500650296 /* CoreDataManager.swift */; };
@@ -20,8 +21,6 @@
 		CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */; };
 		CBC4B12529B8D28D00650296 /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11F29B8D28D00650296 /* Conversation+CoreDataClass.swift */; };
 		CBC4B12629B8D28D00650296 /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B12029B8D28D00650296 /* Conversation+CoreDataProperties.swift */; };
-		CBC4B12729B8D28D00650296 /* UserRole+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B12129B8D28D00650296 /* UserRole+CoreDataClass.swift */; };
-		CBC4B12829B8D28D00650296 /* UserRole+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B12229B8D28D00650296 /* UserRole+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +31,7 @@
 		CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSXChatGPT.entitlements; sourceTree = "<group>"; };
 		CB1DCAD029B4F0C800B1D4E1 /* ChatMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
 		CB1DCAD229B4F0EF00B1D4E1 /* ChatGPTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGPTManager.swift; sourceTree = "<group>"; };
+		CB28A51029BCC56200F0286A /* LocalNoCommitFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNoCommitFile.swift; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
 		CBC4B11529B8CB5300650296 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		CBC4B11929B8D11500650296 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -40,8 +40,6 @@
 		CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CBC4B11F29B8D28D00650296 /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CBC4B12029B8D28D00650296 /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		CBC4B12129B8D28D00650296 /* UserRole+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserRole+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CBC4B12229B8D28D00650296 /* UserRole+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserRole+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +75,7 @@
 				CBC4B11429B8CB1B00650296 /* Models */,
 				CB1DCAC129B4F09D00B1D4E1 /* OSXChatGPTApp.swift */,
 				CB1DCAD029B4F0C800B1D4E1 /* ChatMessageView.swift */,
+				CB28A51029BCC56200F0286A /* LocalNoCommitFile.swift */,
 				CB1DCAD229B4F0EF00B1D4E1 /* ChatGPTManager.swift */,
 				CBC4B11929B8D11500650296 /* CoreDataManager.swift */,
 				CBC4B11B29B8D23C00650296 /* ViewModel.swift */,
@@ -104,8 +103,6 @@
 				CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */,
 				CBC4B11F29B8D28D00650296 /* Conversation+CoreDataClass.swift */,
 				CBC4B12029B8D28D00650296 /* Conversation+CoreDataProperties.swift */,
-				CBC4B12129B8D28D00650296 /* UserRole+CoreDataClass.swift */,
-				CBC4B12229B8D28D00650296 /* UserRole+CoreDataProperties.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -180,11 +177,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBC4B12829B8D28D00650296 /* UserRole+CoreDataProperties.swift in Sources */,
-				CBC4B12729B8D28D00650296 /* UserRole+CoreDataClass.swift in Sources */,
 				CBC4B11A29B8D11500650296 /* CoreDataManager.swift in Sources */,
 				CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */,
 				CBC4B11629B8CB5300650296 /* HTTPClient.swift in Sources */,
+				CB28A51129BCC56200F0286A /* LocalNoCommitFile.swift in Sources */,
 				CB1DCAD329B4F0EF00B1D4E1 /* ChatGPTManager.swift in Sources */,
 				CB1DCAD129B4F0C800B1D4E1 /* ChatMessageView.swift in Sources */,
 				CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */,

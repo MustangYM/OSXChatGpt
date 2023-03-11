@@ -20,6 +20,7 @@ extension Conversation {
     @NSManaged public var updateData: Date?
     @NSManaged public var id: UUID?
     @NSManaged public var lastMessage: Message?
+    @NSManaged public var remark: String?
 }
 
 extension Conversation : Identifiable {

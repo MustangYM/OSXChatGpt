@@ -13,7 +13,8 @@ import CoreData
     
     @Published var conversations: [Conversation] = []
     @Published var messages: [Message] = []
-    
+    var currentConversation: Conversation?
+    var isNewConversation: Bool = false
     init() {
         fetchConversations()
     }
@@ -27,9 +28,32 @@ import CoreData
         con?.lastMessage = message
         con?.updateData = Date()
         CoreDataManager.shared.saveData()
-//        if let idx = conversations.firstIndex(where:{ $0.sesstionId == sesstionId }) {
-//            conversations[idx].lastMessage = message
-//        }
+        if let index = conversations.firstIndex(where: { $0.sesstionId == sesstionId}) {
+            conversations[index] = con!
+        }
+    }
+    func updateConversation(sesstionId: String, remark: String?) {
+        var con = fetchConversation(sesstionId: sesstionId)
+        if con == nil {
+            con = Conversation(context: CoreDataManager.shared.container.viewContext)
+            con?.sesstionId = sesstionId
+            con?.id = UUID()
+            con?.updateData = Date()
+        }
+        con?.remark = remark
+        CoreDataManager.shared.saveData()
+        if let index = conversations.firstIndex(where: { $0.sesstionId == sesstionId}) {
+            conversations[index] = con!
+        }
+    }
+    func addNewConversation() -> Conversation {
+        let con = Conversation(context: CoreDataManager.shared.container.viewContext)
+        con.sesstionId = createSesstionId()
+        con.id = UUID()
+        con.updateData = Date()
+        CoreDataManager.shared.saveData()
+        
+        return con
     }
     func addConversation() {
         let con = Conversation(context: CoreDataManager.shared.container.viewContext)
@@ -40,7 +64,8 @@ import CoreData
         fetchConversations()
     }
     func deleteConversation(_ conversation: Conversation) {
-        
+        CoreDataManager.shared.delete(objects: [conversation])
+        conversations.removeAll { $0.sesstionId == conversation.sesstionId }
     }
     
     func fetchMessage(sesstionId: String) {
@@ -74,8 +99,9 @@ import CoreData
             let roleStr = myMessage?["role"] as? String
             let msg = Message(context: CoreDataManager.shared.container.viewContext)
             msg.sesstionId = sesstionId
-            msg.role = roleStr ?? ""
+            msg.role = roleStr ?? ChatGPTManager.shared.gptRoleString
             msg.text = content ?? ""
+            msg.text = msg.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             msg.createdDate = Date()
             msg.id = UUID()
             CoreDataManager.shared.saveData()
@@ -100,7 +126,11 @@ extension ViewModel {
 extension ViewModel {
     func fetchConversations() {
         let completedDateSort = NSSortDescriptor(keyPath: \Conversation.updateData, ascending: false)
-        conversations = CoreDataManager.shared.fetch("Conversation", sorting: [completedDateSort])
+        var aa: [Conversation] = CoreDataManager.shared.fetch("Conversation", sorting: [completedDateSort])
+        let remove = aa.filter { $0.lastMessage == nil}
+        CoreDataManager.shared.delete(objects: remove)
+        aa.removeAll { $0.lastMessage == nil}
+        conversations = aa
     }
     private func fetchConversation(sesstionId: String) -> Conversation? {
         let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()

@@ -12,7 +12,7 @@ class ChatGPTManager {
     static let shared = ChatGPTManager()
     private var messagesDict: [String:[Message]] = [:]
     private let httpClient: HTTPClient = HTTPClient()
-    private let apiKey : String = "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"
+    private let apiKey : String = myApiKey
     let gptRoleString: String = "assistant"
     private init() {
         
@@ -24,7 +24,8 @@ extension ChatGPTManager {
     /// 提问
     func askChatGPT(messages: [Message], complete:(([String: Any]?, String?) -> ())?) {
         var arr: [Message] = messages
-        arr = checkMaxAskMsgCount(maxCount: 6, messages: arr)
+        //来回两次算一次对话，上下文传最多传5次对话
+        arr = checkMaxAskMsgCount(maxCount: 10, messages: arr)
         var temp: [[String: String]] = []
         arr.forEach { msg in
             temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])

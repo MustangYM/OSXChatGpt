@@ -11,106 +11,68 @@ import AppKit
 struct ContentView: View {
     @EnvironmentObject var viewModel: ViewModel
     @State private var searchText = ""
-    @State private var shouldNavigate = false
+    @State var showNewConversationSheet = false
     
     var body: some View {
         NavigationView {
-            VStack {
-                HStack {
-                    SearchBar(text: $searchText)
-                        .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: 40, idealHeight: 40, maxHeight: 40)
-                        .padding(.init(top: 10, leading: 10, bottom: 0, trailing: 0))
-                    NavigationLink(destination: ChatView(sesstionId: viewModel.createSesstionId()).environmentObject(viewModel), isActive: $shouldNavigate) {
-                        Button {
-                            self.shouldNavigate = true
-                        } label: {
-                            Text("New")
-                                .padding(5)
-                            Spacer()
-                        }.background(Color.clear)
-
-
-                    }.frame(minWidth: 30, idealWidth: 30, maxWidth: 30, minHeight: 30, idealHeight: 30, maxHeight: 30)
-                        .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 10))
-                    
-                }.frame(minHeight: 40, idealHeight: 40, maxHeight: 50)
-                Divider()
-                List(viewModel.conversations.filter({ searchText.isEmpty ? true : $0.sesstionId.localizedCaseInsensitiveContains(searchText) })) { chat in
-                    NavigationLink(destination: ChatView(sesstionId: chat.sesstionId).environmentObject(viewModel)) {
-                        ChatRowContent(chat: chat)
+            List(viewModel.conversations) { conversation in
+                NavigationLink(destination: ChatView(conversation: conversation).environmentObject(viewModel)) {
+                    ChatRowContentView(chat: conversation).environmentObject(viewModel)
+                }
+                    .cornerRadius(5)
+            }
+            .toolbar {
+                let aa = viewModel.addNewConversation()
+                NavigationLink(destination: ChatView(conversation: aa)) {
+                    Button(action: {
+                        viewModel.conversations.insert(aa, at: 0)
+                        showNewConversationSheet = true
+                    }) {
+                        Label("New Conversation", systemImage: "plus")
                     }
                 }
-                .listStyle(SidebarListStyle())
-                .padding(.top, 1)
-                
-                Spacer()
             }
-            .frame(minWidth: 250, idealWidth: 300, maxWidth: 300)
-            
             Text("请选择一个会话")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
+        }.navigationTitle(viewModel.currentConversation?.remark ?? "New Chat")
     }
 }
-/// 搜索框
-struct SearchBar: View {
-    @Binding var text: String
-    
-    var body: some View {
-        HStack {
-            TextField("搜索", text: $text)
-                .padding(.vertical, 5)
-                .padding(.horizontal, 8)
-                .padding(.leading, 15)
-                .background(.clear)
-                .cornerRadius(5)
-                .overlay(
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.white)
-                            .padding(.leading, 5)
-                            .cornerRadius(5)
-                        
-                        Spacer()
-                    }.background(.clear)
-                )
-                .padding(.horizontal, 4)
-        }
-    }
-}
+
 /// 左边会话列表
-struct ChatRowContent: View {
-    @State var chat: Conversation
+struct ChatRowContentView: View {
+    @ObservedObject var chat: Conversation
     var body: some View {
-        MyView(chat: chat)
+        ChatRowContentNSView(chat: chat)
             .frame(minHeight: 50, idealHeight: 50, maxHeight: 50)
     }
 }
+
 /// 左边会话列表
-struct ChatRow: View {
-    @State var chat: Conversation
+struct ChatRowView: View {
+    @ObservedObject var chat: Conversation
     var body: some View {
         HStack {
             Image("openAI_icon")
                 .resizable()
                 .frame(width: 30, height: 30)
-
+                .padding(.leading, 5)
             VStack(alignment: .leading) {
-                Text(chat.lastMessage?.text ?? "newChat")
+                Text(chat.remark ?? chat.lastMessage?.text ?? "New Chat")
                     .font(.headline)
-
-                //                Text(chat.message)
-                //                    .font(.subheadline)
-                //                    .foregroundColor(.gray)
-            }
-
+                    
+            }.padding(.trailing, 5)
+            
             Spacer()
         }
         .padding(.vertical, 4)
+        .padding(.trailing, 5)
     }
 }
-struct MyView: NSViewRepresentable {
-    @State var chat: Conversation
+struct ChatRowContentNSView: NSViewRepresentable {
+    @EnvironmentObject var viewModel: ViewModel
+    @ObservedObject var chat: Conversation
+    @State private var showMenu = false
+    @State private var editNote: String = ""
     func updateNSView(_ nsView: NSView, context: Context) {
         // Update view properties and state here.
     }
@@ -119,39 +81,77 @@ struct MyView: NSViewRepresentable {
         Coordinator(self)
     }
     
-    class Coordinator: NSObject {
-        var parent: MyView
+    class Coordinator: NSObject, NSMenuDelegate {
+        var parent: ChatRowContentNSView
         
-        init(_ parent: MyView) {
+        init(_ parent: ChatRowContentNSView) {
             self.parent = parent
             super.init()
         }
         
         @objc func handleRightClick(_ sender: NSClickGestureRecognizer) {
             if sender.state == .ended {
-                print("Right mouse button clicked!")
+                print("双击鼠标")
+                
+                let menu = NSMenu(title: "123")
+                menu.delegate = self
+                let editMenuItem = NSMenuItem(title: "编辑备注", action: #selector(edit), keyEquivalent: "")
+                let deleteMenuItem = NSMenuItem(title: "删除会话", action: #selector(delete), keyEquivalent: "")
+                editMenuItem.target = self
+                deleteMenuItem.target = self
+                menu.addItem(editMenuItem)
+                menu.addItem(deleteMenuItem)
+                menu.popUp(positioning: nil, at: sender.location(in: sender.view!), in: sender.view!)
+                parent.showMenu = true
             }
         }
+        func menuDidClose(_ menu: NSMenu) {
+//            print("menu menuDidClose!")
+        }
+        
+        @MainActor @objc func edit() {
+            parent.editNote = parent.chat.remark ?? ""
+            let alert = NSAlert()
+            alert.messageText = "修改会话备注"
+            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "Cancel")
+            let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+            inputTextField.stringValue = parent.editNote
+            alert.accessoryView = inputTextField
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn {
+                parent.chat.remark = inputTextField.stringValue
+                parent.viewModel.updateConversation(sesstionId: parent.chat.sesstionId, remark: parent.chat.remark)
+            }
+        }
+        
+        @MainActor @objc func delete() {
+            parent.viewModel.deleteConversation(parent.chat)
+        }
+
     }
-    
     func makeNSView(context: Context) -> NSView {
         let view = NSView()
         view.wantsLayer = true
         view.layer?.cornerRadius = 3
-        let swiftUIView = ChatRow(chat: chat)
-            .frame(width: 300, height: 50)
+        let swiftUIView = ChatRowView(chat: chat)
+            .frame(width: 300, height: 40)
         let hostingView = NSHostingView(rootView: swiftUIView)
         view.addSubview(hostingView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
+        hostingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        hostingView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        hostingView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        hostingView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         let gestureRecognizer = NSClickGestureRecognizer(target: context.coordinator,
                                                           action: #selector(Coordinator.handleRightClick(_:)))
         gestureRecognizer.buttonMask = 0x2 // 双击事件
         view.addGestureRecognizer(gestureRecognizer)
-        
         return view
     }
+
 }
-struct MessageView: View {
+struct ChatMessageView: View {
     let message: Message
     
     var body: some View {
@@ -163,7 +163,21 @@ struct MessageView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(6)
+                VStack {
+                    Image("User")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(0)
+                    Spacer()
+                }
             } else {
+                VStack {
+                    Image("openAI_icon")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(0)
+                    Spacer()
+                }
                 Text(message.text ?? "")
                     .padding(12)
                     .background(Color.gray)
@@ -178,12 +192,12 @@ struct MessageView: View {
 
 /// 聊天框
 struct ChatView: View {
-    var sesstionId: String
+    var conversation: Conversation
+    var isNewConversation: Bool = false
     @EnvironmentObject var viewModel: ViewModel
     @State private var newMessageText = ""
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
-    
     var body: some View {
         VStack(spacing: 0) {
             GeometryReader { geometry in
@@ -191,13 +205,12 @@ struct ChatView: View {
                     ScrollViewReader { scrollView in
                         VStack(alignment: .trailing, spacing: 8) {
                             ForEach(viewModel.messages) { message in
-                                MessageView(message: message)
+                                ChatMessageView(message: message)
                                     .id(message.id) // 添加唯一标识符
-                                    .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
+                                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
                             }
                         }
                         .onChange(of: scrollID) { _ in
-                            // 滚动到最后一条消息
                             scrollView.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
                         }
                         .background(Color.clear)
@@ -208,9 +221,13 @@ struct ChatView: View {
                     }
                     .background(Color.clear)
                     .onAppear {
-                        viewModel.fetchMessage(sesstionId: sesstionId)
+//                        viewModel.fetchMessage(sesstionId: sesstionId)
                         // 将 ScrollView 存储在状态中
                         self.scrollView = scrollView
+                        
+                    }
+                    .onDisappear {
+                        
                     }
                     .onChange(of: viewModel.messages.count) { _ in
                         // 每次添加新消息时，更新 ID 以便滚动
@@ -243,28 +260,24 @@ struct ChatView: View {
         }
         .onAppear {
             print("View appeared!")
-            viewModel.fetchMessage(sesstionId: sesstionId)
+            viewModel.fetchMessage(sesstionId: conversation.sesstionId)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
                 
             }
+            
         }
         .onDisappear {
             print("View disappeared!")
-        }
+        }.navigationTitle(conversation.remark ?? conversation.lastMessage?.text ?? "New Chat")
     }
     
     private func sendMessage(scrollView: ScrollViewProxy?) {
         guard !newMessageText.isEmpty else { return }
-        
         let temp = NSMutableString(string: newMessageText)
         let replaceStr = temp.replacingOccurrences(of: "\n", with: "")
-        viewModel.addNewMessage(sesstionId: sesstionId, text: replaceStr, role: "user") {
+        viewModel.addNewMessage(sesstionId: conversation.sesstionId, text: replaceStr, role: "user") {
             scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
-        }
-        if viewModel.messages.count == 1 {
-            //有点问题
-            viewModel.fetchConversations()
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             newMessageText = ""
