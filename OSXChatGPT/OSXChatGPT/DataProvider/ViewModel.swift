@@ -10,7 +10,6 @@ import SwiftUI
 import CoreData
 
 @MainActor class ViewModel: ObservableObject {
-    
     @Published var conversations: [Conversation] = []
     @Published var messages: [Message] = []
     var currentConversation: Conversation?

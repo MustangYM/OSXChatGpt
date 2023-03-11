@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EnterAPIView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var apiKey: String = ""
+    @State var apiKey: String = ChatGPTManager.shared.getMaskApiKey()
     
     var body: some View {
         VStack(spacing: 20) {
@@ -55,8 +55,9 @@ struct EnterAPIView: View {
                 .buttonStyle(BorderlessButtonStyle())
                 
                 Button(action: {
-                    // TODO: save the API key
+                    ChatGPTManager.shared.updateApiKey(apiKey: apiKey)
                     self.presentationMode.wrappedValue.dismiss()
+                    
                 }) {
                     Text("Save")
                         .foregroundColor(.white)
