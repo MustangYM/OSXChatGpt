@@ -9,6 +9,7 @@ import SwiftUI
 import AppKit
 /// main View
 struct MainContentView: View {
+    @State var openArgumentsSeet: Bool = false
     var body: some View {
         NavigationView {
             SessionsView()

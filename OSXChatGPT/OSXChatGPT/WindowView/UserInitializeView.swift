@@ -8,6 +8,8 @@ import Colorful
 import SwiftUI
 
 struct UserInitializeView: View {
+    @State var openArgumentSeet: Bool = false
+    
     var body: some View {
         ColorfulView(colors: [.accentColor], colorCount: 4)
             .ignoresSafeArea()
@@ -40,7 +42,7 @@ struct UserInitializeView: View {
 
                 // 添加API密钥按钮
                 Button(action: {
-//                    apiKeyTapped.toggle()
+                    openArgumentSeet.toggle()
                 }) {
                     HStack(spacing: 8) {
                         Image(systemName: "key.radiowaves.forward.fill")
@@ -54,11 +56,16 @@ struct UserInitializeView: View {
                 }
                 .buttonStyle(PlainButtonStyle()) // 隐藏按钮的默认样式
             }
+            .sheet(isPresented: $openArgumentSeet) {
+                EnterAPIView()
+            }
+            
         }
         .padding(.top,100)
         .padding(.bottom,300)
         .padding(.leading,200)
         .padding(.trailing,200)
+
         
         VStack {
             Spacer()
