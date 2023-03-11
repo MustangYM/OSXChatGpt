@@ -18,24 +18,65 @@ struct SessionsView: View {
             ColorfulView(colors: [.accentColor], colorCount: 4)
                 .ignoresSafeArea()
             VStack {
-                HStack {
+//                HStack {
+//                    SearchBar(text: $searchText)
+//                        .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: 40, idealHeight: 40, maxHeight: 40)
+//                        .padding(.init(top: 10, leading: 10, bottom: 0, trailing: 0))
+//                    NavigationLink(destination: ChatRoomView(sesstionId: viewModel.createSesstionId()).environmentObject(viewModel), isActive: $shouldNavigate) {
+//                        Button {
+//                            self.shouldNavigate = true
+//                        } label: {
+//                            Text("New")
+//                                .padding(5)
+//                            Spacer()
+//                        }.background(Color.clear)
+//
+//
+//                    }.frame(minWidth: 30, idealWidth: 30, maxWidth: 30, minHeight: 30, idealHeight: 30, maxHeight: 30)
+//                        .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 10))
+//
+//                }.frame(minHeight: 40, idealHeight: 40, maxHeight: 50)
+                VStack(spacing: 0) {
+                    HStack(spacing: 20, content: {
+                        NavigationLink(destination: ChatRoomView(sesstionId: viewModel.createSesstionId()).environmentObject(viewModel), isActive: $shouldNavigate) {
+                            Button(action: {
+                                // 点击 New Chat 按钮的操作
+                                self.shouldNavigate = true
+                            }) {
+                                HStack(spacing: 10) {
+                                    Image(systemName: "plus.bubble")
+                                    Text("New Chat")
+                                }
+                                .padding(10)
+                                .foregroundColor(.white)
+                                .background(Color.blue)
+                                .cornerRadius(5)
+                            }
+                            .buttonStyle(BorderlessButtonStyle())
+                        }.buttonStyle(BorderlessButtonStyle())
+                            .padding(.leading,0)
+                        
+                        
+                        Button(action: {
+                            // 点击右边按钮的操作
+                        }) {
+                            Image(systemName: "gear")
+                                .padding(10)
+                                .foregroundColor(.white)
+                                .background(Color.gray)
+                                .cornerRadius(5)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        
+                    })
+                    .frame(height: 30)
+                    .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 0))
                     SearchBar(text: $searchText)
                         .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: 40, idealHeight: 40, maxHeight: 40)
-                        .padding(.init(top: 10, leading: 10, bottom: 0, trailing: 0))
-                    NavigationLink(destination: ChatRoomView(sesstionId: viewModel.createSesstionId()).environmentObject(viewModel), isActive: $shouldNavigate) {
-                        Button {
-                            self.shouldNavigate = true
-                        } label: {
-                            Text("New")
-                                .padding(5)
-                            Spacer()
-                        }.background(Color.clear)
-
-
-                    }.frame(minWidth: 30, idealWidth: 30, maxWidth: 30, minHeight: 30, idealHeight: 30, maxHeight: 30)
-                        .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 10))
-                    
-                }.frame(minHeight: 40, idealHeight: 40, maxHeight: 50)
+                        .padding(.init(top: 10, leading: 0, bottom: 0, trailing: 0))
+                }
+                .frame(width: 300, height: 90)
+                
                 Divider()
                 List(viewModel.conversations.filter({ searchText.isEmpty ? true : $0.sesstionId.localizedCaseInsensitiveContains(searchText) })) { chat in
                     NavigationLink(destination: ChatRoomView(sesstionId: chat.sesstionId).environmentObject(viewModel)) {
@@ -43,7 +84,7 @@ struct SessionsView: View {
                     }
                 }
                 .listStyle(SidebarListStyle())
-                .padding(.top, 1)
+                .padding(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                 
                 Spacer()
             }
@@ -58,23 +99,13 @@ struct SearchBar: View {
     
     var body: some View {
         HStack {
-            TextField("搜索", text: $text)
+            TextField("Search Chats...", text: $text)
                 .padding(.vertical, 5)
-                .padding(.horizontal, 8)
-                .padding(.leading, 15)
+                .padding(.horizontal, 0)
+                .padding(.leading, 0)
                 .background(.clear)
+                .padding(.horizontal, 0)
                 .cornerRadius(5)
-                .overlay(
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.white)
-                            .padding(.leading, 5)
-                            .cornerRadius(5)
-                        
-                        Spacer()
-                    }.background(.clear)
-                )
-                .padding(.horizontal, 4)
         }
     }
 }

@@ -14,6 +14,17 @@ struct MainContentView: View {
         NavigationView {
             SessionsView()
             UserInitializeView()
+        }.toolbar {
+            ToolbarItem(placement: .navigation) {
+                Button {
+                    NSApp.keyWindow?.firstResponder?.tryToPerform(
+                        #selector(NSSplitViewController.toggleSidebar(_:)),
+                        with: nil
+                    )
+                } label: {
+                    Label("Toggle Sidebar", systemImage: "sidebar.leading")
+                }
+            }
         }
     }
 }
