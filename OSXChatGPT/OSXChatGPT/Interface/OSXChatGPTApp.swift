@@ -17,7 +17,7 @@ struct OSXChatGPTApp: App {
             ZStack {
                 ColorfulView(colors: [.accentColor], colorCount: 10)
                     .ignoresSafeArea()
-                ContentView().environmentObject(viewModel).edgesIgnoringSafeArea(.top).frame(minWidth: 900, maxWidth: .infinity, minHeight: 600, maxHeight: .infinity)
+                MainContentView().environmentObject(viewModel).edgesIgnoringSafeArea(.top).frame(minWidth: 900, maxWidth: .infinity, minHeight: 600, maxHeight: .infinity)
             }
         }
         .windowToolbarStyle(.unified)

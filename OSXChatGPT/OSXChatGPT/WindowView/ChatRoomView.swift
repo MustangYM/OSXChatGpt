@@ -1,120 +1,12 @@
 //
-//  ChatMessageView.swift
+//  ChatRoomView.swift
 //  OSXChatGPT
 //
-//  Created by CoderChan on 2023/3/5.
+//  Created by MustangYM on 2023/3/11.
 //
 
 import SwiftUI
-import AppKit
-/// main View
-struct ContentView: View {
-    var body: some View {
-        NavigationView {
-            SessionsView()
-            UserInitializeView()
-        }
-    }
-}
-/// 搜索框
-struct SearchBar: View {
-    @Binding var text: String
-    
-    var body: some View {
-        HStack {
-            TextField("搜索", text: $text)
-                .padding(.vertical, 5)
-                .padding(.horizontal, 8)
-                .padding(.leading, 15)
-                .background(.clear)
-                .cornerRadius(5)
-                .overlay(
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.white)
-                            .padding(.leading, 5)
-                            .cornerRadius(5)
-                        
-                        Spacer()
-                    }.background(.clear)
-                )
-                .padding(.horizontal, 4)
-        }
-    }
-}
-/// 左边会话列表
-struct ChatRowContent: View {
-    @State var chat: Conversation
-    var body: some View {
-        MyView(chat: chat)
-            .frame(minHeight: 50, idealHeight: 50, maxHeight: 50)
-    }
-}
-/// 左边会话列表
-struct ChatRow: View {
-    @State var chat: Conversation
-    var body: some View {
-        HStack {
-            Image("openAI_icon")
-                .resizable()
-                .frame(width: 30, height: 30)
 
-            VStack(alignment: .leading) {
-                Text(chat.lastMessage?.text ?? "newChat")
-                    .font(.headline)
-
-                //                Text(chat.message)
-                //                    .font(.subheadline)
-                //                    .foregroundColor(.gray)
-            }
-
-            Spacer()
-        }
-        .padding(.vertical, 4)
-    }
-}
-struct MyView: NSViewRepresentable {
-    @State var chat: Conversation
-    func updateNSView(_ nsView: NSView, context: Context) {
-        // Update view properties and state here.
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    class Coordinator: NSObject {
-        var parent: MyView
-        
-        init(_ parent: MyView) {
-            self.parent = parent
-            super.init()
-        }
-        
-        @objc func handleRightClick(_ sender: NSClickGestureRecognizer) {
-            if sender.state == .ended {
-                print("Right mouse button clicked!")
-            }
-        }
-    }
-    
-    func makeNSView(context: Context) -> NSView {
-        let view = NSView()
-        view.wantsLayer = true
-        view.layer?.cornerRadius = 3
-        let swiftUIView = ChatRow(chat: chat)
-            .frame(width: 300, height: 50)
-        let hostingView = NSHostingView(rootView: swiftUIView)
-        view.addSubview(hostingView)
-        hostingView.translatesAutoresizingMaskIntoConstraints = false
-        let gestureRecognizer = NSClickGestureRecognizer(target: context.coordinator,
-                                                          action: #selector(Coordinator.handleRightClick(_:)))
-        gestureRecognizer.buttonMask = 0x2 // 双击事件
-        view.addGestureRecognizer(gestureRecognizer)
-        
-        return view
-    }
-}
 struct MessageView: View {
     let message: Message
     
@@ -141,7 +33,7 @@ struct MessageView: View {
 }
 
 /// 聊天框
-struct ChatView: View {
+struct ChatRoomView: View {
     var sesstionId: String
     @EnvironmentObject var viewModel: ViewModel
     @State private var newMessageText = ""
@@ -235,14 +127,6 @@ struct ChatView: View {
             scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
             
         }
-    }
-}
-
-
-
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
 

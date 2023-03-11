@@ -8,20 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		182B42B629BBA82800F06778 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182B42B529BBA82800F06778 /* Storyboard.storyboard */; };
-		182B42BB29BBAE5F00F06778 /* SessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B42BA29BBAE5F00F06778 /* SessionsView.swift */; };
-		182B42BD29BBAEAA00F06778 /* UserInitializeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B42BC29BBAEAA00F06778 /* UserInitializeView.swift */; };
 		182B42C929BBB1C500F06778 /* Colorful in Frameworks */ = {isa = PBXBuildFile; productRef = 182B42C829BBB1C500F06778 /* Colorful */; };
-		182B42CB29BBBCE800F06778 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B42CA29BBBCE800F06778 /* View.swift */; };
-		182B435B29BC596A00F06778 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B435A29BC596A00F06778 /* AppDelegate.swift */; };
-		CB1DCAC229B4F09D00B1D4E1 /* OSXChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1DCAC129B4F09D00B1D4E1 /* OSXChatGPTApp.swift */; };
+		182B436529BC5C8700F06778 /* SessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B436029BC5C8700F06778 /* SessionsView.swift */; };
+		182B436629BC5C8700F06778 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B436129BC5C8700F06778 /* View.swift */; };
+		182B436729BC5C8700F06778 /* ChatRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B436229BC5C8700F06778 /* ChatRoomView.swift */; };
+		182B436829BC5C8700F06778 /* MainContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B436329BC5C8700F06778 /* MainContentView.swift */; };
+		182B436929BC5C8700F06778 /* UserInitializeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B436429BC5C8700F06778 /* UserInitializeView.swift */; };
+		182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B436A29BC5CBA00F06778 /* AppDelegate.swift */; };
+		182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B436D29BC5D1B00F06778 /* HTTPClient.swift */; };
+		182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B436F29BC5D1B00F06778 /* CoreDataManager.swift */; };
+		182B437429BC5D1B00F06778 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437029BC5D1B00F06778 /* ViewModel.swift */; };
+		182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437129BC5D1B00F06778 /* ChatGPTManager.swift */; };
+		182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437829BC5D6200F06778 /* OSXChatGPTApp.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
-		CB1DCAD129B4F0C800B1D4E1 /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1DCAD029B4F0C800B1D4E1 /* ChatMessageView.swift */; };
-		CB1DCAD329B4F0EF00B1D4E1 /* ChatGPTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1DCAD229B4F0EF00B1D4E1 /* ChatGPTManager.swift */; };
 		CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
-		CBC4B11629B8CB5300650296 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11529B8CB5300650296 /* HTTPClient.swift */; };
-		CBC4B11A29B8D11500650296 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11929B8D11500650296 /* CoreDataManager.swift */; };
-		CBC4B11C29B8D23C00650296 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11B29B8D23C00650296 /* ViewModel.swift */; };
 		CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */; };
 		CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */; };
 		CBC4B12529B8D28D00650296 /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11F29B8D28D00650296 /* Conversation+CoreDataClass.swift */; };
@@ -32,21 +33,22 @@
 
 /* Begin PBXFileReference section */
 		182B42B529BBA82800F06778 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
-		182B42BA29BBAE5F00F06778 /* SessionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsView.swift; sourceTree = "<group>"; };
-		182B42BC29BBAEAA00F06778 /* UserInitializeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInitializeView.swift; sourceTree = "<group>"; };
-		182B42CA29BBBCE800F06778 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
-		182B435A29BC596A00F06778 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		182B436029BC5C8700F06778 /* SessionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsView.swift; sourceTree = "<group>"; };
+		182B436129BC5C8700F06778 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		182B436229BC5C8700F06778 /* ChatRoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomView.swift; sourceTree = "<group>"; };
+		182B436329BC5C8700F06778 /* MainContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContentView.swift; sourceTree = "<group>"; };
+		182B436429BC5C8700F06778 /* UserInitializeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInitializeView.swift; sourceTree = "<group>"; };
+		182B436A29BC5CBA00F06778 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		182B436D29BC5D1B00F06778 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		182B436F29BC5D1B00F06778 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		182B437029BC5D1B00F06778 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		182B437129BC5D1B00F06778 /* ChatGPTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGPTManager.swift; sourceTree = "<group>"; };
+		182B437829BC5D6200F06778 /* OSXChatGPTApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSXChatGPTApp.swift; sourceTree = "<group>"; };
 		CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CB1DCAC129B4F09D00B1D4E1 /* OSXChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSXChatGPTApp.swift; sourceTree = "<group>"; };
 		CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSXChatGPT.entitlements; sourceTree = "<group>"; };
-		CB1DCAD029B4F0C800B1D4E1 /* ChatMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
-		CB1DCAD229B4F0EF00B1D4E1 /* ChatGPTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGPTManager.swift; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
-		CBC4B11529B8CB5300650296 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
-		CBC4B11929B8D11500650296 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		CBC4B11B29B8D23C00650296 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CBC4B11F29B8D28D00650296 /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -67,21 +69,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		182B42B929BBAE5F00F06778 /* InterfaceView */ = {
-			isa = PBXGroup;
-			children = (
-				182B42BA29BBAE5F00F06778 /* SessionsView.swift */,
-				182B42BC29BBAEAA00F06778 /* UserInitializeView.swift */,
-				182B42CA29BBBCE800F06778 /* View.swift */,
-			);
-			path = InterfaceView;
-			sourceTree = "<group>";
-		};
 		182B42C229BBB00500F06778 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		182B435E29BC5C8700F06778 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				182B436A29BC5CBA00F06778 /* AppDelegate.swift */,
+				182B437829BC5D6200F06778 /* OSXChatGPTApp.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		182B435F29BC5C8700F06778 /* WindowView */ = {
+			isa = PBXGroup;
+			children = (
+				182B436329BC5C8700F06778 /* MainContentView.swift */,
+				182B436029BC5C8700F06778 /* SessionsView.swift */,
+				182B436229BC5C8700F06778 /* ChatRoomView.swift */,
+				182B436429BC5C8700F06778 /* UserInitializeView.swift */,
+				182B436129BC5C8700F06778 /* View.swift */,
+			);
+			path = WindowView;
+			sourceTree = "<group>";
+		};
+		182B436C29BC5D1B00F06778 /* NetWork */ = {
+			isa = PBXGroup;
+			children = (
+				182B436D29BC5D1B00F06778 /* HTTPClient.swift */,
+			);
+			path = NetWork;
+			sourceTree = "<group>";
+		};
+		182B436E29BC5D1B00F06778 /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				182B437129BC5D1B00F06778 /* ChatGPTManager.swift */,
+				182B436F29BC5D1B00F06778 /* CoreDataManager.swift */,
+				182B437029BC5D1B00F06778 /* ViewModel.swift */,
+			);
+			path = DataProvider;
 			sourceTree = "<group>";
 		};
 		CB1DCAB529B4F09D00B1D4E1 = {
@@ -104,16 +135,12 @@
 		CB1DCAC029B4F09D00B1D4E1 /* OSXChatGPT */ = {
 			isa = PBXGroup;
 			children = (
-				182B42B929BBAE5F00F06778 /* InterfaceView */,
+				182B436E29BC5D1B00F06778 /* DataProvider */,
+				182B436C29BC5D1B00F06778 /* NetWork */,
+				182B435E29BC5C8700F06778 /* Interface */,
+				182B435F29BC5C8700F06778 /* WindowView */,
 				CBC4B11429B8CB1B00650296 /* Models */,
-				CB1DCAC129B4F09D00B1D4E1 /* OSXChatGPTApp.swift */,
-				182B435A29BC596A00F06778 /* AppDelegate.swift */,
 				182B42B529BBA82800F06778 /* Storyboard.storyboard */,
-				CB1DCAD029B4F0C800B1D4E1 /* ChatMessageView.swift */,
-				CB1DCAD229B4F0EF00B1D4E1 /* ChatGPTManager.swift */,
-				CBC4B11929B8D11500650296 /* CoreDataManager.swift */,
-				CBC4B11B29B8D23C00650296 /* ViewModel.swift */,
-				CBC4B11529B8CB5300650296 /* HTTPClient.swift */,
 				CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */,
 				CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */,
 				CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */,
@@ -220,22 +247,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				182B42CB29BBBCE800F06778 /* View.swift in Sources */,
 				CBC4B12829B8D28D00650296 /* UserRole+CoreDataProperties.swift in Sources */,
+				182B436929BC5C8700F06778 /* UserInitializeView.swift in Sources */,
+				182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */,
+				182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */,
 				CBC4B12729B8D28D00650296 /* UserRole+CoreDataClass.swift in Sources */,
-				CBC4B11A29B8D11500650296 /* CoreDataManager.swift in Sources */,
+				182B436629BC5C8700F06778 /* View.swift in Sources */,
+				182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */,
+				182B437429BC5D1B00F06778 /* ViewModel.swift in Sources */,
 				CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */,
-				182B42BD29BBAEAA00F06778 /* UserInitializeView.swift in Sources */,
-				CBC4B11629B8CB5300650296 /* HTTPClient.swift in Sources */,
-				CB1DCAD329B4F0EF00B1D4E1 /* ChatGPTManager.swift in Sources */,
-				CB1DCAD129B4F0C800B1D4E1 /* ChatMessageView.swift in Sources */,
+				182B436729BC5C8700F06778 /* ChatRoomView.swift in Sources */,
 				CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */,
-				CB1DCAC229B4F09D00B1D4E1 /* OSXChatGPTApp.swift in Sources */,
-				182B42BB29BBAE5F00F06778 /* SessionsView.swift in Sources */,
 				CBC4B12629B8D28D00650296 /* Conversation+CoreDataProperties.swift in Sources */,
-				CBC4B11C29B8D23C00650296 /* ViewModel.swift in Sources */,
+				182B436529BC5C8700F06778 /* SessionsView.swift in Sources */,
+				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
+				182B436829BC5C8700F06778 /* MainContentView.swift in Sources */,
 				CBC4B12529B8D28D00650296 /* Conversation+CoreDataClass.swift in Sources */,
-				182B435B29BC596A00F06778 /* AppDelegate.swift in Sources */,
+				182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */,
 				CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
