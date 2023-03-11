@@ -20,17 +20,18 @@ struct SessionsView: View {
             ColorfulView(colors: [.accentColor], colorCount: 4)
                 .ignoresSafeArea()
             VStack {
-                HStack(spacing: 20, content: {
+                HStack(spacing: 10, content: {
                     let newConversaion = viewModel.addNewConversation()
                     NavigationLink(destination: ChatView(conversation: newConversaion).environmentObject(viewModel), isActive: $shouldNavigate) {
+                        Spacer()
                         Button(action: {
                             // 点击 New Chat 按钮的操作
-                            viewModel.conversations.insert(newConversaion, at: 0)
                             self.shouldNavigate = true
                         }) {
-                            HStack(spacing: 10) {
-                                Image(systemName: "plus.bubble")
-                                Text("New Chat")
+                            HStack(spacing: 0) {
+                                Text("     ")
+                                Image(systemName: "plus.message.fill")
+                                Text("New Chat        ")
                             }
                             .padding(10)
                             .foregroundColor(.white)
@@ -38,9 +39,10 @@ struct SessionsView: View {
                             .cornerRadius(5)
                         }
                         .buttonStyle(BorderlessButtonStyle())
-                    }.buttonStyle(BorderlessButtonStyle())
-                        .padding(.leading,0)
-                    
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading,10)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
                     
                     Button(action: {
                         // 点击右边按钮的操作
@@ -52,10 +54,14 @@ struct SessionsView: View {
                             .cornerRadius(5)
                     }
                     .buttonStyle(BorderlessButtonStyle())
+                    .padding(.trailing, 30)
                     
                 })
-                .frame(height: 30)
-                .padding(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .frame(height: 20)
+                
+                
+                Spacer()
+                    .frame(height: 20)
                 
                 List(viewModel.conversations) { conversation in
                     NavigationLink(destination: ChatView(conversation: conversation).environmentObject(viewModel)) {
@@ -64,10 +70,12 @@ struct SessionsView: View {
                     .cornerRadius(5)
                 }
             }
-            .frame(minWidth: 250, idealWidth: 300, maxWidth: 300)
+            .leftSessionContentSize()
         }
+        
     }
 }
+
 
 /// 左边会话列表
 struct ChatRowContentView: View {

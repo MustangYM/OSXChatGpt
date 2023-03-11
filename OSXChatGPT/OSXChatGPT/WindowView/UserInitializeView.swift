@@ -40,7 +40,7 @@ struct UserInitializeView: View {
 
                 VStack(alignment: .leading, spacing: 10){
                     HStack {
-                        Text("✅ Faster response      ✅ Chat History Search")
+                        Text("✅ Faster response      ✅ Local Chat History")
                             .fixedSize(horizontal: true, vertical: false)
                     }
                     HStack {

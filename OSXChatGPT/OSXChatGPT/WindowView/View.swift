@@ -8,11 +8,11 @@
 import SwiftUI
 
 extension View {
-    func usePreferredContentSize() -> some View {
+    func leftSessionContentSize() -> some View {
         frame(
-            minWidth: 400, idealWidth: 500, maxWidth: .infinity,
+            minWidth: 250, idealWidth: 250, maxWidth: .infinity,
             minHeight: 300, idealHeight: 350, maxHeight: .infinity,
-            alignment: .center
+            alignment: .leading
         )
     }
 }
