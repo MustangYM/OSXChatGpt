@@ -57,9 +57,17 @@ struct UserInitializeView: View {
                     }
                 }
                 
-                Text("A Better macOS application for ChatGPT")
-                    .font(.system(.body, design: .rounded))
-
+                Button(action: {
+                    if let url = URL(string: "https://github.com/MustangYM/OSXChatGpt") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }) {
+                    Text("☁️ A Better macOS application for ChatGPT")
+                        .foregroundColor(.blue)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.horizontal, 20)
+                }.buttonStyle(BorderlessButtonStyle())//删除背景色
+                
                 // 添加API密钥按钮
                 Button(action: {
                     openArgumentSeet.toggle()
@@ -81,10 +89,7 @@ struct UserInitializeView: View {
             }
             
         }
-//        .padding(.top,100)
         .padding(.bottom,150)
-//        .padding(.leading,200)
-//        .padding(.trailing,200)
 
         
         VStack {

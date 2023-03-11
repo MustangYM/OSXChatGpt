@@ -29,7 +29,7 @@ struct EnterAPIView: View {
                     NSWorkspace.shared.open(url)
                 }
             }) {
-                Text("->Get your API key from Open AI dashboard")
+                Text("🌏 Get your API key from Open AI dashboard")
                     .foregroundColor(.blue)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.horizontal, 20)
