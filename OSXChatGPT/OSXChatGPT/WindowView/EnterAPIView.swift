@@ -49,7 +49,7 @@ struct EnterAPIView: View {
                         .padding(.vertical, 8)
                         .padding(.horizontal, 20)
                 }
-                .frame(width: 100, height: 40) // 设置按钮大小
+                .frame(width: 100, height: 30) // 设置按钮大小
                 .background(Color.gray)
                 .cornerRadius(10)
                 .buttonStyle(BorderlessButtonStyle())
@@ -63,7 +63,7 @@ struct EnterAPIView: View {
                         .padding(.vertical, 8)
                         .padding(.horizontal, 20)
                 }
-                .frame(width: 100, height: 40) // 设置按钮大小
+                .frame(width: 100, height: 30) // 设置按钮大小
                 .background(Color.blue)
                 .cornerRadius(10)
                 .buttonStyle(BorderlessButtonStyle())

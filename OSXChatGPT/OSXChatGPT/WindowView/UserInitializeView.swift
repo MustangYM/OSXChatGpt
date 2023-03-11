@@ -37,6 +37,26 @@ struct UserInitializeView: View {
                                 .foregroundColor(.white)
                         )
                 }
+
+                VStack(alignment: .leading, spacing: 10){
+                    HStack {
+                        Text("✅ Faster response      ✅ Chat History Search")
+                            .fixedSize(horizontal: true, vertical: false)
+                    }
+                    HStack {
+                        Text("✅ Prompt Library        ✅ Run locally on browser")
+                            .fixedSize(horizontal: true, vertical: false)
+                    }
+                    HStack {
+                        Text("✅ No login required    ✅ Use your own API key")
+                            .fixedSize(horizontal: true, vertical: false)
+                    }
+                    HStack {
+                        Text("✅ No monthly fee       ✅ and more soon")
+                            .fixedSize(horizontal: true, vertical: false)
+                    }
+                }
+                
                 Text("A Better macOS application For ChatGPT")
                     .font(.system(.body, design: .rounded))
 
@@ -61,10 +81,10 @@ struct UserInitializeView: View {
             }
             
         }
-        .padding(.top,100)
-        .padding(.bottom,300)
-        .padding(.leading,200)
-        .padding(.trailing,200)
+//        .padding(.top,100)
+        .padding(.bottom,200)
+//        .padding(.leading,200)
+//        .padding(.trailing,200)
 
         
         VStack {
