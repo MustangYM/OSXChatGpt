@@ -57,7 +57,7 @@ struct UserInitializeView: View {
                     }
                 }
                 
-                Text("A Better macOS application For ChatGPT")
+                Text("A Better macOS application for ChatGPT")
                     .font(.system(.body, design: .rounded))
 
                 // 添加API密钥按钮
@@ -82,7 +82,7 @@ struct UserInitializeView: View {
             
         }
 //        .padding(.top,100)
-        .padding(.bottom,200)
+        .padding(.bottom,150)
 //        .padding(.leading,200)
 //        .padding(.trailing,200)
 
