@@ -60,6 +60,7 @@ struct ChatRoomView: View {
                 }
                 .frame(maxHeight: geometry.size.height) // 限制高度以便滚动
             }
+            .padding(.top, 1)
             Divider()
             HStack {
                 GeometryReader { geometry in

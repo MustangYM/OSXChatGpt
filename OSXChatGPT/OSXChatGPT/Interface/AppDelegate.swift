@@ -11,11 +11,11 @@ import SwiftUI
 class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow?
     func applicationDidFinishLaunching(_ notification: Notification) {
-        if let window = NSApplication.shared.windows.first {
-            self.window = window
-            window.titlebarAppearsTransparent = true
-            window.titleVisibility = .hidden
-        }
+        hideTheNavNar()
+    }
+    
+    func applicationDidBecomeActive(_ notification: Notification) {
+        hideTheNavNar()
     }
 
     private func filteringSpecialWindow(_ window: NSWindow) -> Bool {
@@ -25,5 +25,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if window.isKind(of: clz.self) { return false }
         }
         return true
+    }
+    
+    private func hideTheNavNar() {
+        if let window = NSApplication.shared.windows.first {
+            self.window = window
+            window.titlebarAppearsTransparent = true
+            window.titleVisibility = .hidden
+        }
     }
 }
