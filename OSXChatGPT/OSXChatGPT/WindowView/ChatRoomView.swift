@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 /// 聊天框
 struct ChatRoomView: View {
     let conversation: Conversation
@@ -125,6 +126,15 @@ struct ChatRoomCellView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(6)
+                    .contextMenu {
+                        Button(action: {
+                            NSPasteboard.general.prepareForNewContents()
+                            NSPasteboard.general.setString(message.text ?? "", forType: .string)
+                        }) {
+                            Text("Copy")
+                            Image(systemName: "doc.on.doc.fill")
+                        }
+                    }
                 VStack {
                     Image("User")
                         .resizable()
@@ -145,9 +155,21 @@ struct ChatRoomCellView: View {
                     .background(Color.gray)
                     .foregroundColor(.white)
                     .cornerRadius(6)
+                    .contextMenu {
+                        Button(action: {
+                            NSPasteboard.general.prepareForNewContents()
+                            NSPasteboard.general.setString(message.text ?? "", forType: .string)
+                        }) {
+                            Text("Copy")
+                            Image(systemName: "doc.on.doc.fill")
+                        }
+                    }
                 Spacer()
             }
-        }.padding(.trailing, (message.role == ChatGPTManager.shared.gptRoleString) ? 70 : 0)
+        }
+        .padding(.trailing, (message.role == ChatGPTManager.shared.gptRoleString) ? 70 : 0)
         .padding(.leading, (message.role != ChatGPTManager.shared.gptRoleString) ? 70 : 0)
     }
 }
+
+
