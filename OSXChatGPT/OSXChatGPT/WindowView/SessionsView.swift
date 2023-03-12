@@ -12,6 +12,7 @@ struct SessionsView: View {
     @EnvironmentObject var viewModel: ViewModel
     @State private var searchText = ""
     @State var showNewConversationSheet = false
+    @State var showUserInitialize = false
 //    @State private var isNewChatButtonClicked = false
     
     @State private var shouldNavigate = false {
@@ -31,8 +32,7 @@ struct SessionsView: View {
                 HStack(spacing: 10, content: {
                     let tempConversation = viewModel.addNewConversation()
                     NavigationLink(destination: ChatRoomView(conversation: tempConversation).environmentObject(viewModel), isActive: $shouldNavigate) {
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
+                    }.buttonStyle(BorderlessButtonStyle())
                     Spacer()
                     Button(action: {
                         // 点击 New Chat 按钮的操作
@@ -52,8 +52,11 @@ struct SessionsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading,0)
                     
+                    NavigationLink(destination: UserInitializeView().environmentObject(viewModel), isActive: $showUserInitialize) {
+                    }.buttonStyle(BorderlessButtonStyle())
                     Button(action: {
                         // 点击右边按钮的操作
+                        self.showUserInitialize = true
                     }) {
                         Image(systemName: "gear")
                             .padding(10)

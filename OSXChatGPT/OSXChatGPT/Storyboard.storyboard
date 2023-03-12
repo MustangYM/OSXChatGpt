@@ -16,7 +16,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="obK-b7-uuc">
                                 <rect key="frame" x="60" y="212" width="75" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" image="plus.message.fill" catalog="system" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2Un-2f-eoO">
+                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" image="person.fill.checkmark" catalog="system" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2Un-2f-eoO">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -30,6 +30,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="plus.message.fill" catalog="system" width="17" height="16"/>
+        <image name="person.fill.checkmark" catalog="system" width="19" height="14"/>
     </resources>
 </document>

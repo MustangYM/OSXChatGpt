@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserInitializeView: View {
     @State var openArgumentSeet: Bool = false
-    
+    @State var apiKey: String = ChatGPTManager.shared.getMaskApiKey()
     var body: some View {
         ColorfulView(colors: [.accentColor], colorCount: 4)
             .ignoresSafeArea()
@@ -73,16 +73,28 @@ struct UserInitializeView: View {
                     openArgumentSeet.toggle()
                 }) {
                     HStack(spacing: 8) {
-                        Image(systemName: "key.radiowaves.forward.fill")
-                        Text("Enter API Key")
+                        if apiKey.count > 0 {
+                            Image(systemName: "person.fill.checkmark")
+                            Text("Update API Key")
+                        } else {
+                            Image(systemName: "key.radiowaves.forward.fill")
+                            Text("Enter API Key")
+                        }
                     }
                     .foregroundColor(.white)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
-                    .background(Color.blue)
+                    .background(apiKey.count > 0 ? Color.green : Color.red)
                     .cornerRadius(10)
                 }
                 .buttonStyle(PlainButtonStyle()) // 隐藏按钮的默认样式
+                
+                if apiKey.count > 0 {
+                    Text(apiKey)
+                        .font(.footnote)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
             }
             .sheet(isPresented: $openArgumentSeet) {
                 EnterAPIView()
