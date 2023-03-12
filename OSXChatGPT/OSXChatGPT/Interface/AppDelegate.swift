@@ -17,6 +17,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidBecomeActive(_ notification: Notification) {
         hideTheNavNar()
     }
+    
+    func applicationDidUnhide(_ notification: Notification) {
+        hideTheNavNar()
+    }
+    
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        hideTheNavNar()
+        return true
+    }
 
     private func filteringSpecialWindow(_ window: NSWindow) -> Bool {
         let list = ["NSStatusBarWindow", "_NSPopoverWindow"]
@@ -28,10 +37,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func hideTheNavNar() {
-        if let window = NSApplication.shared.windows.first {
-            self.window = window
-            window.titlebarAppearsTransparent = true
-            window.titleVisibility = .hidden
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.00001) {
+            for window in NSApplication.shared.windows {
+                self.window = window
+                window.titlebarAppearsTransparent = true
+                window.titleVisibility = .hidden
+            }
         }
     }
 }
