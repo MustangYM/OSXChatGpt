@@ -33,7 +33,6 @@ struct SessionsView: View {
                         // 点击 New Chat 按钮的操作
                         self.shouldNavigate = true
                         self.isNewChatButtonClicked = true
-                        
                     }) {
                         HStack(spacing: 0) {
                             Text("     ")
@@ -79,7 +78,6 @@ struct SessionsView: View {
             }
             .leftSessionContentSize()
         }
-        
     }
 }
 
@@ -100,11 +98,16 @@ struct ChatRowView: View {
         HStack {
             Image("openAI_icon")
                 .resizable()
-                .frame(width: 30, height: 30)
+                .frame(width: 40, height: 40)
                 .padding(.leading, 5)
             VStack(alignment: .leading) {
                 Text(chat.remark ?? chat.lastMessage?.text ?? "New Chat")
                     .font(.headline)
+                Spacer()
+                let dateTime = dateFormatter(chat.updateData!)
+                Text(dateTime)
+                    .foregroundColor(.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     
             }.padding(.trailing, 5)
             
@@ -112,6 +115,18 @@ struct ChatRowView: View {
         }
         .padding(.vertical, 4)
         .padding(.trailing, 5)
+    }
+    
+    private func dateFormatter(_ date: Date) -> String {
+        let formatter = DateFormatter()
+         formatter.dateFormat = "yyyy/MM/dd"
+         
+         let calendar = Calendar.current
+         if calendar.isDateInToday(date) {
+             formatter.dateFormat = "HH:mm"
+         }
+         
+         return formatter.string(from: date)
     }
 }
 struct ChatRowContentNSView: NSViewRepresentable {

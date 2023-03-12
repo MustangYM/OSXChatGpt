@@ -21,6 +21,7 @@
 		182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437129BC5D1B00F06778 /* ChatGPTManager.swift */; };
 		182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437829BC5D6200F06778 /* OSXChatGPTApp.swift */; };
 		182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437A29BC5FBE00F06778 /* EnterAPIView.swift */; };
+		182B437F29BDE08200F06778 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437E29BDE08200F06778 /* Config.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
 		CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
@@ -44,6 +45,7 @@
 		182B437129BC5D1B00F06778 /* ChatGPTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGPTManager.swift; sourceTree = "<group>"; };
 		182B437829BC5D6200F06778 /* OSXChatGPTApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSXChatGPTApp.swift; sourceTree = "<group>"; };
 		182B437A29BC5FBE00F06778 /* EnterAPIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAPIView.swift; sourceTree = "<group>"; };
+		182B437E29BDE08200F06778 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				182B437129BC5D1B00F06778 /* ChatGPTManager.swift */,
 				182B436F29BC5D1B00F06778 /* CoreDataManager.swift */,
 				182B437029BC5D1B00F06778 /* ViewModel.swift */,
+				182B437E29BDE08200F06778 /* Config.swift */,
 			);
 			path = DataProvider;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				182B436929BC5C8700F06778 /* UserInitializeView.swift in Sources */,
 				182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */,
 				182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */,
+				182B437F29BDE08200F06778 /* Config.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
 				182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */,

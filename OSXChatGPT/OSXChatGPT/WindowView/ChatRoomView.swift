@@ -83,6 +83,8 @@ struct ChatRoomView: View {
         }
         .onAppear {
             print("View appeared!")
+            //**全局监控一下当前conversation
+            Config.shared.CurrentSession = conversation.sesstionId
             viewModel.fetchMessage(sesstionId: conversation.sesstionId)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
@@ -97,7 +99,7 @@ struct ChatRoomView: View {
         guard !newMessageText.isEmpty else { return }
         let temp = NSMutableString(string: newMessageText)
         let replaceStr = temp.replacingOccurrences(of: "\n", with: "")
-        viewModel.addNewMessage(sesstionId: conversation.sesstionId, text: replaceStr, role: "user") {
+        viewModel.addNewMessage(sesstionId: Config.shared.CurrentSession, text: replaceStr, role: "user") {
             scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
             conversation.lastMessage = viewModel.messages.last
             conversation.updateData = Date()
