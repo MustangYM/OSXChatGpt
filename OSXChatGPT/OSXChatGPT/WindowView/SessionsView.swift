@@ -12,8 +12,15 @@ struct SessionsView: View {
     @EnvironmentObject var viewModel: ViewModel
     @State private var searchText = ""
     @State var showNewConversationSheet = false
-    @State var shouldNavigate = false
-    @State private var isNewChatButtonClicked = false
+//    @State private var isNewChatButtonClicked = false
+    
+    @State private var shouldNavigate = false {
+        didSet {
+            if !shouldNavigate {
+//                self.isNewChatButtonClicked = false
+            }
+        }
+    }
     
     var body: some View {
         
@@ -22,17 +29,14 @@ struct SessionsView: View {
                 .ignoresSafeArea()
             VStack {
                 HStack(spacing: 10, content: {
-                    if isNewChatButtonClicked {
-                        let tempConversation = viewModel.addNewConversation()
-                        NavigationLink(destination: ChatRoomView(conversation: tempConversation).environmentObject(viewModel), isActive: $shouldNavigate) {
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
+                    let tempConversation = viewModel.addNewConversation()
+                    NavigationLink(destination: ChatRoomView(conversation: tempConversation).environmentObject(viewModel), isActive: $shouldNavigate) {
                     }
+                    .buttonStyle(BorderlessButtonStyle())
                     Spacer()
                     Button(action: {
                         // 点击 New Chat 按钮的操作
                         self.shouldNavigate = true
-                        self.isNewChatButtonClicked = true
                     }) {
                         HStack(spacing: 0) {
                             Text("     ")
@@ -104,10 +108,12 @@ struct ChatRowView: View {
                 Text(chat.remark ?? chat.lastMessage?.text ?? "New Chat")
                     .font(.headline)
                 Spacer()
-                let dateTime = dateFormatter(chat.updateData!)
-                Text(dateTime)
-                    .foregroundColor(.gray)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                if chat.updateData != nil {
+                    let dateTime = dateFormatter(chat.updateData!)
+                    Text(dateTime)
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
                     
             }.padding(.trailing, 5)
             

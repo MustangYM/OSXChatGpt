@@ -48,15 +48,19 @@ import CoreData
             conversations[index] = con!
         }
     }
+    
+    //**这里是一个Fake会话, 不需要存入数据库
     func addNewConversation() -> Conversation {
         if (currentConversation != nil) && currentConversation!.lastMessage == nil {
             return currentConversation!
         }
+        
         let con = Conversation(context: CoreDataManager.shared.container.viewContext)
         con.sesstionId = createSesstionId()
         con.id = UUID()
         con.updateData = Date()
-        CoreDataManager.shared.saveData()
+        //**这里是一个Fake会话, 不需要存入数据库
+//        CoreDataManager.shared.saveData()
         currentConversation = con
         return con
     }
