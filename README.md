@@ -4,3 +4,6 @@
 
 # OSXChatGpt
 Easy to use OpenAI in your desktop, not just ChatGPT.
+
+## Thanks
+[Lakr233/Colorful](https://github.com/Lakr233/Colorful)
