@@ -13,6 +13,7 @@ struct SessionsView: View {
     @State private var searchText = ""
     @State var showNewConversationSheet = false
     @State var shouldNavigate = false
+    @State private var isNewChatButtonClicked = false
     
     var body: some View {
         
@@ -21,28 +22,32 @@ struct SessionsView: View {
                 .ignoresSafeArea()
             VStack {
                 HStack(spacing: 10, content: {
-                    let newConversaion = viewModel.addNewConversation()
-                    NavigationLink(destination: ChatView(conversation: newConversaion).environmentObject(viewModel), isActive: $shouldNavigate) {
-                        Spacer()
-                        Button(action: {
-                            // 点击 New Chat 按钮的操作
-                            self.shouldNavigate = true
-                        }) {
-                            HStack(spacing: 0) {
-                                Text("     ")
-                                Image(systemName: "plus.message.fill")
-                                Text("New Chat        ")
-                            }
-                            .padding(10)
-                            .foregroundColor(.white)
-                            .background(Color.blue)
-                            .cornerRadius(5)
+                    if isNewChatButtonClicked {
+                        let tempConversation = viewModel.addNewConversation()
+                        NavigationLink(destination: ChatRoomView(conversation: tempConversation).environmentObject(viewModel), isActive: $shouldNavigate) {
                         }
                         .buttonStyle(BorderlessButtonStyle())
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading,10)
+                    }
+                    Spacer()
+                    Button(action: {
+                        // 点击 New Chat 按钮的操作
+                        self.shouldNavigate = true
+                        self.isNewChatButtonClicked = true
+                        
+                    }) {
+                        HStack(spacing: 0) {
+                            Text("     ")
+                            Image(systemName: "plus.message.fill")
+                            Text("New Chat        ")
+                        }
+                        .padding(10)
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                        .cornerRadius(5)
                     }
                     .buttonStyle(BorderlessButtonStyle())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading,0)
                     
                     Button(action: {
                         // 点击右边按钮的操作
@@ -62,13 +67,15 @@ struct SessionsView: View {
                 
                 Spacer()
                     .frame(height: 20)
-                
-                List(viewModel.conversations) { conversation in
-                    NavigationLink(destination: ChatView(conversation: conversation).environmentObject(viewModel)) {
-                        ChatRowContentView(chat: conversation).environmentObject(viewModel)
+                List {
+                    ForEach(viewModel.conversations, id: \.self) { conversation in
+                        NavigationLink(destination: ChatRoomView(conversation: conversation).environmentObject(viewModel)) {
+                            ChatRowContentView(chat: conversation).environmentObject(viewModel)
+                        }
+                        .cornerRadius(5)
                     }
-                    .cornerRadius(5)
                 }
+
             }
             .leftSessionContentSize()
         }

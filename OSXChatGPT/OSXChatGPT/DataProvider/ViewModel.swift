@@ -49,12 +49,15 @@ import CoreData
         }
     }
     func addNewConversation() -> Conversation {
+        if (currentConversation != nil) && currentConversation!.lastMessage == nil {
+            return currentConversation!
+        }
         let con = Conversation(context: CoreDataManager.shared.container.viewContext)
         con.sesstionId = createSesstionId()
         con.id = UUID()
         con.updateData = Date()
         CoreDataManager.shared.saveData()
-        
+        currentConversation = con
         return con
     }
     func addConversation() {

@@ -1,5 +1,5 @@
 //
-//  ChatRoomView.swift
+//  ChatRoomCellView.swift
 //  OSXChatGPT
 //
 //  Created by MustangYM on 2023/3/11.
@@ -7,53 +7,20 @@
 
 import SwiftUI
 
-struct ChatRoomView: View {
-    let message: Message
-    
-    var body: some View {
-        HStack {
-            if message.role != ChatGPTManager.shared.gptRoleString {
-                Spacer()
-                Text(message.text ?? "")
-                    .padding(12)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(6)
-                VStack {
-                    Image("User")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(0)
-                    Spacer()
-                }
-            } else {
-                VStack {
-                    Image("openAI_icon")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(0)
-                    Spacer()
-                }
-                Text(message.text ?? "")
-                    .padding(12)
-                    .background(Color.gray)
-                    .foregroundColor(.white)
-                    .cornerRadius(6)
-                Spacer()
-            }
-        }.padding(.trailing, (message.role == ChatGPTManager.shared.gptRoleString) ? 70 : 0)
-        .padding(.leading, (message.role != ChatGPTManager.shared.gptRoleString) ? 70 : 0)
-    }
-}
-
 /// 聊天框
-struct ChatView: View {
-    var conversation: Conversation
+struct ChatRoomView: View {
+    let conversation: Conversation
     var isNewConversation: Bool = false
     @EnvironmentObject var viewModel: ViewModel
     @State private var newMessageText = ""
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
+    
+    init(conversation: Conversation, isNewConversation: Bool=false) {
+        self.conversation = conversation
+        self.isNewConversation = isNewConversation
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             GeometryReader { geometry in
@@ -61,7 +28,7 @@ struct ChatView: View {
                     ScrollViewReader { scrollView in
                         VStack(alignment: .trailing, spacing: 8) {
                             ForEach(viewModel.messages) { message in
-                                ChatRoomView(message: message)
+                                ChatRoomCellView(message: message)
                                     .id(message.id) // 添加唯一标识符
                                     .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
                             }
@@ -119,9 +86,7 @@ struct ChatView: View {
             viewModel.fetchMessage(sesstionId: conversation.sesstionId)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
-                
             }
-            
         }
         .onDisappear {
             print("View disappeared!")
@@ -134,6 +99,8 @@ struct ChatView: View {
         let replaceStr = temp.replacingOccurrences(of: "\n", with: "")
         viewModel.addNewMessage(sesstionId: conversation.sesstionId, text: replaceStr, role: "user") {
             scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+            conversation.lastMessage = viewModel.messages.last
+            conversation.updateData = Date()
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             //清空
@@ -144,3 +111,41 @@ struct ChatView: View {
 }
 
 
+struct ChatRoomCellView: View {
+    let message: Message
+    
+    var body: some View {
+        HStack {
+            if message.role != ChatGPTManager.shared.gptRoleString {
+                Spacer()
+                Text(message.text ?? "")
+                    .padding(12)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(6)
+                VStack {
+                    Image("User")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(0)
+                    Spacer()
+                }
+            } else {
+                VStack {
+                    Image("openAI_icon")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(0)
+                    Spacer()
+                }
+                Text(message.text ?? "")
+                    .padding(12)
+                    .background(Color.gray)
+                    .foregroundColor(.white)
+                    .cornerRadius(6)
+                Spacer()
+            }
+        }.padding(.trailing, (message.role == ChatGPTManager.shared.gptRoleString) ? 70 : 0)
+        .padding(.leading, (message.role != ChatGPTManager.shared.gptRoleString) ? 70 : 0)
+    }
+}

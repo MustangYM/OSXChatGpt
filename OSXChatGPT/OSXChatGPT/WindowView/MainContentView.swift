@@ -1,5 +1,5 @@
 //
-//  ChatRoomView.swift
+//  ChatRoomCellView.swift
 //  OSXChatGPT
 //
 //  Created by CoderChan on 2023/3/5.
@@ -30,7 +30,7 @@ struct MainContentView: View {
     }
 }
 
-struct ChatView_Previews: PreviewProvider {
+struct ChatRoomView_Previews: PreviewProvider {
     static var previews: some View {
         MainContentView()
     }
