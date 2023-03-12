@@ -57,16 +57,49 @@ struct UserInitializeView: View {
                     }
                 }
                 
-                Button(action: {
-                    if let url = URL(string: "https://github.com/MustangYM/OSXChatGpt") {
-                        NSWorkspace.shared.open(url)
-                    }
-                }) {
-                    Text("☁️ A Better macOS application for ChatGPT")
-                        .foregroundColor(.blue)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.horizontal, 20)
-                }.buttonStyle(BorderlessButtonStyle())//删除背景色
+                VStack (spacing: 10, content: {
+                    Button(action: {
+                        if let url = URL(string: "https://github.com/MustangYM/OSXChatGpt") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }) {
+                        HStack(spacing: 0, content:{
+                            Image("github-fill 1")
+                            Text("A Better macOS application for ChatGPT")
+                                .foregroundColor(.blue)
+                                .frame(maxWidth: 250, alignment: .leading)
+                                .padding(.horizontal, 5)
+                        })
+                    }.buttonStyle(BorderlessButtonStyle())//删除背景色
+                    
+                    Button(action: {
+                        if let url = URL(string: "https://www.yemays.com/") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }) {
+                        HStack(spacing: 0, content:{
+                            Image(systemName: "play.tv.fill")
+                            Text("湖畔机械厂电影院")
+                                .foregroundColor(.blue)
+                                .frame(maxWidth: 250, alignment: .leading)
+                                .padding(.horizontal, 5)
+                        })
+                    }.buttonStyle(BorderlessButtonStyle())//删除背景色
+                    
+                    Button(action: {
+                        if let url = URL(string: "https://5imac.net/") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }) {
+                        HStack(spacing: 0, content:{
+                            Image(systemName: "desktopcomputer.and.arrow.down")
+                            Text("湖畔机械厂员工搬运Mac软件资源网")
+                                .foregroundColor(.blue)
+                                .frame(maxWidth: 250, alignment: .leading)
+                                .padding(.horizontal, 5)
+                        })
+                    }.buttonStyle(BorderlessButtonStyle())//删除背景色
+                })
                 
                 // 添加API密钥按钮
                 Button(action: {
