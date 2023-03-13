@@ -155,16 +155,26 @@ struct ChatRoomCellView: View {
                         .padding(0)
                     Spacer()
                 }
-                VStack {
-                    ForEach(message.textArray, id: \.self) { model in
-                        ChatRoomCellTextView(textModel: model)
-                            .fixedSize(horizontal: false, vertical: true)
+                if message.hasCode {
+                    VStack {
+                        ForEach(message.textArray, id: \.self) { model in
+                            ChatRoomCellTextView(textModel: model)
+                                .fixedSize(horizontal: false, vertical: true)
+                            
+                        }
                     }
-                }
                     .padding(12)
                     .background(Color.gray.opacity(0.8))
                     .foregroundColor(.white)
                     .cornerRadius(6)
+                    
+                }else {
+                    Text(message.text ?? "")
+                        .padding(12)
+                        .background(Color.gray.opacity(0.8))
+                        .foregroundColor(.white)
+                        .cornerRadius(6)
+                }
                     
                 Spacer()
             }
@@ -182,7 +192,9 @@ struct ChatRoomCellTextView: View {
                 Text(textModel.text)
                     .foregroundColor(.white)
                 Spacer()
-            }.contextMenu {
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .contextMenu {
                 Button(action: {
                     NSPasteboard.general.prepareForNewContents()
                     NSPasteboard.general.setString(textModel.text, forType: .string)
@@ -220,6 +232,7 @@ struct ChatRoomCellTextView: View {
                 .padding(.top, 0)
                 .background(Color.black.opacity(0.7))
             .cornerRadius(5)
+            .frame(minWidth: 20)
             .contextMenu {
                 Button(action: {
                     NSPasteboard.general.prepareForNewContents()
