@@ -3,7 +3,7 @@
 </p>
 
 # OSXChatGpt
-Easy to use OpenAI in your desktop, not just ChatGPT.
+Easy to use OpenAI in your desktop, the whole application is implemented by SwiftUI.
 
 ## Install
 <p align="center">
