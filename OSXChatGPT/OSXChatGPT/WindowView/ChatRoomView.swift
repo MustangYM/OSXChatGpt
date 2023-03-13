@@ -222,7 +222,7 @@ struct ChatRoomCellTextView: View {
                     .padding(.leading, 0)
                 HStack {
                     Text(textModel.text)
-                        .foregroundColor(.white)
+                        .foregroundColor(NSColor(r: 0, g: 195, b: 135).toColor())
                         .padding(.top, 0)
                         .padding(.leading, 10)
                     Spacer()
