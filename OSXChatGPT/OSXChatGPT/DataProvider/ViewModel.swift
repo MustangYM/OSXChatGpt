@@ -124,8 +124,58 @@ import CoreData
         let aa = Date.now.timeIntervalSince1970 * 1000
         return String(aa)
     }
+    
 }
-
+extension ViewModel {
+    static func handleMessage(text: String) -> [MessageTextModel] {
+        var array: [MessageTextModel] = []
+        if !text.contains("```") {
+            let model = MessageTextModel(type: .text, text: text)
+            array.append(model)
+        }else {
+            let components = text.split(separator: "```")
+            var idx: Int = 0// 0: code， 1: text
+            for (index, str) in components.enumerated() {
+                if index == 0 {
+                    if (text.hasPrefix("```")) {
+                        idx = 0
+                    }else {
+                        idx = 1
+                    }
+                    if idx == 0 {
+                        let model = MessageTextModel(type: .code, text: String(str))
+                        array.append(model)
+                    }else {
+                        let model = MessageTextModel(type: .text, text: String(str))
+                        array.append(model)
+                    }
+                    if idx == 0 {
+                        idx = 1
+                    }else {
+                        idx = 0
+                    }
+                }else {
+                    if idx == 0 {
+                        let model = MessageTextModel(type: .code, text: String(str))
+                        array.append(model)
+                    }else {
+                        let model = MessageTextModel(type: .text, text: String(str))
+                        array.append(model)
+                    }
+                    if idx == 0 {
+                        idx = 1
+                    }else {
+                        idx = 0
+                    }
+                }
+                
+            }
+            
+        }
+        
+        return array
+    }
+}
 extension ViewModel {
     private func getNowData() -> Int64 {
         return Int64(Date.now.timeIntervalSince1970)

@@ -45,7 +45,7 @@ struct SessionsView: View {
                         }
                         .padding(10)
                         .foregroundColor(.white)
-                        .background(Color.blue)
+                        .background(Color.blue.opacity(0.8))
                         .cornerRadius(5)
                     }
                     .buttonStyle(BorderlessButtonStyle())

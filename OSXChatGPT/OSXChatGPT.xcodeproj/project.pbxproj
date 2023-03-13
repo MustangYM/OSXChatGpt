@@ -24,6 +24,7 @@
 		182B437F29BDE08200F06778 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437E29BDE08200F06778 /* Config.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
+		CB28A51E29BF284000F0286A /* MessageTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A51D29BF284000F0286A /* MessageTextModel.swift */; };
 		CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
 		CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */; };
 		CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */; };
@@ -50,6 +51,7 @@
 		CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSXChatGPT.entitlements; sourceTree = "<group>"; };
+		CB28A51D29BF284000F0286A /* MessageTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextModel.swift; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
 		CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */,
+				CB28A51D29BF284000F0286A /* MessageTextModel.swift */,
 				CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */,
 				CBC4B11F29B8D28D00650296 /* Conversation+CoreDataClass.swift */,
 				CBC4B12029B8D28D00650296 /* Conversation+CoreDataProperties.swift */,
@@ -255,6 +258,7 @@
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
 				182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */,
+				CB28A51E29BF284000F0286A /* MessageTextModel.swift in Sources */,
 				182B437429BC5D1B00F06778 /* ViewModel.swift in Sources */,
 				CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */,
 				182B436729BC5C8700F06778 /* ChatRoomView.swift in Sources */,

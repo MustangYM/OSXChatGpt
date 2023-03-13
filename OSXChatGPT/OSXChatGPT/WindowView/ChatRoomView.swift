@@ -115,6 +115,7 @@ struct ChatRoomView: View {
 }
 
 
+
 struct ChatRoomCellView: View {
     let message: Message
     
@@ -122,9 +123,10 @@ struct ChatRoomCellView: View {
         HStack {
             if message.role != ChatGPTManager.shared.gptRoleString {
                 Spacer()
-                Text(message.text ?? "")
-                    .padding(12)
-                    .background(Color.blue)
+                VStack {
+                    Text(message.text ?? "")
+                }.padding(12)
+                    .background(Color.blue.opacity(0.8))
                     .foregroundColor(.white)
                     .cornerRadius(6)
                     .contextMenu {
@@ -136,6 +138,8 @@ struct ChatRoomCellView: View {
                             Image(systemName: "doc.on.doc.fill")
                         }
                     }
+                
+                    
                 VStack {
                     Image("User")
                         .resizable()
@@ -151,20 +155,17 @@ struct ChatRoomCellView: View {
                         .padding(0)
                     Spacer()
                 }
-                Text(message.text ?? "")
+                VStack {
+                    ForEach(message.textArray, id: \.self) { model in
+                        ChatRoomCellTextView(textModel: model)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
                     .padding(12)
-                    .background(Color.gray)
+                    .background(Color.gray.opacity(0.8))
                     .foregroundColor(.white)
                     .cornerRadius(6)
-                    .contextMenu {
-                        Button(action: {
-                            NSPasteboard.general.prepareForNewContents()
-                            NSPasteboard.general.setString(message.text ?? "", forType: .string)
-                        }) {
-                            Text("Copy")
-                            Image(systemName: "doc.on.doc.fill")
-                        }
-                    }
+                    
                 Spacer()
             }
         }
@@ -173,4 +174,61 @@ struct ChatRoomCellView: View {
     }
 }
 
-
+struct ChatRoomCellTextView: View {
+    let textModel: MessageTextModel
+    var body: some View {
+        if textModel.type == .text {
+            HStack {
+                Text(textModel.text)
+                    .foregroundColor(.white)
+                Spacer()
+            }.contextMenu {
+                Button(action: {
+                    NSPasteboard.general.prepareForNewContents()
+                    NSPasteboard.general.setString(textModel.text, forType: .string)
+                }) {
+                    Text("Copy")
+                    Image(systemName: "doc.on.doc.fill")
+                }
+            }
+        }else {
+            VStack {
+                HStack {
+                    Text(textModel.headText)
+                        .foregroundColor(.white)
+                        .frame(height: 20)
+                        .padding(.leading, 10)
+                    Spacer()
+                    Button(action: {
+                        
+                    }) {
+                        Text("Copy")
+                        Image(systemName: "doc.on.doc.fill")
+                    }
+                }.background(Color.white.opacity(0.4))
+                    .padding(0)
+                    .padding(.leading, 0)
+                HStack {
+                    Text(textModel.text)
+                        .foregroundColor(.white)
+                        .padding(.top, 0)
+                        .padding(.leading, 10)
+                    Spacer()
+                }
+                
+            }.padding(.leading, 0)
+                .padding(.top, 0)
+                .background(Color.black.opacity(0.7))
+            .cornerRadius(5)
+            .contextMenu {
+                Button(action: {
+                    NSPasteboard.general.prepareForNewContents()
+                    NSPasteboard.general.setString(textModel.text, forType: .string)
+                }) {
+                    Text("Copy")
+                    Image(systemName: "doc.on.doc.fill")
+                }
+            }
+        }
+    }
+}
