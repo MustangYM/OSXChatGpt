@@ -15,6 +15,7 @@ You need a working OpenAI API Key in order to use OSXChatGPT
 <p align="center">
 <img src="https://github.com/MustangYM/OSXChatGpt/blob/main/OSXChatGPT/picture/WechatIMG300.png" width="700px"/>
 </p>
+
 ## Have fun
 <p align="center">
 <img src="https://github.com/MustangYM/OSXChatGpt/blob/main/OSXChatGPT/picture/WechatIMG301.png" width="700px"/>
