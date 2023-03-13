@@ -62,6 +62,7 @@ struct UserInitializeView: View {
                     }
                 }
                 
+                //**BorderlessButtonStyle() -> PlainButtonStyle(), 前者导致侧边栏无法展开
                 VStack (spacing: 10, content: {
                     Button(action: {
                         if let url = URL(string: "https://github.com/MustangYM/OSXChatGpt") {
@@ -75,8 +76,8 @@ struct UserInitializeView: View {
                                 .frame(maxWidth: 250, alignment: .leading)
                                 .padding(.horizontal, 5)
                         })
-                    }.buttonStyle(BorderlessButtonStyle())//删除背景色
-                    
+                    }.buttonStyle(PlainButtonStyle())//删除背景色
+
                     Button(action: {
                         if let url = URL(string: "https://www.yemays.com/") {
                             NSWorkspace.shared.open(url)
@@ -89,8 +90,8 @@ struct UserInitializeView: View {
                                 .frame(maxWidth: 250, alignment: .leading)
                                 .padding(.horizontal, 5)
                         })
-                    }.buttonStyle(BorderlessButtonStyle())//删除背景色
-                    
+                    }.buttonStyle(PlainButtonStyle())//删除背景色
+
                     Button(action: {
                         if let url = URL(string: "https://5imac.net/") {
                             NSWorkspace.shared.open(url)
@@ -103,7 +104,7 @@ struct UserInitializeView: View {
                                 .frame(maxWidth: 250, alignment: .leading)
                                 .padding(.horizontal, 5)
                         })
-                    }.buttonStyle(BorderlessButtonStyle())//删除背景色
+                    }.buttonStyle(PlainButtonStyle())//删除背景色
                 })
                 
                 // 添加API密钥按钮
@@ -144,7 +145,7 @@ struct UserInitializeView: View {
         
         VStack {
             Spacer()
-            Text("Beta v \(UserInitializeView.appVersion)")
+            Text("Beta v\(UserInitializeView.appVersion)")
                 .font(.system(size: 12, weight: .light, design: .rounded))
                 .opacity(0.5)
             Spacer().frame(height: 30)

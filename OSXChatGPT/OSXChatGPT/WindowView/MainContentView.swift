@@ -9,12 +9,12 @@ import SwiftUI
 import AppKit
 /// main View
 struct MainContentView: View {
-    @State var openArgumentsSeet: Bool = false
     var body: some View {
         NavigationView {
             SessionsView()
             UserInitializeView()
-        }.toolbar {
+        }
+        .toolbar {
             ToolbarItem(placement: .navigation) {
                 Button {
                     NSApp.keyWindow?.firstResponder?.tryToPerform(
@@ -26,7 +26,6 @@ struct MainContentView: View {
                 }
             }
         }
-        
     }
 }
 
