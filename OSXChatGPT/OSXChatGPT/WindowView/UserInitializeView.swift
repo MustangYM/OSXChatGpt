@@ -10,6 +10,11 @@ import SwiftUI
 struct UserInitializeView: View {
     @State var openArgumentSeet: Bool = false
     @State var apiKey: String = ChatGPTManager.shared.getMaskApiKey()
+    static let appVersion: String =
+        Bundle
+            .main
+            .infoDictionary?["CFBundleShortVersionString"] as? String
+            ?? "unknown"
     var body: some View {
         ColorfulView(colors: [.accentColor], colorCount: 4)
             .ignoresSafeArea()
@@ -139,7 +144,7 @@ struct UserInitializeView: View {
         
         VStack {
             Spacer()
-            Text("v1.0.0")
+            Text("Beta v \(UserInitializeView.appVersion)")
                 .font(.system(size: 12, weight: .light, design: .rounded))
                 .opacity(0.5)
             Spacer().frame(height: 30)
