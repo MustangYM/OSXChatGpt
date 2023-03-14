@@ -14,6 +14,7 @@ struct MainContentView: View {
             SessionsView()
             UserInitializeView()
         }
+        .padding(.bottom, -5)
         .toolbar {
             ToolbarItem(placement: .navigation) {
                 Button {
@@ -26,6 +27,7 @@ struct MainContentView: View {
                 }
             }
         }.tabViewStyle(.automatic)
+            
     }
 }
 
