@@ -25,7 +25,7 @@ struct MainContentView: View {
                     Label("Toggle Sidebar", systemImage: "sidebar.leading")
                 }
             }
-        }
+        }.tabViewStyle(.automatic)
     }
 }
 
