@@ -40,7 +40,7 @@ extension Message {
             let model = MessageTextModel(type: .text, text: text)
             array.append(model)
         }else {
-            let components = text.split(separator: "```")
+            var components = text.components(separatedBy: "```")
             var idx: Int = 0// 0: code， 1: text
             for (index, str) in components.enumerated() {
                 if index == 0 {

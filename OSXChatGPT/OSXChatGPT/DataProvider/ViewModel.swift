@@ -121,15 +121,22 @@ import CoreData
         }
     }
     func createSesstionId() -> String {
-        let aa = Date.now.timeIntervalSince1970 * 1000
-        return String(aa)
+        if #available(macOS 12, *) {
+            return String(Date.now.timeIntervalSince1970 * 1000)
+        } else {
+            return String(Date().timeIntervalSince1970 * 1000)
+        }
     }
     
 }
 
 extension ViewModel {
     private func getNowData() -> Int64 {
-        return Int64(Date.now.timeIntervalSince1970)
+        if #available(macOS 12, *) {
+            return Int64(Date.now.timeIntervalSince1970)
+        } else {
+            return Int64(Date().timeIntervalSince1970)
+        }
     }
 }
 

@@ -64,20 +64,36 @@ struct ChatRoomView: View {
             Divider()
             HStack {
                 GeometryReader { geometry in
-                    TextEditor(text: $newMessageText)
-                        .font(.title3)
-                        .lineSpacing(5)
-                        .disableAutocorrection(true)
-                        .padding()
-                        .background(Color.clear)
-                        .scrollContentBackground(.hidden)
-                        .cornerRadius(10)
-                        .frame(maxHeight: geometry.size.height)
-                        .onChange(of: newMessageText) { _ in
-                            if newMessageText.contains("\n") {
-                                sendMessage(scrollView: scrollView)
+                    if #available(macOS 13.0, *) {
+                        TextEditor(text: $newMessageText)
+                            .font(.title3)
+                            .lineSpacing(5)
+                            .disableAutocorrection(true)
+                            .padding()
+                            .background(Color.clear)
+                            .scrollContentBackground(.hidden)
+                            .cornerRadius(10)
+                            .frame(maxHeight: geometry.size.height)
+                            .onChange(of: newMessageText) { _ in
+                                if newMessageText.contains("\n") {
+                                    sendMessage(scrollView: scrollView)
+                                }
                             }
-                        }
+                    } else {
+                        TextEditor(text: $newMessageText)
+                            .font(.title3)
+                            .lineSpacing(5)
+                            .disableAutocorrection(true)
+                            .padding()
+                            .background(Color.clear)
+                            .cornerRadius(10)
+                            .frame(maxHeight: geometry.size.height)
+                            .onChange(of: newMessageText) { _ in
+                                if newMessageText.contains("\n") {
+                                    sendMessage(scrollView: scrollView)
+                                }
+                            }
+                    }
                 }
             }
             .padding(0)
