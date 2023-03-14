@@ -221,7 +221,15 @@ struct ChatRoomCellView: View {
                     .foregroundColor(.white)
                     .cornerRadius(6)
                     
-                }else {
+                }else if message.sesstionId == Config.shared.chatGptThinkSession {
+                    //等待chatGPT回复的动画
+                    Text(message.text ?? "")
+                        .padding(12)
+                        .background(Color.gray.opacity(0.8))
+                        .foregroundColor(.white)
+                        .cornerRadius(6)
+                }
+                else {
                     Text(message.text ?? "")
                         .padding(12)
                         .background(Color.gray.opacity(0.8))

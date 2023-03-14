@@ -14,7 +14,7 @@ import CoreData
     @Published var messages: [Message] = []
     var currentConversation: Conversation?
     var isNewConversation: Bool = false
-    private let chatGptThinkSession: String = "chatGptThinkSessionID"
+    
     init() {
         fetchConversations()
     }
@@ -87,11 +87,11 @@ import CoreData
         messages = results
     }
     func addGptThinkMessage() {
-        if messages.contains(where: { $0.sesstionId == chatGptThinkSession}) {
-            messages.removeAll(where: { $0.sesstionId == chatGptThinkSession} )
+        if messages.contains(where: { $0.sesstionId == Config.shared.chatGptThinkSession}) {
+            messages.removeAll(where: { $0.sesstionId == Config.shared.chatGptThinkSession} )
         }
         let msg = Message(context: CoreDataManager.shared.container.viewContext)
-        msg.sesstionId = chatGptThinkSession
+        msg.sesstionId = Config.shared.chatGptThinkSession
         msg.id = UUID()
         msg.createdDate = Date()
         msg.text = "......"
@@ -99,8 +99,8 @@ import CoreData
         messages.append(msg)
     }
     func removeGptThinkMessage() {
-        if messages.contains(where: { $0.sesstionId == chatGptThinkSession}) {
-            messages.removeAll(where: { $0.sesstionId == chatGptThinkSession} )
+        if messages.contains(where: { $0.sesstionId == Config.shared.chatGptThinkSession}) {
+            messages.removeAll(where: { $0.sesstionId == Config.shared.chatGptThinkSession} )
         }
     }
     func addNewMessage(sesstionId: String, text: String, role: String, updateBlock: @escaping(() -> ())) {
@@ -119,6 +119,17 @@ import CoreData
         ChatGPTManager.shared.askChatGPT(messages: messages) { json, error in
             if let err = error {
                 print("\(err)")
+                let msg = Message(context: CoreDataManager.shared.container.viewContext)
+                msg.sesstionId = sesstionId
+                msg.role = ChatGPTManager.shared.gptRoleString
+                msg.text = "啊哦～连接失败了！"
+                msg.createdDate = Date()
+                msg.id = UUID()
+                CoreDataManager.shared.saveData()
+                self.removeGptThinkMessage()
+                self.messages.append(msg)
+                self.updateConversation(sesstionId: sesstionId, message: self.messages.last)
+                updateBlock()
                 return
             }
             let choices = json?["choices"] as? [Any]
