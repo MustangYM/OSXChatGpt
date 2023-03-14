@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AppKit
+
 
 
 /// 聊天框
@@ -17,10 +19,14 @@ struct ChatRoomView: View {
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
     
+    @State private var shiftKeyPressed = false
+    
     init(conversation: Conversation, isNewConversation: Bool=false) {
         self.conversation = conversation
         self.isNewConversation = isNewConversation
+        KeyboardMonitor.shared.startMonitorShiftKey()
     }
+    
     
     var body: some View {
         VStack(spacing: 0) {
@@ -75,10 +81,14 @@ struct ChatRoomView: View {
                             .cornerRadius(10)
                             .frame(maxHeight: geometry.size.height)
                             .onChange(of: newMessageText) { _ in
-                                if newMessageText.contains("\n") {
+                                if (KeyboardMonitor.shared.shiftKeyPressed) {
+                                    return
+                                }
+                                if newMessageText.hasSuffix("\n") {
                                     sendMessage(scrollView: scrollView)
                                 }
                             }
+                            
                     } else {
                         TextEditor(text: $newMessageText)
                             .font(.title3)
@@ -93,12 +103,28 @@ struct ChatRoomView: View {
                                     sendMessage(scrollView: scrollView)
                                 }
                             }
+                            .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+                                NSEvent.addGlobalMonitorForEvents(matching: [.keyDown, .keyUp]) { event in
+                                    if event.type == .keyDown {
+                                        if event.modifierFlags.contains(.shift) {
+                                            shiftKeyPressed = true
+                                        }
+                                    } else if event.type == .keyUp {
+                                        if event.modifierFlags.contains(.shift) {
+                                            shiftKeyPressed = false
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            
                     }
                 }
             }
             .padding(0)
             .frame(maxHeight: 200)
         }
+        
         .onAppear {
             print("View appeared!")
             //**全局监控一下当前conversation
@@ -110,18 +136,36 @@ struct ChatRoomView: View {
         }
         .onDisappear {
             print("View disappeared!")
-        }.navigationTitle(conversation.remark ?? conversation.lastMessage?.text ?? "New Chat")
+            
+        }
+        .navigationTitle(conversation.remark ?? conversation.lastMessage?.text ?? "New Chat")
+        
+
     }
     
     
     private func sendMessage(scrollView: ScrollViewProxy?) {
         guard !newMessageText.isEmpty else { return }
-        let temp = NSMutableString(string: newMessageText)
-        let replaceStr = temp.replacingOccurrences(of: "\n", with: "")
+        let temp = String(newMessageText.dropLast())
+        let replaceStr = temp.replacingOccurrences(of: " ", with: "")
+        if replaceStr.count == 0 {
+            newMessageText = ""
+            return
+        }else if replaceStr.contains("\n") {
+            let repl = replaceStr.replacingOccurrences(of: "\n", with: "")
+            if repl.count == 0 {
+                newMessageText = ""
+                return
+            }
+        }
         viewModel.addNewMessage(sesstionId: Config.shared.CurrentSession, text: replaceStr, role: "user") {
             scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
             conversation.lastMessage = viewModel.messages.last
             conversation.updateData = Date()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+            }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             //清空

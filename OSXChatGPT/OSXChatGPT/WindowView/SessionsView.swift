@@ -57,6 +57,7 @@ struct SessionsView: View {
                     Button(action: {
                         // 点击右边按钮的操作
                         self.showUserInitialize = true
+                        KeyboardMonitor.shared.stopKeyMonitor()
                     }) {
                         Image(systemName: "gear")
                             .padding(10)
@@ -76,7 +77,8 @@ struct SessionsView: View {
                 List {
                     ForEach(viewModel.conversations, id: \.self) { conversation in
                         NavigationLink(destination: ChatRoomView(conversation: conversation).environmentObject(viewModel)) {
-                            ChatRowContentView(chat: conversation).environmentObject(viewModel)
+                            
+                            ChatRowContentView(chat: conversation, showUserInitialize:$showUserInitialize).environmentObject(viewModel)
                         }
                         .cornerRadius(5)
                     }
@@ -92,8 +94,9 @@ struct SessionsView: View {
 /// 左边会话列表
 struct ChatRowContentView: View {
     @ObservedObject var chat: Conversation
+    @Binding var showUserInitialize: Bool
     var body: some View {
-        ChatRowContentNSView(chat: chat)
+        ChatRowContentNSView(chat: chat, showUserInitialize: $showUserInitialize)
             .frame(minHeight: 50, idealHeight: 50, maxHeight: 50)
     }
 }
@@ -101,6 +104,7 @@ struct ChatRowContentView: View {
 /// 左边会话列表
 struct ChatRowView: View {
     @ObservedObject var chat: Conversation
+    @Binding var showUserInitialize: Bool
     var body: some View {
         HStack {
             Image("openAI_icon")
@@ -143,6 +147,7 @@ struct ChatRowContentNSView: NSViewRepresentable {
     @ObservedObject var chat: Conversation
     @State private var showMenu = false
     @State private var editNote: String = ""
+    @Binding var showUserInitialize: Bool
     func updateNSView(_ nsView: NSView, context: Context) {
         // Update view properties and state here.
     }
@@ -197,6 +202,10 @@ struct ChatRowContentNSView: NSViewRepresentable {
         
         @MainActor @objc func delete() {
             parent.viewModel.deleteConversation(parent.chat)
+            if parent.viewModel.conversations.count == 0 {
+                //已经没有会话了，显示其他
+                parent.showUserInitialize = true
+            }
         }
 
     }
@@ -204,7 +213,7 @@ struct ChatRowContentNSView: NSViewRepresentable {
         let view = NSView()
         view.wantsLayer = true
         view.layer?.cornerRadius = 3
-        let swiftUIView = ChatRowView(chat: chat)
+        let swiftUIView = ChatRowView(chat: chat, showUserInitialize: $showUserInitialize)
             .frame(width: 300, height: 40)
         let hostingView = NSHostingView(rootView: swiftUIView)
         view.addSubview(hostingView)

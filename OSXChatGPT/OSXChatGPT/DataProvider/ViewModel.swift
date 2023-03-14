@@ -14,6 +14,7 @@ import CoreData
     @Published var messages: [Message] = []
     var currentConversation: Conversation?
     var isNewConversation: Bool = false
+    private let chatGptThinkSession: String = "chatGptThinkSessionID"
     init() {
         fetchConversations()
     }
@@ -85,7 +86,23 @@ import CoreData
         let results: [Message] = CoreDataManager.shared.fetch(request: request)
         messages = results
     }
-    
+    func addGptThinkMessage() {
+        if messages.contains(where: { $0.sesstionId == chatGptThinkSession}) {
+            messages.removeAll(where: { $0.sesstionId == chatGptThinkSession} )
+        }
+        let msg = Message(context: CoreDataManager.shared.container.viewContext)
+        msg.sesstionId = chatGptThinkSession
+        msg.id = UUID()
+        msg.createdDate = Date()
+        msg.text = "......"
+        msg.role = ChatGPTManager.shared.gptRoleString
+        messages.append(msg)
+    }
+    func removeGptThinkMessage() {
+        if messages.contains(where: { $0.sesstionId == chatGptThinkSession}) {
+            messages.removeAll(where: { $0.sesstionId == chatGptThinkSession} )
+        }
+    }
     func addNewMessage(sesstionId: String, text: String, role: String, updateBlock: @escaping(() -> ())) {
         let msg = Message(context: CoreDataManager.shared.container.viewContext)
         msg.sesstionId = sesstionId
@@ -96,6 +113,9 @@ import CoreData
         CoreDataManager.shared.saveData()
         messages.append(msg)
         updateConversation(sesstionId: sesstionId, message:messages.last)
+        
+        addGptThinkMessage()
+        
         ChatGPTManager.shared.askChatGPT(messages: messages) { json, error in
             if let err = error {
                 print("\(err)")
@@ -114,6 +134,7 @@ import CoreData
             msg.createdDate = Date()
             msg.id = UUID()
             CoreDataManager.shared.saveData()
+            self.removeGptThinkMessage()
             self.messages.append(msg)
             self.updateConversation(sesstionId: sesstionId, message: self.messages.last)
             updateBlock()
