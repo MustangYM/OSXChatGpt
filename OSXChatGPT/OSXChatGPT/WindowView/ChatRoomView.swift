@@ -125,8 +125,12 @@ struct ChatRoomView: View {
         }else if newMessageText.count < lastMessageText.count {
             //删除操作
         }else if newMessageText.hasSuffix("\n") {
-            //发送操作
-            sendMessage(scrollView: scrollView)
+            var text = String(newMessageText)
+            text.removeLast(1)
+            if text == lastMessageText {
+                //发送操作
+                sendMessage(scrollView: scrollView)
+            }
         }
         lastMessageText = newMessageText
     }
