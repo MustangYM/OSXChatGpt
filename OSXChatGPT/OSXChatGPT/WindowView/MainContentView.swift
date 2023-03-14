@@ -14,7 +14,7 @@ struct MainContentView: View {
             SessionsView()
             UserInitializeView()
         }
-        .padding(.bottom, -5)
+        .padding(.bottom, -6)
         .toolbar {
             ToolbarItem(placement: .navigation) {
                 Button {
