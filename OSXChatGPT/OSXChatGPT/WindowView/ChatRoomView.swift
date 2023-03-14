@@ -97,6 +97,7 @@ struct ChatRoomView: View {
         }.navigationTitle(conversation.remark ?? conversation.lastMessage?.text ?? "New Chat")
     }
     
+    
     private func sendMessage(scrollView: ScrollViewProxy?) {
         guard !newMessageText.isEmpty else { return }
         let temp = NSMutableString(string: newMessageText)
@@ -174,6 +175,15 @@ struct ChatRoomCellView: View {
                         .background(Color.gray.opacity(0.8))
                         .foregroundColor(.white)
                         .cornerRadius(6)
+                        .contextMenu {
+                            Button(action: {
+                                NSPasteboard.general.prepareForNewContents()
+                                NSPasteboard.general.setString(message.text ?? "", forType: .string)
+                            }) {
+                                Text("Copy")
+                                Image(systemName: "doc.on.doc.fill")
+                            }
+                        }
                 }
                     
                 Spacer()
