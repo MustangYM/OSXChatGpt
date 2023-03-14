@@ -14,6 +14,7 @@ struct MainContentView: View {
             SessionsView()
             UserInitializeView()
         }
+        .padding(.bottom, -6)
         .toolbar {
             ToolbarItem(placement: .navigation) {
                 Button {
@@ -25,7 +26,8 @@ struct MainContentView: View {
                     Label("Toggle Sidebar", systemImage: "sidebar.leading")
                 }
             }
-        }
+        }.tabViewStyle(.automatic)
+            
     }
 }
 

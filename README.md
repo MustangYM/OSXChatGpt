@@ -8,9 +8,9 @@ Easy to use OpenAI in your desktop, the whole application is implemented by Swif
 ## Feature And Bugs
 | Feature/Bug | Status |
 | --- | --- |
-| The paste board content is automatically sent | ❌ |
-| Disable sending NULL content | ❌ |
-| The input state of the GPT | ❌ |
+| ~~The paste board content is automatically sent~~ | ✅ |
+| ~~Disable sending NULL content~~ | ✅ |
+| ~~The input state of the GPT~~ | ✅ |
 | ~~The sidebar cannot be displayed~~ | ✅ |
 | ~~The GPT's answer cannot be pasted~~ | ✅ |
 

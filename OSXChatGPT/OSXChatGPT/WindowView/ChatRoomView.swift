@@ -167,7 +167,22 @@ struct ChatRoomView: View {
     }
 }
 
+struct GradientProgressView: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSProgressIndicator {
+        let progressIndicator = NSProgressIndicator()
+        progressIndicator.style = .bar
+        progressIndicator.isIndeterminate = true
+        progressIndicator.startAnimation(nil)
+        progressIndicator.controlSize = .regular
+        progressIndicator.controlTint = .graphiteControlTint
+        progressIndicator.layer?.rasterizationScale = NSScreen.main?.backingScaleFactor ?? 1
+        progressIndicator.appearance = NSAppearance(named: .aqua)
+        return progressIndicator
+    }
 
+    func updateNSView(_ nsView: NSProgressIndicator, context: Context) {
+    }
+}
 
 struct ChatRoomCellView: View {
     let message: Message
@@ -202,12 +217,19 @@ struct ChatRoomCellView: View {
                 }
             } else {
                 VStack {
-                    Image("openAI_icon")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(0)
+                    if message.text == "......" {
+                        GradientProgressView()
+                                            .frame(width: 30, height: 30)
+                                            .padding(0)
+                    } else {
+                        Image("openAI_icon")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .padding(0)
+                    }
                     Spacer()
                 }
+                
                 if message.hasCode {
                     VStack {
                         ForEach(message.textArray, id: \.self) { model in
