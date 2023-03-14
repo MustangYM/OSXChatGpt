@@ -16,10 +16,9 @@ struct ChatRoomView: View {
     var isNewConversation: Bool = false
     @EnvironmentObject var viewModel: ViewModel
     @State private var newMessageText = ""
+    @State private var lastMessageText = ""
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
-    
-    @State private var shiftKeyPressed = false
     
     init(conversation: Conversation, isNewConversation: Bool=false) {
         self.conversation = conversation
@@ -81,12 +80,7 @@ struct ChatRoomView: View {
                             .cornerRadius(10)
                             .frame(maxHeight: geometry.size.height)
                             .onChange(of: newMessageText) { _ in
-                                if (KeyboardMonitor.shared.shiftKeyPressed) {
-                                    return
-                                }
-                                if newMessageText.hasSuffix("\n") {
-                                    sendMessage(scrollView: scrollView)
-                                }
+                                onTextViewChange()
                             }
                             
                     } else {
@@ -99,25 +93,8 @@ struct ChatRoomView: View {
                             .cornerRadius(10)
                             .frame(maxHeight: geometry.size.height)
                             .onChange(of: newMessageText) { _ in
-                                if newMessageText.contains("\n") {
-                                    sendMessage(scrollView: scrollView)
-                                }
+                                onTextViewChange()
                             }
-                            .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
-                                NSEvent.addGlobalMonitorForEvents(matching: [.keyDown, .keyUp]) { event in
-                                    if event.type == .keyDown {
-                                        if event.modifierFlags.contains(.shift) {
-                                            shiftKeyPressed = true
-                                        }
-                                    } else if event.type == .keyUp {
-                                        if event.modifierFlags.contains(.shift) {
-                                            shiftKeyPressed = false
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            
                     }
                 }
             }
@@ -142,7 +119,17 @@ struct ChatRoomView: View {
         
 
     }
-    
+    private func onTextViewChange() {
+        if (KeyboardMonitor.shared.shiftKeyPressed) {
+            //按下shift
+        }else if newMessageText.count < lastMessageText.count {
+            //删除操作
+        }else if newMessageText.hasSuffix("\n") {
+            //发送操作
+            sendMessage(scrollView: scrollView)
+        }
+        lastMessageText = newMessageText
+    }
     
     private func sendMessage(scrollView: ScrollViewProxy?) {
         guard !newMessageText.isEmpty else { return }
@@ -170,6 +157,7 @@ struct ChatRoomView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             //清空
             newMessageText = ""
+            lastMessageText = newMessageText
             scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
         }
     }
