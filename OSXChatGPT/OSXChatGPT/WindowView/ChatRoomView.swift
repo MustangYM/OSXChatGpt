@@ -228,7 +228,7 @@ struct ChatRoomCellView: View {
                     //等待chatGPT回复的动画
                     ThinkingAnimationView()
                         .padding(12)
-                        .background(Color.gray.opacity(0.8))
+                        .background(Color.gray.opacity(0.1))
                         .cornerRadius(6)
                 }
                 else {
