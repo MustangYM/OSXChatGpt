@@ -140,8 +140,8 @@ struct ChatRoomView: View {
     
     private func sendMessage(scrollView: ScrollViewProxy?) {
         guard !newMessageText.isEmpty else { return }
-        let temp = String(newMessageText.dropLast())
-        let replaceStr = temp.replacingOccurrences(of: " ", with: "")
+        let msg = String(newMessageText.dropLast())
+        let replaceStr = msg.replacingOccurrences(of: " ", with: "")
         if replaceStr.count == 0 {
             newMessageText = ""
             return
@@ -152,7 +152,7 @@ struct ChatRoomView: View {
                 return
             }
         }
-        viewModel.addNewMessage(sesstionId: Config.shared.CurrentSession, text: replaceStr, role: "user") {
+        viewModel.addNewMessage(sesstionId: Config.shared.CurrentSession, text: msg, role: "user") {
             conversation.lastMessage = viewModel.messages.last
             conversation.updateData = Date()
             
@@ -294,6 +294,7 @@ struct ChatRoomCellTextView: View {
                     .padding(.leading, 0)
                 HStack {
                     Text(textModel.text)
+                        
                         .foregroundColor(NSColor(r: 0, g: 195, b: 135).toColor())
                         .padding(.top, 0)
                         .padding(.leading, 10)
