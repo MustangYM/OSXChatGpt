@@ -21,7 +21,6 @@
 		182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437129BC5D1B00F06778 /* ChatGPTManager.swift */; };
 		182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437829BC5D6200F06778 /* OSXChatGPTApp.swift */; };
 		182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437A29BC5FBE00F06778 /* EnterAPIView.swift */; };
-		182B437F29BDE08200F06778 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437E29BDE08200F06778 /* Config.swift */; };
 		182B43A429BF730300F06778 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B43A329BF730300F06778 /* NSColor.swift */; };
 		188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
@@ -50,7 +49,6 @@
 		182B437129BC5D1B00F06778 /* ChatGPTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGPTManager.swift; sourceTree = "<group>"; };
 		182B437829BC5D6200F06778 /* OSXChatGPTApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSXChatGPTApp.swift; sourceTree = "<group>"; };
 		182B437A29BC5FBE00F06778 /* EnterAPIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAPIView.swift; sourceTree = "<group>"; };
-		182B437E29BDE08200F06778 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		182B43A329BF730300F06778 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
 		188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EidtSessionRemarkView.swift; sourceTree = "<group>"; };
 		CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,7 +122,6 @@
 				182B437129BC5D1B00F06778 /* ChatGPTManager.swift */,
 				182B436F29BC5D1B00F06778 /* CoreDataManager.swift */,
 				182B437029BC5D1B00F06778 /* ViewModel.swift */,
-				182B437E29BDE08200F06778 /* Config.swift */,
 				CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */,
 			);
 			path = DataProvider;
@@ -268,7 +265,6 @@
 				182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */,
 				182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */,
 				188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */,
-				182B437F29BDE08200F06778 /* Config.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
 				182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */,

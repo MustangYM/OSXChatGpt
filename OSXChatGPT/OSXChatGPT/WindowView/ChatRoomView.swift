@@ -12,17 +12,15 @@ import AppKit
 
 /// 聊天框
 struct ChatRoomView: View {
-    let conversation: Conversation
-    var isNewConversation: Bool = false
+    var conversation: Conversation?
     @EnvironmentObject var viewModel: ViewModel
     @State private var newMessageText = ""
     @State private var lastMessageText = ""
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
     
-    init(conversation: Conversation, isNewConversation: Bool=false) {
+    init(conversation: Conversation?) {
         self.conversation = conversation
-        self.isNewConversation = isNewConversation
         KeyboardMonitor.shared.startMonitorShiftKey()
     }
     
@@ -34,7 +32,7 @@ struct ChatRoomView: View {
                     ScrollViewReader { scrollView in
                         VStack(alignment: .trailing, spacing: 8) {
                             ForEach(viewModel.messages) { message in
-                                ChatRoomCellView(message: message)
+                                ChatRoomCellView(message: message).environmentObject(viewModel)
                                     .id(message.id) // 添加唯一标识符
                                     .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
                             }
@@ -104,9 +102,11 @@ struct ChatRoomView: View {
         
         .onAppear {
             print("View appeared!")
-            //**全局监控一下当前conversation
-            Config.shared.CurrentSession = conversation.sesstionId
-            viewModel.fetchMessage(sesstionId: conversation.sesstionId)
+            if viewModel.createNewChat {
+//                viewModel.createNewChat = false
+            }
+            viewModel.currentConversation = conversation
+            viewModel.fetchMessage(sesstionId: conversation?.sesstionId ?? "")
                 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 withAnimation {
@@ -118,7 +118,7 @@ struct ChatRoomView: View {
             print("View disappeared!")
             
         }
-        .navigationTitle(conversation.remark ?? conversation.lastMessage?.text ?? "New Chat")
+        .navigationTitle(conversation?.remark ?? conversation?.lastMessage?.text ?? "New Chat")
         
 
     }
@@ -152,9 +152,9 @@ struct ChatRoomView: View {
                 return
             }
         }
-        viewModel.addNewMessage(sesstionId: Config.shared.CurrentSession, text: msg, role: "user") {
-            conversation.lastMessage = viewModel.messages.last
-            conversation.updateData = Date()
+        viewModel.addNewMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", text: msg, role: "user") {
+            conversation?.lastMessage = viewModel.messages.last
+            conversation?.updateData = Date()
             
             withAnimation {
                 scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
@@ -173,7 +173,7 @@ struct ChatRoomView: View {
 
 struct ChatRoomCellView: View {
     let message: Message
-    
+    @EnvironmentObject var viewModel: ViewModel
     var body: some View {
         HStack {
             if message.role != ChatGPTManager.shared.gptRoleString {
@@ -222,8 +222,7 @@ struct ChatRoomCellView: View {
                     .background(Color.gray.opacity(0.8))
                     .foregroundColor(.white)
                     .cornerRadius(6)
-                    
-                }else if message.sesstionId == Config.shared.chatGptThinkSession {
+                }else if message.sesstionId == viewModel.chatGptThinkSession {
                     //等待chatGPT回复的动画
                     ThinkingAnimationView()
                         .padding(12)

@@ -10,10 +10,16 @@ import SwiftUI
 import CoreData
 
 @MainActor class ViewModel: ObservableObject {
-    @Published var conversations: [Conversation] = []
-    @Published var messages: [Message] = []
-    var currentConversation: Conversation?
-    var isNewConversation: Bool = false
+    @Published var conversations: [Conversation] = []//所有会话
+    @Published var messages: [Message] = []//当前会话的消息
+    @Published var showUserInitialize: Bool = false//显示设置页
+    @Published var showEditRemark: Bool = false//显示编辑备注
+    var editConversation: Conversation?//编辑备注的会话
+    @Published var createNewChat: Bool = false//创建新会话
+    
+    
+    var currentConversation: Conversation?//当前会话
+    public let chatGptThinkSession: String = "chatGptThinkSessionID"//gpt输入固定id
     
     init() {
         fetchConversations()
@@ -49,19 +55,19 @@ import CoreData
             conversations[index] = con!
         }
     }
-    
-    //**这里是一个Fake会话, 不需要存入数据库
-    func addNewConversation() -> Conversation {
-        if (currentConversation != nil) && currentConversation!.lastMessage == nil {
-            return currentConversation!
-        }
-        
+    class func addNewConversation() -> Conversation {
         let con = Conversation(context: CoreDataManager.shared.container.viewContext)
         con.sesstionId = createSesstionId()
         con.id = UUID()
         con.updateData = Date()
-        //**这里是一个Fake会话, 不需要存入数据库
-//        CoreDataManager.shared.saveData()
+        return con
+    }
+    //**这里是一个Fake会话, 不需要存入数据库
+    func addNewConversation() -> Conversation {
+        let con = Conversation(context: CoreDataManager.shared.container.viewContext)
+        con.sesstionId = createSesstionId()
+        con.id = UUID()
+        con.updateData = Date()
         currentConversation = con
         return con
     }
@@ -76,6 +82,9 @@ import CoreData
     func deleteConversation(_ conversation: Conversation) {
         CoreDataManager.shared.delete(objects: [conversation])
         conversations.removeAll { $0.sesstionId == conversation.sesstionId }
+        if currentConversation?.sesstionId == conversation.sesstionId {
+            currentConversation = nil
+        }
     }
     
     func fetchMessage(sesstionId: String) {
@@ -87,11 +96,11 @@ import CoreData
         messages = results
     }
     func addGptThinkMessage() {
-        if messages.contains(where: { $0.sesstionId == Config.shared.chatGptThinkSession}) {
-            messages.removeAll(where: { $0.sesstionId == Config.shared.chatGptThinkSession} )
+        if messages.contains(where: { $0.sesstionId == chatGptThinkSession}) {
+            messages.removeAll(where: { $0.sesstionId == chatGptThinkSession} )
         }
         let msg = Message(context: CoreDataManager.shared.container.viewContext)
-        msg.sesstionId = Config.shared.chatGptThinkSession
+        msg.sesstionId = chatGptThinkSession
         msg.id = UUID()
         msg.createdDate = Date()
         msg.text = "......"
@@ -99,24 +108,30 @@ import CoreData
         messages.append(msg)
     }
     func removeGptThinkMessage() {
-        if messages.contains(where: { $0.sesstionId == Config.shared.chatGptThinkSession}) {
-            messages.removeAll(where: { $0.sesstionId == Config.shared.chatGptThinkSession} )
+        let msg = messages.filter({ $0.sesstionId == chatGptThinkSession})
+        CoreDataManager.shared.delete(objects: msg)
+        if messages.contains(where: { $0.sesstionId == chatGptThinkSession}) {
+            messages.removeAll(where: { $0.sesstionId == chatGptThinkSession} )
         }
+        
     }
     func addNewMessage(sesstionId: String, text: String, role: String, updateBlock: @escaping(() -> ())) {
+        if sesstionId.isEmpty {
+            return
+        }
         let msg = Message(context: CoreDataManager.shared.container.viewContext)
         msg.sesstionId = sesstionId
         msg.text = text
         msg.role = role
         msg.id = UUID()
         msg.createdDate = Date()
-        CoreDataManager.shared.saveData()
         messages.append(msg)
+        CoreDataManager.shared.saveData()
         updateConversation(sesstionId: sesstionId, message:messages.last)
         
-        addGptThinkMessage()
         var sendMsgs = messages
-        sendMsgs.removeAll(where: {$0.sesstionId == Config.shared.chatGptThinkSession})
+        sendMsgs.removeAll(where: {$0.sesstionId == chatGptThinkSession})
+        var isFeedback = false
         ChatGPTManager.shared.askChatGPT(messages: sendMsgs) { json, error in
             if let err = error {
                 print("\(err)")
@@ -128,9 +143,12 @@ import CoreData
                 msg.id = UUID()
                 CoreDataManager.shared.saveData()
                 self.removeGptThinkMessage()
-                self.messages.append(msg)
-                self.updateConversation(sesstionId: sesstionId, message: self.messages.last)
+                if self.currentConversation?.sesstionId == sesstionId {
+                    self.messages.append(msg)
+                }
+                self.updateConversation(sesstionId: sesstionId, message: msg)
                 updateBlock()
+                isFeedback = true
                 return
             }
             let choices = json?["choices"] as? [Any]
@@ -147,13 +165,29 @@ import CoreData
             msg.id = UUID()
             CoreDataManager.shared.saveData()
             self.removeGptThinkMessage()
-            self.messages.append(msg)
-            self.updateConversation(sesstionId: sesstionId, message: self.messages.last)
+            if self.currentConversation?.sesstionId == sesstionId {
+                self.messages.append(msg)
+            }
+            self.updateConversation(sesstionId: sesstionId, message: msg)
             updateBlock()
+            isFeedback = true
             print("回答的内容：\(String(describing: content))")
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if !isFeedback {
+                self.addGptThinkMessage()
+            }
         }
     }
     func createSesstionId() -> String {
+        if #available(macOS 12, *) {
+            return String(Date.now.timeIntervalSince1970 * 1000)
+        } else {
+            return String(Date().timeIntervalSince1970 * 1000)
+        }
+    }
+    
+    class func createSesstionId() -> String {
         if #available(macOS 12, *) {
             return String(Date.now.timeIntervalSince1970 * 1000)
         } else {

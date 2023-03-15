@@ -10,34 +10,20 @@ import Colorful
 
 struct SessionsView: View {
     @EnvironmentObject var viewModel: ViewModel
-    @State private var searchText = ""
-    @State var showNewConversationSheet = false
-    @State var showUserInitialize = false
-    @State var showEditRemark = false
-//    @State private var isNewChatButtonClicked = false
-    
-    @State private var shouldNavigate = false {
-        didSet {
-            if !shouldNavigate {
-//                self.isNewChatButtonClicked = false
-            }
-        }
-    }
-    
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        
         ZStack {
             ColorfulView(colors: [.accentColor], colorCount: 4)
                 .ignoresSafeArea()
             VStack {
                 HStack(spacing: 10, content: {
-                    let tempConversation = viewModel.addNewConversation()
-                    NavigationLink(destination: ChatRoomView(conversation: tempConversation).environmentObject(viewModel), isActive: $shouldNavigate) {
+                    NavigationLink(destination: ChatRoomView(conversation: viewModel.currentConversation).environmentObject(viewModel), isActive: $viewModel.createNewChat) {
                     }.buttonStyle(BorderlessButtonStyle())
                     Spacer()
                     Button(action: {
                         // 点击 New Chat 按钮的操作
-                        self.shouldNavigate = true
+                        viewModel.currentConversation = viewModel.addNewConversation()
+                        viewModel.createNewChat = true
                     }) {
                         HStack(spacing: 0) {
                             Text("     ")
@@ -53,11 +39,11 @@ struct SessionsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading,0)
                     
-                    NavigationLink(destination: UserInitializeView().environmentObject(viewModel), isActive: $showUserInitialize) {
+                    NavigationLink(destination: UserInitializeView().environmentObject(viewModel), isActive: $viewModel.showUserInitialize) {
                     }.buttonStyle(BorderlessButtonStyle())
                     Button(action: {
                         // 点击右边按钮的操作
-                        self.showUserInitialize = true
+                        viewModel.showUserInitialize = true
                         KeyboardMonitor.shared.stopKeyMonitor()
                     }) {
                         Image(systemName: "gear")
@@ -71,17 +57,17 @@ struct SessionsView: View {
                     
                 })
                 .frame(height: 20)
-                .sheet(isPresented: $showEditRemark) {
-                    EidtSessionRemarkView()
+                .sheet(isPresented: $viewModel.showEditRemark) {
+                    EidtSessionRemarkView(remark: viewModel.editConversation?.remark ?? "").environmentObject(viewModel)
                 }
                 
                 Spacer()
                     .frame(height: 20)
                 List {
                     ForEach(viewModel.conversations, id: \.self) { conversation in
-                        NavigationLink(destination: ChatRoomView(conversation: conversation).environmentObject(viewModel)) {
+                        NavigationLink(destination: ChatRoomView(conversation: conversation).environmentObject(viewModel), tag: conversation, selection: $viewModel.currentConversation) {
+                            ChatRowContentView(chat: conversation).environmentObject(viewModel)
                             
-                            ChatRowContentView(chat: conversation, showUserInitialize:$showUserInitialize, showEditRemark: $showEditRemark).environmentObject(viewModel)
                         }
                         .cornerRadius(5)
                     }
@@ -98,10 +84,9 @@ struct SessionsView: View {
 /// 左边会话列表
 struct ChatRowContentView: View {
     @ObservedObject var chat: Conversation
-    @Binding var showUserInitialize: Bool
-    @Binding var showEditRemark: Bool
+    @EnvironmentObject var viewModel: ViewModel
     var body: some View {
-        ChatRowContentNSView(chat: chat, showUserInitialize: $showUserInitialize, showEditRemark: $showEditRemark)
+        ChatRowContentNSView(chat: chat).environmentObject(viewModel)
             .frame(minHeight: 50, idealHeight: 50, maxHeight: 50)
     }
 }
@@ -109,8 +94,7 @@ struct ChatRowContentView: View {
 /// 左边会话列表
 struct ChatRowView: View {
     @ObservedObject var chat: Conversation
-    @Binding var showUserInitialize: Bool
-    @Binding var showEditRemark: Bool
+    @EnvironmentObject var viewModel: ViewModel
     
     var body: some View {
         HStack {
@@ -154,8 +138,6 @@ struct ChatRowContentNSView: NSViewRepresentable {
     @ObservedObject var chat: Conversation
     @State private var showMenu = false
     @State private var editNote: String = ""
-    @Binding var showUserInitialize: Bool
-    @Binding var showEditRemark: Bool
     func updateNSView(_ nsView: NSView, context: Context) {
         // Update view properties and state here.
     }
@@ -174,8 +156,7 @@ struct ChatRowContentNSView: NSViewRepresentable {
         
         @objc func handleRightClick(_ sender: NSClickGestureRecognizer) {
             if sender.state == .ended {
-                print("双击鼠标")
-                
+                print("右键鼠标")
                 let menu = NSMenu(title: "123")
                 menu.delegate = self
                 let editMenuItem = NSMenuItem(title: "编辑备注", action: #selector(edit), keyEquivalent: "")
@@ -194,15 +175,17 @@ struct ChatRowContentNSView: NSViewRepresentable {
         
         @MainActor @objc func edit() {
             parent.editNote = parent.chat.remark ?? ""
-            Config.shared.CurrentClickSession = parent.chat.sesstionId
-            parent.showEditRemark = true
+            parent.viewModel.editConversation = parent.chat
+            parent.viewModel.showEditRemark = true
         }
         
         @MainActor @objc func delete() {
             parent.viewModel.deleteConversation(parent.chat)
             if parent.viewModel.conversations.count == 0 {
                 //已经没有会话了，显示其他
-                parent.showUserInitialize = true
+                parent.viewModel.showUserInitialize = true
+            }else if parent.viewModel.currentConversation == nil {
+                parent.viewModel.showUserInitialize = true
             }
         }
 
@@ -211,7 +194,7 @@ struct ChatRowContentNSView: NSViewRepresentable {
         let view = NSView()
         view.wantsLayer = true
         view.layer?.cornerRadius = 3
-        let swiftUIView = ChatRowView(chat: chat, showUserInitialize: $showUserInitialize, showEditRemark: $showEditRemark)
+        let swiftUIView = ChatRowView(chat: chat).environmentObject(viewModel)
             .frame(width: 300, height: 40)
         let hostingView = NSHostingView(rootView: swiftUIView)
         view.addSubview(hostingView)

@@ -9,9 +9,8 @@ import SwiftUI
 
 struct EidtSessionRemarkView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var apiKey: String = ""
+    @State var remark: String
     @EnvironmentObject var viewModel: ViewModel
-    
     var body: some View {
         VStack(spacing: 20) {
             Text("Edit Conversation Remark:")
@@ -20,7 +19,7 @@ struct EidtSessionRemarkView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.top, 20)
             
-            TextField("Enter remark", text: $apiKey)
+            TextField("Enter remark", text: $remark)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 200, height: 50)
             
@@ -39,7 +38,8 @@ struct EidtSessionRemarkView: View {
                 .buttonStyle(BorderlessButtonStyle())
                 
                 Button(action: {
-                    viewModel.updateConversation(sesstionId: Config.shared.CurrentClickSession, remark: apiKey)
+                    viewModel.updateConversation(sesstionId: viewModel.editConversation?.sesstionId ?? "", remark: remark)
+                    viewModel.editConversation = nil
                     self.presentationMode.wrappedValue.dismiss()
                     
                 }) {
@@ -62,6 +62,6 @@ struct EidtSessionRemarkView: View {
 
 struct EidtSessionRemarkView_Previews: PreviewProvider {
     static var previews: some View {
-        EidtSessionRemarkView()
+        EidtSessionRemarkView(remark: "")
     }
 }
