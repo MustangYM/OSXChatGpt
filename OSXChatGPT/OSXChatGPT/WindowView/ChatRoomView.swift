@@ -284,7 +284,8 @@ struct ChatRoomCellTextView: View {
                         .padding(.leading, 10)
                     Spacer()
                     Button(action: {
-                        
+                        NSPasteboard.general.prepareForNewContents()
+                        NSPasteboard.general.setString(textModel.text, forType: .string)
                     }) {
                         Text("Copy")
                         Image(systemName: "doc.on.doc.fill")
@@ -294,7 +295,9 @@ struct ChatRoomCellTextView: View {
                     .padding(.leading, 0)
                 HStack {
                     Text(textModel.text)
-                        
+                        .font(.custom("SF Mono Bold", size: 14.5))
+                        .kerning(0.5)
+                        .lineSpacing(5)
                         .foregroundColor(NSColor(r: 0, g: 195, b: 135).toColor())
                         .padding(.top, 0)
                         .padding(.leading, 10)
