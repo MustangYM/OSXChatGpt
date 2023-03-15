@@ -194,18 +194,6 @@ struct ChatRowContentNSView: NSViewRepresentable {
         
         @MainActor @objc func edit() {
             parent.editNote = parent.chat.remark ?? ""
-//            let alert = NSAlert()
-//            alert.messageText = "修改会话备注"
-//            alert.addButton(withTitle: "OK")
-//            alert.addButton(withTitle: "Cancel")
-//            let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-//            inputTextField.stringValue = parent.editNote
-//            alert.accessoryView = inputTextField
-//            let response = alert.runModal()
-//            if response == .alertFirstButtonReturn {
-//                parent.chat.remark = inputTextField.stringValue
-//                parent.viewModel.updateConversation(sesstionId: parent.chat.sesstionId, remark: parent.chat.remark)
-//            }
             Config.shared.CurrentClickSession = parent.chat.sesstionId
             parent.showEditRemark = true
         }

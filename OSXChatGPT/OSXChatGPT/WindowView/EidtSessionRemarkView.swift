@@ -39,7 +39,6 @@ struct EidtSessionRemarkView: View {
                 .buttonStyle(BorderlessButtonStyle())
                 
                 Button(action: {
-//                    ChatGPTManager.shared.updateApiKey(apiKey: apiKey)
                     viewModel.updateConversation(sesstionId: Config.shared.CurrentClickSession, remark: apiKey)
                     self.presentationMode.wrappedValue.dismiss()
                     
