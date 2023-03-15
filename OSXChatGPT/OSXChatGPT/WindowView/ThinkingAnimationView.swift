@@ -17,7 +17,7 @@ struct ThinkingAnimationView: View {
             ThinkingAnimationCircle(delay: time*2, color: NSColor(r: 171, g: 118, b: 170).toColor())
             ThinkingAnimationCircle(delay: time*3, color: NSColor(r: 116, g: 129, b: 216).toColor())
             ThinkingAnimationCircle(delay: time*4, color: NSColor(r: 96, g: 130, b: 229).toColor())
-            ThinkingAnimationCircle(delay: time*5 - 0.1, color: NSColor(r: 80, g: 130, b: 238).toColor())
+            ThinkingAnimationCircle(delay: time*5-0.05, color: NSColor(r: 80, g: 130, b: 238).toColor())
             Spacer()
         }
         .frame(width: 105, height: 15)
