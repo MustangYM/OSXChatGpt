@@ -12,5 +12,6 @@ import Foundation
 class Config: ObservableObject {
     static let shared = Config()
     public var CurrentSession : String = ""
+    public var CurrentClickSession : String = ""
     public let chatGptThinkSession: String = "chatGptThinkSessionID"
 }

@@ -13,6 +13,7 @@ struct SessionsView: View {
     @State private var searchText = ""
     @State var showNewConversationSheet = false
     @State var showUserInitialize = false
+    @State var showEditRemark = false
 //    @State private var isNewChatButtonClicked = false
     
     @State private var shouldNavigate = false {
@@ -70,7 +71,9 @@ struct SessionsView: View {
                     
                 })
                 .frame(height: 20)
-                
+                .sheet(isPresented: $showEditRemark) {
+                    EidtSessionRemarkView()
+                }
                 
                 Spacer()
                     .frame(height: 20)
@@ -78,7 +81,7 @@ struct SessionsView: View {
                     ForEach(viewModel.conversations, id: \.self) { conversation in
                         NavigationLink(destination: ChatRoomView(conversation: conversation).environmentObject(viewModel)) {
                             
-                            ChatRowContentView(chat: conversation, showUserInitialize:$showUserInitialize).environmentObject(viewModel)
+                            ChatRowContentView(chat: conversation, showUserInitialize:$showUserInitialize, showEditRemark: $showEditRemark).environmentObject(viewModel)
                         }
                         .cornerRadius(5)
                     }
@@ -86,6 +89,7 @@ struct SessionsView: View {
 
             }
             .leftSessionContentSize()
+            
         }
     }
 }
@@ -95,8 +99,9 @@ struct SessionsView: View {
 struct ChatRowContentView: View {
     @ObservedObject var chat: Conversation
     @Binding var showUserInitialize: Bool
+    @Binding var showEditRemark: Bool
     var body: some View {
-        ChatRowContentNSView(chat: chat, showUserInitialize: $showUserInitialize)
+        ChatRowContentNSView(chat: chat, showUserInitialize: $showUserInitialize, showEditRemark: $showEditRemark)
             .frame(minHeight: 50, idealHeight: 50, maxHeight: 50)
     }
 }
@@ -105,6 +110,8 @@ struct ChatRowContentView: View {
 struct ChatRowView: View {
     @ObservedObject var chat: Conversation
     @Binding var showUserInitialize: Bool
+    @Binding var showEditRemark: Bool
+    
     var body: some View {
         HStack {
             Image("openAI_icon")
@@ -138,7 +145,7 @@ struct ChatRowView: View {
          if calendar.isDateInToday(date) {
              formatter.dateFormat = "HH:mm"
          }
-         
+    
          return formatter.string(from: date)
     }
 }
@@ -148,6 +155,7 @@ struct ChatRowContentNSView: NSViewRepresentable {
     @State private var showMenu = false
     @State private var editNote: String = ""
     @Binding var showUserInitialize: Bool
+    @Binding var showEditRemark: Bool
     func updateNSView(_ nsView: NSView, context: Context) {
         // Update view properties and state here.
     }
@@ -186,18 +194,20 @@ struct ChatRowContentNSView: NSViewRepresentable {
         
         @MainActor @objc func edit() {
             parent.editNote = parent.chat.remark ?? ""
-            let alert = NSAlert()
-            alert.messageText = "修改会话备注"
-            alert.addButton(withTitle: "OK")
-            alert.addButton(withTitle: "Cancel")
-            let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-            inputTextField.stringValue = parent.editNote
-            alert.accessoryView = inputTextField
-            let response = alert.runModal()
-            if response == .alertFirstButtonReturn {
-                parent.chat.remark = inputTextField.stringValue
-                parent.viewModel.updateConversation(sesstionId: parent.chat.sesstionId, remark: parent.chat.remark)
-            }
+//            let alert = NSAlert()
+//            alert.messageText = "修改会话备注"
+//            alert.addButton(withTitle: "OK")
+//            alert.addButton(withTitle: "Cancel")
+//            let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+//            inputTextField.stringValue = parent.editNote
+//            alert.accessoryView = inputTextField
+//            let response = alert.runModal()
+//            if response == .alertFirstButtonReturn {
+//                parent.chat.remark = inputTextField.stringValue
+//                parent.viewModel.updateConversation(sesstionId: parent.chat.sesstionId, remark: parent.chat.remark)
+//            }
+            Config.shared.CurrentClickSession = parent.chat.sesstionId
+            parent.showEditRemark = true
         }
         
         @MainActor @objc func delete() {
@@ -213,7 +223,7 @@ struct ChatRowContentNSView: NSViewRepresentable {
         let view = NSView()
         view.wantsLayer = true
         view.layer?.cornerRadius = 3
-        let swiftUIView = ChatRowView(chat: chat, showUserInitialize: $showUserInitialize)
+        let swiftUIView = ChatRowView(chat: chat, showUserInitialize: $showUserInitialize, showEditRemark: $showEditRemark)
             .frame(width: 300, height: 40)
         let hostingView = NSHostingView(rootView: swiftUIView)
         view.addSubview(hostingView)

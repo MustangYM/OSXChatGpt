@@ -194,7 +194,6 @@ struct ChatRoomCellView: View {
                         }
                     }
                 
-                    
                 VStack {
                     Image("User")
                         .resizable()

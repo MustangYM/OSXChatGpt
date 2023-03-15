@@ -23,6 +23,7 @@
 		182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437A29BC5FBE00F06778 /* EnterAPIView.swift */; };
 		182B437F29BDE08200F06778 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437E29BDE08200F06778 /* Config.swift */; };
 		182B43A429BF730300F06778 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B43A329BF730300F06778 /* NSColor.swift */; };
+		188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
 		CB28A51E29BF284000F0286A /* MessageTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A51D29BF284000F0286A /* MessageTextModel.swift */; };
@@ -51,6 +52,7 @@
 		182B437A29BC5FBE00F06778 /* EnterAPIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAPIView.swift; sourceTree = "<group>"; };
 		182B437E29BDE08200F06778 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		182B43A329BF730300F06778 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
+		188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EidtSessionRemarkView.swift; sourceTree = "<group>"; };
 		CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				182B436429BC5C8700F06778 /* UserInitializeView.swift */,
 				182B436129BC5C8700F06778 /* View.swift */,
 				182B437A29BC5FBE00F06778 /* EnterAPIView.swift */,
+				188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */,
 				CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */,
 			);
 			path = WindowView;
@@ -264,6 +267,7 @@
 				182B43A429BF730300F06778 /* NSColor.swift in Sources */,
 				182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */,
 				182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */,
+				188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */,
 				182B437F29BDE08200F06778 /* Config.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
