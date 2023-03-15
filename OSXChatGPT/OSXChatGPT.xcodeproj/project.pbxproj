@@ -27,6 +27,7 @@
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
 		CB28A51E29BF284000F0286A /* MessageTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A51D29BF284000F0286A /* MessageTextModel.swift */; };
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
+		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
 		CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
 		CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */; };
 		CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */; };
@@ -56,6 +57,7 @@
 		CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSXChatGPT.entitlements; sourceTree = "<group>"; };
 		CB28A51D29BF284000F0286A /* MessageTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextModel.swift; sourceTree = "<group>"; };
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
+		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
 		CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				182B436429BC5C8700F06778 /* UserInitializeView.swift */,
 				182B436129BC5C8700F06778 /* View.swift */,
 				182B437A29BC5FBE00F06778 /* EnterAPIView.swift */,
+				CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */,
 			);
 			path = WindowView;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
 				182B436829BC5C8700F06778 /* MainContentView.swift in Sources */,
 				CBC4B12529B8D28D00650296 /* Conversation+CoreDataClass.swift in Sources */,
+				CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */,
 				182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */,
 				CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */,
 			);

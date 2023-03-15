@@ -40,7 +40,7 @@ extension Message {
             let model = MessageTextModel(type: .text, text: text)
             array.append(model)
         }else {
-            var components = text.components(separatedBy: "```")
+            let components = text.components(separatedBy: "```")
             var idx: Int = 0// 0: code， 1: text
             for (index, str) in components.enumerated() {
                 if index == 0 {
@@ -53,7 +53,9 @@ extension Message {
                         let model = createMessageCodeModel(text: String(str))
                         array.append(model)
                     }else {
-                        let model = MessageTextModel(type: .text, text: String(str))
+                        var newStr = String(str)
+                        newStr = newStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                        let model = MessageTextModel(type: .text, text: newStr)
                         array.append(model)
                     }
                     if idx == 0 {
@@ -67,7 +69,9 @@ extension Message {
                         let model = createMessageCodeModel(text: String(str))
                         array.append(model)
                     }else {
-                        let model = MessageTextModel(type: .text, text: String(str))
+                        var newStr = String(str)
+                        newStr = newStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                        let model = MessageTextModel(type: .text, text: newStr)
                         array.append(model)
                     }
                     if idx == 0 {

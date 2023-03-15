@@ -43,9 +43,8 @@ class ChatGPTManager {
 extension ChatGPTManager {
     /// 提问
     func askChatGPT(messages: [Message], complete:(([String: Any]?, String?) -> ())?) {
-        var arr: [Message] = messages
-        //来回两次算一次对话，上下文传最多传5次对话
-        arr = checkMaxAskMsgCount(maxCount: 10, messages: arr)
+        //来回两次算一次对话，上下文传最多传的对话
+        let arr = messages.suffix(20)
         var temp: [[String: String]] = []
         arr.forEach { msg in
             temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])
@@ -83,15 +82,6 @@ extension ChatGPTManager {
 }
 
 extension ChatGPTManager {
-    private func checkMaxAskMsgCount(maxCount: Int, messages: [Message]) -> [Message] {
-        var msg = messages
-        if msg.count > maxCount {
-            msg.remove(at: 0)
-            return checkMaxAskMsgCount(maxCount: maxCount, messages: msg)
-        }else {
-            return msg
-        }
-    }
     private func maskString(_ string: inout String, startIndex: Int, endIndex: Int, maskCharacter: Character = "*") {
         guard startIndex < endIndex else { return }
         let range = string.index(string.startIndex, offsetBy: startIndex) ..< string.index(string.startIndex, offsetBy: endIndex)

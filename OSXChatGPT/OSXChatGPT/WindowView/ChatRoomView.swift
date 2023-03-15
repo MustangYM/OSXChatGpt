@@ -107,8 +107,11 @@ struct ChatRoomView: View {
             //**全局监控一下当前conversation
             Config.shared.CurrentSession = conversation.sesstionId
             viewModel.fetchMessage(sesstionId: conversation.sesstionId)
+                
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                withAnimation {
+                    scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                }
             }
         }
         .onDisappear {
@@ -150,11 +153,10 @@ struct ChatRoomView: View {
             }
         }
         viewModel.addNewMessage(sesstionId: Config.shared.CurrentSession, text: replaceStr, role: "user") {
-            scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
             conversation.lastMessage = viewModel.messages.last
             conversation.updateData = Date()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation {
                 scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
             }
         }
@@ -162,25 +164,10 @@ struct ChatRoomView: View {
             //清空
             newMessageText = ""
             lastMessageText = newMessageText
-            scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+            withAnimation {
+                scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+            }
         }
-    }
-}
-
-struct GradientProgressView: NSViewRepresentable {
-    func makeNSView(context: Context) -> NSProgressIndicator {
-        let progressIndicator = NSProgressIndicator()
-        progressIndicator.style = .bar
-        progressIndicator.isIndeterminate = true
-        progressIndicator.startAnimation(nil)
-        progressIndicator.controlSize = .regular
-        progressIndicator.controlTint = .graphiteControlTint
-        progressIndicator.layer?.rasterizationScale = NSScreen.main?.backingScaleFactor ?? 1
-        progressIndicator.appearance = NSAppearance(named: .aqua)
-        return progressIndicator
-    }
-
-    func updateNSView(_ nsView: NSProgressIndicator, context: Context) {
     }
 }
 
@@ -217,16 +204,10 @@ struct ChatRoomCellView: View {
                 }
             } else {
                 VStack {
-                    if message.text == "......" {
-                        GradientProgressView()
-                                            .frame(width: 30, height: 30)
-                                            .padding(0)
-                    } else {
-                        Image("openAI_icon")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .padding(0)
-                    }
+                    Image("openAI_icon")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(0)
                     Spacer()
                 }
                 
@@ -245,10 +226,9 @@ struct ChatRoomCellView: View {
                     
                 }else if message.sesstionId == Config.shared.chatGptThinkSession {
                     //等待chatGPT回复的动画
-                    Text(message.text ?? "")
+                    ThinkingAnimationView()
                         .padding(12)
                         .background(Color.gray.opacity(0.8))
-                        .foregroundColor(.white)
                         .cornerRadius(6)
                 }
                 else {
@@ -317,6 +297,7 @@ struct ChatRoomCellTextView: View {
                         .foregroundColor(NSColor(r: 0, g: 195, b: 135).toColor())
                         .padding(.top, 0)
                         .padding(.leading, 10)
+                        .padding(.bottom, 15)
                     Spacer()
                 }
                 

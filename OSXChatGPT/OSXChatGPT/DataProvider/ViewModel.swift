@@ -115,8 +115,9 @@ import CoreData
         updateConversation(sesstionId: sesstionId, message:messages.last)
         
         addGptThinkMessage()
-        
-        ChatGPTManager.shared.askChatGPT(messages: messages) { json, error in
+        var sendMsgs = messages
+        sendMsgs.removeAll(where: {$0.sesstionId == Config.shared.chatGptThinkSession})
+        ChatGPTManager.shared.askChatGPT(messages: sendMsgs) { json, error in
             if let err = error {
                 print("\(err)")
                 let msg = Message(context: CoreDataManager.shared.container.viewContext)
