@@ -225,7 +225,7 @@ struct ChatRoomCellView: View {
                     .background(Color.gray.opacity(0.8))
                     .foregroundColor(.white)
                     .cornerRadius(6)
-                }else if message.sesstionId == viewModel.chatGptThinkSession {
+                }else if message.type == 1 {
                     //等待chatGPT回复的动画
                     ThinkingAnimationView()
                         .padding(12)

@@ -19,7 +19,6 @@ import CoreData
     
     
     var currentConversation: Conversation?//当前会话
-    public let chatGptThinkSession: String = "chatGptThinkSessionID"//gpt输入固定id
     
     init() {
         fetchConversations()
@@ -80,8 +79,8 @@ import CoreData
         fetchConversations()
     }
     func deleteConversation(_ conversation: Conversation) {
-        CoreDataManager.shared.delete(objects: [conversation])
         conversations.removeAll { $0.sesstionId == conversation.sesstionId }
+        CoreDataManager.shared.delete(objects: [conversation])
         if currentConversation?.sesstionId == conversation.sesstionId {
             currentConversation = nil
         }
@@ -92,28 +91,42 @@ import CoreData
         request.predicate = NSPredicate(format: "sesstionId == %@", sesstionId)
         let timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: true)
         request.sortDescriptors = [timestampSortDescriptor]
-        let results: [Message] = CoreDataManager.shared.fetch(request: request)
+        var results: [Message] = CoreDataManager.shared.fetch(request: request)
+        if let last = results.last {
+            if last.role == ChatGPTManager.shared.gptRoleString {
+                //最后一条是gpt消息，并且已经回复，则删除以前的回复中
+                if last.type != 1 {
+                    let thinks = results.filter({$0.type == 1 })
+                    if thinks.count > 0 {
+                        results.removeAll(where: {$0.type == 1})
+                        CoreDataManager.shared.delete(objects: thinks)
+                    }
+                }
+            }
+        }
+        
         messages = results
     }
-    func addGptThinkMessage() {
-        if messages.contains(where: { $0.sesstionId == chatGptThinkSession}) {
-            messages.removeAll(where: { $0.sesstionId == chatGptThinkSession} )
-        }
+    func addGptThinkMessage(sesstionId: String) {
+        removeGptThinkMessage()
+        
         let msg = Message(context: CoreDataManager.shared.container.viewContext)
-        msg.sesstionId = chatGptThinkSession
+        msg.sesstionId = sesstionId
         msg.id = UUID()
         msg.createdDate = Date()
         msg.text = "......"
         msg.role = ChatGPTManager.shared.gptRoleString
+        msg.type = 1
         messages.append(msg)
+        CoreDataManager.shared.saveData()
     }
     func removeGptThinkMessage() {
-        let msg = messages.filter({ $0.sesstionId == chatGptThinkSession})
+        let msg = messages.filter({ $0.type == 1})
         if msg.count == 0 {
             return
         }
-        if messages.contains(where: { $0.sesstionId == chatGptThinkSession}) {
-            messages.removeAll(where: { $0.sesstionId == chatGptThinkSession} )
+        if messages.contains(where: { $0.type == 1}) {
+            messages.removeAll(where: { $0.type == 1} )
         }
         CoreDataManager.shared.delete(objects: msg)
         
@@ -133,18 +146,19 @@ import CoreData
         updateConversation(sesstionId: sesstionId, message:messages.last)
         print("发送问题：\(text)")
         var sendMsgs = messages
-        sendMsgs.removeAll(where: {$0.sesstionId == chatGptThinkSession})
+        sendMsgs.removeAll(where: {$0.type == 1})
         var isFeedback = false
         ChatGPTManager.shared.askChatGPT(messages: sendMsgs) { json, error in
             if let err = error {
                 print("\(err)")
+                self.removeGptThinkMessage()
+                CoreDataManager.shared.saveData()
                 let msg = Message(context: CoreDataManager.shared.container.viewContext)
                 msg.sesstionId = sesstionId
                 msg.role = ChatGPTManager.shared.gptRoleString
                 msg.text = "啊哦～连接失败了！"
                 msg.createdDate = Date()
                 msg.id = UUID()
-                self.removeGptThinkMessage()
                 CoreDataManager.shared.saveData()
                 if self.currentConversation?.sesstionId == sesstionId {
                     self.messages.append(msg)
@@ -154,6 +168,8 @@ import CoreData
                 isFeedback = true
                 return
             }
+            self.removeGptThinkMessage()
+            CoreDataManager.shared.saveData()
             let choices = json?["choices"] as? [Any]
             let choice = choices?[0] as? [String: Any]
             let myMessage = choice?["message"] as? [String: Any]
@@ -166,7 +182,6 @@ import CoreData
             msg.text = msg.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             msg.createdDate = Date()
             msg.id = UUID()
-            self.removeGptThinkMessage()
             CoreDataManager.shared.saveData()
             if self.currentConversation?.sesstionId == sesstionId {
                 self.messages.append(msg)
@@ -178,7 +193,8 @@ import CoreData
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             if !isFeedback {
-                self.addGptThinkMessage()
+                self.addGptThinkMessage(sesstionId: sesstionId)
+                
             }
         }
     }
