@@ -12,7 +12,6 @@ struct MainContentView: View {
     var body: some View {
         NavigationView {
             SessionsView()
-            UserInitializeView()
         }
         .padding(.bottom, -6)
         .toolbar {

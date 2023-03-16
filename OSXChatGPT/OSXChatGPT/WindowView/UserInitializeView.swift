@@ -141,8 +141,6 @@ struct UserInitializeView: View {
             
         }
         .padding(.bottom,150)
-
-        
         VStack {
             Spacer()
             Text("Beta v\(UserInitializeView.appVersion)")

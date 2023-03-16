@@ -21,7 +21,7 @@ struct ChatRoomView: View {
     
     init(conversation: Conversation?) {
         self.conversation = conversation
-        KeyboardMonitor.shared.startMonitorShiftKey()
+        
     }
     
     
@@ -102,9 +102,8 @@ struct ChatRoomView: View {
         
         .onAppear {
             print("View appeared!")
-            if viewModel.createNewChat {
-//                viewModel.createNewChat = false
-            }
+            KeyboardMonitor.shared.startMonitorPasteboard()
+            KeyboardMonitor.shared.startMonitorShiftKey()
             viewModel.currentConversation = conversation
             viewModel.fetchMessage(sesstionId: conversation?.sesstionId ?? "")
                 
@@ -127,12 +126,18 @@ struct ChatRoomView: View {
             //按下shift
         }else if newMessageText.count < lastMessageText.count {
             //删除操作
-        }else if newMessageText.hasSuffix("\n") {
-            var text = String(newMessageText)
-            text.removeLast(1)
-            if text == lastMessageText {
-                //发送操作
-                sendMessage(scrollView: scrollView)
+        }else if newMessageText.count - 1 == lastMessageText.count {
+            //在中间任意地方按下空格键发送
+            let charts = newMessageText.filter { char in
+                !lastMessageText.contains(char)
+            }
+            if charts == "\n" {
+                if KeyboardMonitor.shared.currentPasteboardText == newMessageText {
+                    //复制进来的，不发送
+                }else {
+                    //输入的是空格，则发送
+                    sendMessage(scrollView: scrollView)
+                }
             }
         }
         lastMessageText = newMessageText
@@ -170,6 +175,7 @@ struct ChatRoomView: View {
         }
     }
 }
+
 
 struct ChatRoomCellView: View {
     let message: Message

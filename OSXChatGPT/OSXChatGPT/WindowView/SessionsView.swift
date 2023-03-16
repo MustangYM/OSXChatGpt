@@ -38,29 +38,32 @@ struct SessionsView: View {
                     .buttonStyle(BorderlessButtonStyle())
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading,0)
-                    
                     NavigationLink(destination: UserInitializeView().environmentObject(viewModel), isActive: $viewModel.showUserInitialize) {
+                        Button(action: {
+                            // 点击右边按钮的操作
+                            viewModel.currentConversation = nil;//先取消会话
+                            viewModel.showUserInitialize = true//再显示设置
+                            KeyboardMonitor.shared.stopKeyMonitor()
+                            KeyboardMonitor.shared.stopMonitorPasteboard()
+                        }) {
+                            Image(systemName: "gear")
+                                .padding(10)
+                                .foregroundColor(.white)
+                                .background(Color.gray)
+                                .cornerRadius(5)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        .padding(.trailing, 30)
                     }.buttonStyle(BorderlessButtonStyle())
-                    Button(action: {
-                        // 点击右边按钮的操作
-                        viewModel.showUserInitialize = true
-                        KeyboardMonitor.shared.stopKeyMonitor()
-                    }) {
-                        Image(systemName: "gear")
-                            .padding(10)
-                            .foregroundColor(.white)
-                            .background(Color.gray)
-                            .cornerRadius(5)
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
-                    .padding(.trailing, 30)
                     
                 })
                 .frame(height: 20)
                 .sheet(isPresented: $viewModel.showEditRemark) {
                     EidtSessionRemarkView(remark: viewModel.editConversation?.remark ?? "").environmentObject(viewModel)
                 }
-                
+                .onAppear  {
+                    viewModel.showUserInitialize = true
+                }
                 Spacer()
                     .frame(height: 20)
                 List {

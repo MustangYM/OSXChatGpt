@@ -109,10 +109,13 @@ import CoreData
     }
     func removeGptThinkMessage() {
         let msg = messages.filter({ $0.sesstionId == chatGptThinkSession})
-        CoreDataManager.shared.delete(objects: msg)
+        if msg.count == 0 {
+            return
+        }
         if messages.contains(where: { $0.sesstionId == chatGptThinkSession}) {
             messages.removeAll(where: { $0.sesstionId == chatGptThinkSession} )
         }
+        CoreDataManager.shared.delete(objects: msg)
         
     }
     func addNewMessage(sesstionId: String, text: String, role: String, updateBlock: @escaping(() -> ())) {
@@ -128,7 +131,7 @@ import CoreData
         messages.append(msg)
         CoreDataManager.shared.saveData()
         updateConversation(sesstionId: sesstionId, message:messages.last)
-        
+        print("发送问题：\(text)")
         var sendMsgs = messages
         sendMsgs.removeAll(where: {$0.sesstionId == chatGptThinkSession})
         var isFeedback = false
@@ -141,8 +144,8 @@ import CoreData
                 msg.text = "啊哦～连接失败了！"
                 msg.createdDate = Date()
                 msg.id = UUID()
-                CoreDataManager.shared.saveData()
                 self.removeGptThinkMessage()
+                CoreDataManager.shared.saveData()
                 if self.currentConversation?.sesstionId == sesstionId {
                     self.messages.append(msg)
                 }
@@ -163,8 +166,8 @@ import CoreData
             msg.text = msg.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             msg.createdDate = Date()
             msg.id = UUID()
-            CoreDataManager.shared.saveData()
             self.removeGptThinkMessage()
+            CoreDataManager.shared.saveData()
             if self.currentConversation?.sesstionId == sesstionId {
                 self.messages.append(msg)
             }
