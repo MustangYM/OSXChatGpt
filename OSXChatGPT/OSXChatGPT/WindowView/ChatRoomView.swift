@@ -158,9 +158,6 @@ struct ChatRoomView: View {
             }
         }
         viewModel.addNewMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", text: msg, role: "user") {
-            conversation?.lastMessage = viewModel.messages.last
-            conversation?.updateData = Date()
-            
             withAnimation {
                 scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
             }
