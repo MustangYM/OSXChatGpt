@@ -19,8 +19,6 @@ struct ChatRoomView: View {
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
     
-    
-    @State private var pasteboardText: String = ""
     init(conversation: Conversation?) {
         self.conversation = conversation
         
@@ -61,6 +59,7 @@ struct ChatRoomView: View {
                     .onChange(of: viewModel.messages.count) { _ in
                         // 每次添加新消息时，更新 ID 以便滚动
                         self.scrollID = UUID()
+                        self.scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
                     }
                 }
                 .frame(maxHeight: geometry.size.height) // 限制高度以便滚动
@@ -123,16 +122,31 @@ struct ChatRoomView: View {
         
 
     }
+    
+    private func compareText(newText: String, lastText: String) -> String {
+        var newValue = String(newText)
+        var lastValue = String(lastText)
+        //比较两个字符串，找出新输入的那个字符
+        newText.forEach { chart in
+            if let index = newValue.firstIndex(of: chart) {
+                if let idx = lastValue.firstIndex(of: chart) {
+                    newValue.remove(at: index)
+                    lastValue.remove(at: idx)
+                }
+            }
+        }
+        return newValue
+    }
+    
     private func onTextViewChange(_ newValue: String) {
+        
         if (KeyboardMonitor.shared.shiftKeyPressed) {
             //按下shift
         }else if newMessageText.count < lastMessageText.count {
             //删除操作
         }else if newMessageText.count - 1 == lastMessageText.count {
             //在中间任意地方按下空格键发送
-            let charts = newMessageText.filter { char in
-                !lastMessageText.contains(char)
-            }
+            var charts = compareText(newText: newMessageText, lastText: lastMessageText)
             if charts == "\n" {
                 if KeyboardMonitor.shared.currentPasteboardText == newMessageText {
                     //复制进来的，不发送
