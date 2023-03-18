@@ -19,6 +19,8 @@ struct ChatRoomView: View {
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
     
+    
+    @State private var pasteboardText: String = ""
     init(conversation: Conversation?) {
         self.conversation = conversation
         
@@ -30,7 +32,7 @@ struct ChatRoomView: View {
             GeometryReader { geometry in
                 ScrollView {
                     ScrollViewReader { scrollView in
-                        VStack(alignment: .trailing, spacing: 8) {
+                        LazyVStack(alignment: .trailing, spacing: 8) {
                             ForEach(viewModel.messages) { message in
                                 ChatRoomCellView(message: message).environmentObject(viewModel)
                                     .id(message.id) // 添加唯一标识符
@@ -77,8 +79,8 @@ struct ChatRoomView: View {
                             .scrollContentBackground(.hidden)
                             .cornerRadius(10)
                             .frame(maxHeight: geometry.size.height)
-                            .onChange(of: newMessageText) { _ in
-                                onTextViewChange()
+                            .onChange(of: newMessageText) { newValue in
+                                onTextViewChange(newValue)
                             }
                             
                     } else {
@@ -90,8 +92,8 @@ struct ChatRoomView: View {
                             .background(Color.clear)
                             .cornerRadius(10)
                             .frame(maxHeight: geometry.size.height)
-                            .onChange(of: newMessageText) { _ in
-                                onTextViewChange()
+                            .onChange(of: newMessageText) { newValue in
+                                onTextViewChange(newValue)
                             }
                     }
                 }
@@ -121,7 +123,7 @@ struct ChatRoomView: View {
         
 
     }
-    private func onTextViewChange() {
+    private func onTextViewChange(_ newValue: String) {
         if (KeyboardMonitor.shared.shiftKeyPressed) {
             //按下shift
         }else if newMessageText.count < lastMessageText.count {
@@ -158,8 +160,10 @@ struct ChatRoomView: View {
             }
         }
         viewModel.addNewMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", text: msg, role: "user") {
-            withAnimation {
-                scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation {
+                    scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                }
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {

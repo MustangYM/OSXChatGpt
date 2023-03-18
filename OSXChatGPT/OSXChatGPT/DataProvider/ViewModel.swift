@@ -20,6 +20,9 @@ import CoreData
     
     var currentConversation: Conversation?//当前会话
     
+    
+    private var allChatRoomViews: [String:ChatRoomView] = [:]
+    
     init() {
         fetchConversations()
     }
@@ -214,6 +217,20 @@ import CoreData
         }
     }
     
+}
+extension ViewModel {
+    func getChatRoomView(conversation: Conversation?) -> ChatRoomView {
+        if conversation == nil || conversation!.sesstionId == "" {
+            let view = ChatRoomView(conversation: conversation)
+            return view
+        }
+        if let view = allChatRoomViews[conversation?.sesstionId ?? ""] {
+            return view
+        }
+        let view = ChatRoomView(conversation: conversation)
+        allChatRoomViews[conversation!.sesstionId] = view
+        return view
+    }
 }
 
 extension ViewModel {

@@ -17,7 +17,7 @@ struct SessionsView: View {
                 .ignoresSafeArea()
             VStack {
                 HStack(spacing: 10, content: {
-                    NavigationLink(destination: ChatRoomView(conversation: viewModel.currentConversation).environmentObject(viewModel), isActive: $viewModel.createNewChat) {
+                    NavigationLink(destination: viewModel.getChatRoomView(conversation: viewModel.currentConversation).environmentObject(viewModel), isActive: $viewModel.createNewChat) {
                     }.buttonStyle(BorderlessButtonStyle())
                     Spacer()
                     Button(action: {
@@ -68,7 +68,7 @@ struct SessionsView: View {
                     .frame(height: 20)
                 List {
                     ForEach(viewModel.conversations, id: \.self) { conversation in
-                        NavigationLink(destination: ChatRoomView(conversation: conversation).environmentObject(viewModel), tag: conversation, selection: $viewModel.currentConversation) {
+                        NavigationLink(destination: viewModel.getChatRoomView(conversation: conversation).environmentObject(viewModel), tag: conversation, selection: $viewModel.currentConversation) {
                             ChatRowContentView(chat: conversation).environmentObject(viewModel)
                             
                         }
