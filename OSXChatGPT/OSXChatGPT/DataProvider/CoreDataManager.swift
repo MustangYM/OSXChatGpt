@@ -44,6 +44,27 @@ class CoreDataManager {
         }
         return []
     }
+    
+    func fetchPage<R: NSFetchRequestResult>(request: NSFetchRequest<R>) -> [R] {
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: container.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        let pageNumber = 1 // 页码从1开始
+        let offset = (pageNumber - 1) * request.fetchBatchSize
+        fetchedResultsController.fetchRequest.fetchOffset = offset
+        
+        do {
+//            try fetchedResultsController.performFetch()
+            let results = fetchedResultsController.fetchedObjects
+            
+            do {
+                return try container.viewContext.fetch(request)
+            } catch let error {
+                
+            }
+        }
+        return []
+    }
+    
     func delete(object: NSManagedObject) {
         withAnimation {
             container.viewContext.delete(object)

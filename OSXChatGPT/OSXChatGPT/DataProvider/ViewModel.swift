@@ -89,7 +89,66 @@ import CoreData
         }
     }
     
+    
+    func createSesstionId() -> String {
+        if #available(macOS 12, *) {
+            return String(Date.now.timeIntervalSince1970 * 1000)
+        } else {
+            return String(Date().timeIntervalSince1970 * 1000)
+        }
+    }
+    
+    class func createSesstionId() -> String {
+        if #available(macOS 12, *) {
+            return String(Date.now.timeIntervalSince1970 * 1000)
+        } else {
+            return String(Date().timeIntervalSince1970 * 1000)
+        }
+    }
+    
+}
+extension ViewModel {
+    func fetchFirstMessage(sesstionId: String) {
+        messages = []
+        fetchMoreMessage(sesstionId: sesstionId)
+    }
+    func fetchMoreMessage(sesstionId: String) {
+        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        request.predicate = NSPredicate(format: "sesstionId == %@", sesstionId)
+        var timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
+        request.sortDescriptors = [timestampSortDescriptor]
+
+        request.fetchLimit = 15
+        request.fetchOffset = messages.count
+        var results: [Message] = CoreDataManager.shared.fetch(request: request)
+        results = results.reversed()
+        if results.count == 0 {
+            return
+        }
+        if messages.count == 0 {
+            if let last = results.last {
+                if last.role == ChatGPTManager.shared.gptRoleString {
+                    //最后一条是gpt消息，并且已经回复，则删除以前的回复中
+                    if last.type != 1 {
+                        let thinks = results.filter({$0.type == 1 })
+                        if thinks.count > 0 {
+                            results.removeAll(where: {$0.type == 1})
+                            CoreDataManager.shared.delete(objects: thinks)
+                        }
+                    }
+                }
+            }
+            messages = results
+        }else {
+//            messages = results + messages
+            messages.insert(contentsOf: results, at: 0)
+        }
+        
+        
+    }
     func fetchMessage(sesstionId: String) {
+//        loadMoreMessage(sesstionId: sesstionId)
+        return
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "sesstionId == %@", sesstionId)
         let timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: true)
@@ -199,21 +258,6 @@ import CoreData
                 self.addGptThinkMessage(sesstionId: sesstionId)
                 
             }
-        }
-    }
-    func createSesstionId() -> String {
-        if #available(macOS 12, *) {
-            return String(Date.now.timeIntervalSince1970 * 1000)
-        } else {
-            return String(Date().timeIntervalSince1970 * 1000)
-        }
-    }
-    
-    class func createSesstionId() -> String {
-        if #available(macOS 12, *) {
-            return String(Date.now.timeIntervalSince1970 * 1000)
-        } else {
-            return String(Date().timeIntervalSince1970 * 1000)
         }
     }
     

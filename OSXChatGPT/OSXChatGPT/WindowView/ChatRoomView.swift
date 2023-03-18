@@ -19,6 +19,8 @@ struct ChatRoomView: View {
     @State private var scrollView: ScrollViewProxy?
     @State private var scrollID = UUID()
     
+    @State private var isOnAppear: Bool = false
+    
     init(conversation: Conversation?) {
         self.conversation = conversation
         
@@ -35,10 +37,18 @@ struct ChatRoomView: View {
                                 ChatRoomCellView(message: message).environmentObject(viewModel)
                                     .id(message.id) // 添加唯一标识符
                                     .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
+                                    .onAppear {
+                                        if viewModel.messages.count > 1 {
+                                            if viewModel.messages[1] == message && self.isOnAppear {
+                                                //加载更多
+                                                viewModel.fetchMoreMessage(sesstionId: conversation?.sesstionId ?? "")
+                                            }
+                                        }
+                                    }
                             }
                         }
                         .onChange(of: scrollID) { _ in
-                            scrollView.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                            scrollView.scrollTo(scrollID, anchor: .bottom)
                         }
                         .background(Color.clear)
                         .onAppear {
@@ -58,9 +68,9 @@ struct ChatRoomView: View {
                     }
                     .onChange(of: viewModel.messages.count) { _ in
                         // 每次添加新消息时，更新 ID 以便滚动
-                        self.scrollID = UUID()
-                        self.scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                        self.scrollID = viewModel.messages.last?.id ?? UUID()
                     }
+
                 }
                 .frame(maxHeight: geometry.size.height) // 限制高度以便滚动
             }
@@ -106,23 +116,24 @@ struct ChatRoomView: View {
             KeyboardMonitor.shared.startMonitorPasteboard()
             KeyboardMonitor.shared.startMonitorShiftKey()
             viewModel.currentConversation = conversation
-            viewModel.fetchMessage(sesstionId: conversation?.sesstionId ?? "")
-                
+            viewModel.fetchFirstMessage(sesstionId: conversation?.sesstionId ?? "")
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 withAnimation {
                     scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                    self.isOnAppear = true
                 }
             }
         }
         .onDisappear {
             print("View disappeared!")
+            self.isOnAppear = false
             
         }
-        .navigationTitle(conversation?.remark ?? conversation?.lastMessage?.text ?? "New Chat")
         
 
     }
-    
+
     private func compareText(newText: String, lastText: String) -> String {
         var newValue = String(newText)
         var lastValue = String(lastText)
@@ -146,7 +157,7 @@ struct ChatRoomView: View {
             //删除操作
         }else if newMessageText.count - 1 == lastMessageText.count {
             //在中间任意地方按下空格键发送
-            var charts = compareText(newText: newMessageText, lastText: lastMessageText)
+            let charts = compareText(newText: newMessageText, lastText: lastMessageText)
             if charts == "\n" {
                 if KeyboardMonitor.shared.currentPasteboardText == newMessageText {
                     //复制进来的，不发送
