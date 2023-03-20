@@ -83,7 +83,9 @@ import CoreData
     }
     func deleteConversation(_ conversation: Conversation) {
         conversations.removeAll { $0.sesstionId == conversation.sesstionId }
+        deleteAllMessage(sesstionId: conversation.sesstionId)
         CoreDataManager.shared.delete(objects: [conversation])
+        //删除会话对应的消息
         if currentConversation?.sesstionId == conversation.sesstionId {
             currentConversation = nil
         }
@@ -107,6 +109,7 @@ import CoreData
     }
     
 }
+// MARK: - message
 extension ViewModel {
     func fetchFirstMessage(sesstionId: String) {
         messages = []
@@ -115,7 +118,7 @@ extension ViewModel {
     func fetchMoreMessage(sesstionId: String) {
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "sesstionId == %@", sesstionId)
-        var timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
+        let timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
         request.sortDescriptors = [timestampSortDescriptor]
 
         request.fetchLimit = 15
@@ -140,34 +143,17 @@ extension ViewModel {
             }
             messages = results
         }else {
-//            messages = results + messages
+            // 需要优化滚动问题
             messages.insert(contentsOf: results, at: 0)
         }
         
         
     }
-    func fetchMessage(sesstionId: String) {
-//        loadMoreMessage(sesstionId: sesstionId)
-        return
+    
+    func deleteAllMessage(sesstionId: String) {
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "sesstionId == %@", sesstionId)
-        let timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: true)
-        request.sortDescriptors = [timestampSortDescriptor]
-        var results: [Message] = CoreDataManager.shared.fetch(request: request)
-        if let last = results.last {
-            if last.role == ChatGPTManager.shared.gptRoleString {
-                //最后一条是gpt消息，并且已经回复，则删除以前的回复中
-                if last.type != 1 {
-                    let thinks = results.filter({$0.type == 1 })
-                    if thinks.count > 0 {
-                        results.removeAll(where: {$0.type == 1})
-                        CoreDataManager.shared.delete(objects: thinks)
-                    }
-                }
-            }
-        }
-        
-        messages = results
+        CoreDataManager.shared.delete(request: request)
     }
     func addGptThinkMessage(sesstionId: String) {
         removeGptThinkMessage()

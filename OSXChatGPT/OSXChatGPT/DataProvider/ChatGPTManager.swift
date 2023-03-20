@@ -16,10 +16,15 @@ class ChatGPTManager {
         let key = UserDefaults.standard.value(forKey: "OSXChatGPT_apiKey_key") as? String
         return key ?? ""
     }()
+    private var askContextCount: Int = 3
     let gptRoleString: String = "assistant"
     private init() {
         let _  = getMaskApiKey()
     }
+    
+}
+// MARK: - 一些接口
+extension ChatGPTManager {
     func updateApiKey(apiKey: String) {
         if apiKey.contains("********") {
             //没有修改
@@ -36,15 +41,24 @@ class ChatGPTManager {
         maskString(&key, startIndex: 4, endIndex: key.count - 4)
         return key
     }
-    
+    /// 更新提问GPT的上下文数量（来回算一次）
+    func updateContextCount(count: Int) {
+        askContextCount = count
+        if askContextCount <= 0 {
+            askContextCount = 1
+        }
+    }
+    /// 获取当前上下文数量（来回算一次）
+    func getContextCount() -> Int {
+        return askContextCount
+    }
 }
-
-/// Chat GTP
+// MARK: - Chat GTP 提问
 extension ChatGPTManager {
     /// 提问
     func askChatGPT(messages: [Message], complete:(([String: Any]?, String?) -> ())?) {
         //来回两次算一次对话，上下文传最多传的对话
-        let arr = messages.suffix(20)
+        let arr = messages.suffix(askContextCount * 2 + 1)
         var temp: [[String: String]] = []
         arr.forEach { msg in
             temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])
