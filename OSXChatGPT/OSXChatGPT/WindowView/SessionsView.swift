@@ -13,8 +13,8 @@ struct SessionsView: View {
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack {
-//            ColorfulView(colors: [.accentColor], colorCount: 4)
-//                .ignoresSafeArea()
+            ColorfulView(colors: [.accentColor], colorCount: 1)
+                .ignoresSafeArea()
             VStack {
                 HStack(spacing: 10, content: {
                     NavigationLink(destination: viewModel.getChatRoomView(conversation: viewModel.currentConversation).environmentObject(viewModel), isActive: $viewModel.createNewChat) {

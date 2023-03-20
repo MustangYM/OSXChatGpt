@@ -16,8 +16,6 @@ struct UserInitializeView: View {
             .infoDictionary?["CFBundleShortVersionString"] as? String
             ?? "unknown"
     var body: some View {
-        ColorfulView(colors: [.accentColor], colorCount: 4)
-            .ignoresSafeArea()
         ZStack {
             VStack(spacing: 20) {
                 Image("App_Icon")
