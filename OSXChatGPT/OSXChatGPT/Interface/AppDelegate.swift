@@ -12,10 +12,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow?
     func applicationDidFinishLaunching(_ notification: Notification) {
         hideTheNavNar()
-        
-        if #available(OSX 10.14, *) {
-            NSApplication.shared.appearance = NSAppearance(named: .darkAqua)
-        }
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {

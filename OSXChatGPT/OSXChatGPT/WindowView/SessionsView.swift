@@ -13,8 +13,8 @@ struct SessionsView: View {
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack {
-            ColorfulView(colors: [.accentColor], colorCount: 4)
-                .ignoresSafeArea()
+//            ColorfulView(colors: [.accentColor], colorCount: 4)
+//                .ignoresSafeArea()
             VStack {
                 HStack(spacing: 10, content: {
                     NavigationLink(destination: viewModel.getChatRoomView(conversation: viewModel.currentConversation).environmentObject(viewModel), isActive: $viewModel.createNewChat) {
@@ -41,8 +41,8 @@ struct SessionsView: View {
                     NavigationLink(destination: UserInitializeView().environmentObject(viewModel), isActive: $viewModel.showUserInitialize) {
                         Button(action: {
                             // 点击右边按钮的操作
-                            viewModel.currentConversation = nil;//先取消会话
-                            viewModel.showUserInitialize = true//再显示设置
+                            viewModel.currentConversation = nil//先取消会话
+                            viewModel.createNewChat = false
                             KeyboardMonitor.shared.stopKeyMonitor()
                             KeyboardMonitor.shared.stopMonitorPasteboard()
                         }) {
@@ -66,14 +66,19 @@ struct SessionsView: View {
                 }
                 Spacer()
                     .frame(height: 20)
-                List {
-                    ForEach(viewModel.conversations, id: \.self) { conversation in
-                        NavigationLink(destination: viewModel.getChatRoomView(conversation: conversation).environmentObject(viewModel), tag: conversation, selection: $viewModel.currentConversation) {
+                List(viewModel.conversations, id: \.self) { conversation in
+                    NavigationLink(destination: viewModel.getChatRoomView(conversation: conversation).environmentObject(viewModel), tag: conversation, selection: $viewModel.currentConversation) {
+//                        ChatRowContentView(chat: conversation).environmentObject(viewModel)
+                        Button(action: {
+                            viewModel.currentConversation = conversation
+                            viewModel.showUserInitialize = false
+                        }) {
                             ChatRowContentView(chat: conversation).environmentObject(viewModel)
-                            
                         }
-                        .cornerRadius(5)
+                        .buttonStyle(BorderlessButtonStyle())
+                        .padding(.trailing, 30)
                     }
+                    .cornerRadius(5)
                 }
 
             }
