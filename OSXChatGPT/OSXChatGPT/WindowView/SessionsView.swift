@@ -217,6 +217,11 @@ struct ChatRowContentNSView: NSViewRepresentable {
         gestureRecognizer.buttonMask = 0x2 // 双击事件
         view.addGestureRecognizer(gestureRecognizer)
         
+        
+        let gestureRecognizer1 = NSClickGestureRecognizer(target: context.coordinator,
+                                                          action: #selector(Coordinator.handleLeftClick(_:)))
+        gestureRecognizer1.buttonMask = 0x1 // 单击事件
+        view.addGestureRecognizer(gestureRecognizer1)
         return view
     }
 
