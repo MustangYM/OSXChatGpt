@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EnterAPIView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var apiKey: String = ChatGPTManager.shared.getMaskApiKey()
+    @Binding var apiKey: String
     
     var body: some View {
         VStack(spacing: 20) {
@@ -81,8 +81,8 @@ struct EnterAPIView: View {
     }
 }
 
-struct EnterAPIView_Previews: PreviewProvider {
-    static var previews: some View {
-        EnterAPIView()
-    }
-}
+//struct EnterAPIView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EnterAPIView(apiKey: $)
+//    }
+//}

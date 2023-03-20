@@ -136,7 +136,7 @@ struct UserInitializeView: View {
                 }
             }
             .sheet(isPresented: $openArgumentSeet) {
-                EnterAPIView()
+                EnterAPIView(apiKey: $apiKey)
             }
             
         }
