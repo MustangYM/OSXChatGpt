@@ -68,15 +68,16 @@ struct SessionsView: View {
                     .frame(height: 20)
                 List(viewModel.conversations, id: \.self) { conversation in
                     NavigationLink(destination: viewModel.getChatRoomView(conversation: conversation).environmentObject(viewModel), tag: conversation, selection: $viewModel.currentConversation) {
-//                        ChatRowContentView(chat: conversation).environmentObject(viewModel)
-                        Button(action: {
-                            viewModel.currentConversation = conversation
-                            viewModel.showUserInitialize = false
-                        }) {
-                            ChatRowContentView(chat: conversation).environmentObject(viewModel)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                        .padding(.trailing, 30)
+                        ChatRowContentView(chat: conversation).environmentObject(viewModel)
+//                        Button(action: {
+//                            viewModel.currentConversation = conversation
+//                            viewModel.showUserInitialize = false
+//                        }) {
+//                            ChatRowContentView(chat: conversation).environmentObject(viewModel)
+//                        }
+//                        .buttonStyle(BorderlessButtonStyle())
+//                        .foregroundColor(.white)
+//                        .padding(.trailing, 30)
                     }
                     .cornerRadius(5)
                 }
@@ -177,8 +178,17 @@ struct ChatRowContentNSView: NSViewRepresentable {
                 parent.showMenu = true
             }
         }
+        
+        @MainActor @objc func handleLeftClick(_ sender: NSClickGestureRecognizer) {
+            if sender.state == .ended {
+                print("左边键鼠标")
+                parent.viewModel.currentConversation = parent.chat;
+                parent.viewModel.showUserInitialize = false
+            }
+        }
+        
         func menuDidClose(_ menu: NSMenu) {
-//            print("menu menuDidClose!")
+            print("menu menuDidClose!")
         }
         
         @MainActor @objc func edit() {
@@ -215,6 +225,14 @@ struct ChatRowContentNSView: NSViewRepresentable {
                                                           action: #selector(Coordinator.handleRightClick(_:)))
         gestureRecognizer.buttonMask = 0x2 // 双击事件
         view.addGestureRecognizer(gestureRecognizer)
+        
+        
+            let gestureRecognizer1 = NSClickGestureRecognizer(target: context.coordinator,
+                                                              action: #selector(Coordinator.handleLeftClick(_:)))
+            gestureRecognizer1.buttonMask = 0x1 // 双击事件
+            view.addGestureRecognizer(gestureRecognizer1)
+        
+        
         return view
     }
 
