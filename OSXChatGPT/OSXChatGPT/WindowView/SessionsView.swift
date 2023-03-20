@@ -52,9 +52,9 @@ struct SessionsView: View {
                                 .background(Color.gray)
                                 .cornerRadius(5)
                         }
-                        .buttonStyle(BorderlessButtonStyle())
+                        .buttonStyle(PlainButtonStyle())
                         .padding(.trailing, 30)
-                    }.buttonStyle(BorderlessButtonStyle())
+                    }.buttonStyle(PlainButtonStyle())
                     
                 })
                 .frame(height: 20)
@@ -69,15 +69,6 @@ struct SessionsView: View {
                 List(viewModel.conversations, id: \.self) { conversation in
                     NavigationLink(destination: viewModel.getChatRoomView(conversation: conversation).environmentObject(viewModel), tag: conversation, selection: $viewModel.currentConversation) {
                         ChatRowContentView(chat: conversation).environmentObject(viewModel)
-//                        Button(action: {
-//                            viewModel.currentConversation = conversation
-//                            viewModel.showUserInitialize = false
-//                        }) {
-//                            ChatRowContentView(chat: conversation).environmentObject(viewModel)
-//                        }
-//                        .buttonStyle(BorderlessButtonStyle())
-//                        .foregroundColor(.white)
-//                        .padding(.trailing, 30)
                     }
                     .cornerRadius(5)
                 }
