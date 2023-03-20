@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EnterAPIView: View {
     @Environment(\.presentationMode) var presentationMode
+    @State var p_apiKey: String = ChatGPTManager.shared.getMaskApiKey()
     @Binding var apiKey: String
     
     var body: some View {
@@ -36,7 +37,7 @@ struct EnterAPIView: View {
             }
             .buttonStyle(BorderlessButtonStyle())//删除背景色
             
-            TextField("Enter your API key", text: $apiKey)
+            TextField("Enter your API key", text: $p_apiKey)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 400, height: 50)
             
@@ -55,7 +56,8 @@ struct EnterAPIView: View {
                 .buttonStyle(BorderlessButtonStyle())
                 
                 Button(action: {
-                    ChatGPTManager.shared.updateApiKey(apiKey: apiKey)
+                    ChatGPTManager.shared.updateApiKey(apiKey: p_apiKey)
+                    apiKey = ChatGPTManager.shared.getMaskApiKey()
                     self.presentationMode.wrappedValue.dismiss()
                     
                 }) {
