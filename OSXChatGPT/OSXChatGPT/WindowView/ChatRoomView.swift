@@ -8,8 +8,15 @@
 import SwiftUI
 import AppKit
 
-
-
+//低于macOS13输入框的背景色
+extension NSTextView {
+    open override var frame: CGRect {
+        didSet {
+            backgroundColor = .clear
+            drawsBackground = true
+        }
+    }
+}
 /// 聊天框
 struct ChatRoomView: View {
     var conversation: Conversation?
@@ -85,7 +92,7 @@ struct ChatRoomView: View {
                             .disableAutocorrection(true)
                             .padding()
                             .background(Color.clear)
-                            .scrollContentBackground(.hidden)
+//                            .scrollContentBackground(.hidden)
                             .cornerRadius(10)
                             .frame(maxHeight: geometry.size.height)
                             .onChange(of: newMessageText) { newValue in
