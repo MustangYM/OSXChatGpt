@@ -13,8 +13,8 @@ struct SessionsView: View {
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack {
-            ColorfulView(colors: [.accentColor], colorCount: 4)
-                .ignoresSafeArea()
+//            ColorfulView(colors: [.accentColor], colorCount: 4)
+//                .ignoresSafeArea()
             VStack {
                 HStack(spacing: 10, content: {
                     NavigationLink(destination: viewModel.getChatRoomView(conversation: viewModel.currentConversation).environmentObject(viewModel), isActive: $viewModel.createNewChat) {
@@ -41,8 +41,8 @@ struct SessionsView: View {
                     NavigationLink(destination: UserInitializeView().environmentObject(viewModel), isActive: $viewModel.showUserInitialize) {
                         Button(action: {
                             // 点击右边按钮的操作
-                            viewModel.currentConversation = nil;//先取消会话
-                            viewModel.showUserInitialize = true//再显示设置
+                            viewModel.currentConversation = nil//先取消会话
+                            viewModel.showUserInitialize = true
                             KeyboardMonitor.shared.stopKeyMonitor()
                             KeyboardMonitor.shared.stopMonitorPasteboard()
                         }) {
@@ -52,9 +52,9 @@ struct SessionsView: View {
                                 .background(Color.gray)
                                 .cornerRadius(5)
                         }
-                        .buttonStyle(BorderlessButtonStyle())
+                        .buttonStyle(PlainButtonStyle())
                         .padding(.trailing, 30)
-                    }.buttonStyle(BorderlessButtonStyle())
+                    }.buttonStyle(PlainButtonStyle())
                     
                 })
                 .frame(height: 20)
@@ -66,14 +66,11 @@ struct SessionsView: View {
                 }
                 Spacer()
                     .frame(height: 20)
-                List {
-                    ForEach(viewModel.conversations, id: \.self) { conversation in
-                        NavigationLink(destination: viewModel.getChatRoomView(conversation: conversation).environmentObject(viewModel), tag: conversation, selection: $viewModel.currentConversation) {
-                            ChatRowContentView(chat: conversation).environmentObject(viewModel)
-                            
-                        }
-                        .cornerRadius(5)
+                List(viewModel.conversations, id: \.self) { conversation in
+                    NavigationLink(destination: viewModel.getChatRoomView(conversation: conversation).environmentObject(viewModel), tag: conversation, selection: $viewModel.currentConversation) {
+                        ChatRowContentView(chat: conversation).environmentObject(viewModel)
                     }
+                    .cornerRadius(5)
                 }
 
             }
@@ -172,8 +169,17 @@ struct ChatRowContentNSView: NSViewRepresentable {
                 parent.showMenu = true
             }
         }
+        
+        @MainActor @objc func handleLeftClick(_ sender: NSClickGestureRecognizer) {
+            if sender.state == .ended {
+                print("左边键鼠标")
+                parent.viewModel.currentConversation = parent.chat;
+                parent.viewModel.showUserInitialize = false
+            }
+        }
+        
         func menuDidClose(_ menu: NSMenu) {
-//            print("menu menuDidClose!")
+            print("menu menuDidClose!")
         }
         
         @MainActor @objc func edit() {
@@ -210,6 +216,14 @@ struct ChatRowContentNSView: NSViewRepresentable {
                                                           action: #selector(Coordinator.handleRightClick(_:)))
         gestureRecognizer.buttonMask = 0x2 // 双击事件
         view.addGestureRecognizer(gestureRecognizer)
+        
+        
+            let gestureRecognizer1 = NSClickGestureRecognizer(target: context.coordinator,
+                                                              action: #selector(Coordinator.handleLeftClick(_:)))
+            gestureRecognizer1.buttonMask = 0x1 // 双击事件
+            view.addGestureRecognizer(gestureRecognizer1)
+        
+        
         return view
     }
 

@@ -148,6 +148,7 @@ struct UserInitializeView: View {
                 .opacity(0.5)
             Spacer().frame(height: 30)
         }
+       
     }
 }
 
