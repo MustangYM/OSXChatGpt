@@ -42,7 +42,7 @@ struct SessionsView: View {
                         Button(action: {
                             // 点击右边按钮的操作
                             viewModel.currentConversation = nil//先取消会话
-                            viewModel.showUserInitialize = false
+                            viewModel.showUserInitialize = true
                             KeyboardMonitor.shared.stopKeyMonitor()
                             KeyboardMonitor.shared.stopMonitorPasteboard()
                         }) {
