@@ -170,16 +170,16 @@ struct ChatRoomView: View {
                     //复制进来的，不发送
                 }else {
                     //输入的是空格，则发送
-                    sendMessage(scrollView: scrollView)
+                    sendMessage(scrollView: scrollView, text: lastMessageText)
                 }
             }
         }
         lastMessageText = newMessageText
     }
     
-    private func sendMessage(scrollView: ScrollViewProxy?) {
+    private func sendMessage(scrollView: ScrollViewProxy?, text: String) {
         guard !newMessageText.isEmpty else { return }
-        let msg = String(newMessageText.dropLast())
+        let msg = String(text)
         let replaceStr = msg.replacingOccurrences(of: " ", with: "")
         if replaceStr.count == 0 {
             newMessageText = ""
