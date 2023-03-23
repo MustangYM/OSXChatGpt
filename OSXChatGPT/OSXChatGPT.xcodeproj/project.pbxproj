@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -28,6 +28,7 @@
 		CB28A51E29BF284000F0286A /* MessageTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A51D29BF284000F0286A /* MessageTextModel.swift */; };
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
+		CB5EC7FE29CC390600C890A6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = CB5EC7FD29CC390600C890A6 /* Starscream */; };
 		CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
 		CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */; };
 		CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */; };
@@ -71,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				182B42C929BBB1C500F06778 /* Colorful in Frameworks */,
+				CB5EC7FE29CC390600C890A6 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +202,7 @@
 			name = OSXChatGPT;
 			packageProductDependencies = (
 				182B42C829BBB1C500F06778 /* Colorful */,
+				CB5EC7FD29CC390600C890A6 /* Starscream */,
 			);
 			productName = OSXChatGPT;
 			productReference = CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */;
@@ -231,6 +234,7 @@
 			mainGroup = CB1DCAB529B4F09D00B1D4E1;
 			packageReferences = (
 				182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */,
+				CB5EC7FC29CC390600C890A6 /* XCRemoteSwiftPackageReference "Starscream" */,
 			);
 			productRefGroup = CB1DCABF29B4F09D00B1D4E1 /* Products */;
 			projectDirPath = "";
@@ -489,6 +493,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		CB5EC7FC29CC390600C890A6 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -496,6 +508,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */;
 			productName = Colorful;
+		};
+		CB5EC7FD29CC390600C890A6 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB5EC7FC29CC390600C890A6 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
 		};
 /* End XCSwiftPackageProductDependency section */
 
