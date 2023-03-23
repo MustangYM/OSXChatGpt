@@ -180,16 +180,15 @@ struct ChatRoomView: View {
                     //复制进来的，不发送
                 }else {
                     //输入的是空格，则发送
-                    sendMessage(scrollView: scrollView)
+                    sendMessage(scrollView: scrollView, text: lastMessageText)
                 }
             }
         }
         lastMessageText = newMessageText
     }
     
-    private func sendMessage(scrollView: ScrollViewProxy?) {
+    private func sendMessage(scrollView: ScrollViewProxy?, text: String) {
         guard !newMessageText.isEmpty else { return }
-        
         let msg = String(newMessageText.dropLast())
         let replaceStr = msg.replacingOccurrences(of: " ", with: "")
         if replaceStr.count == 0 {
@@ -230,6 +229,7 @@ struct ChatRoomCellView: View {
                 Spacer()
                 VStack {
                     Text(message.text ?? "")
+                        .textSelection(.enabled)
                 }.padding(12)
                     .background(Color.blue.opacity(0.8))
                     .foregroundColor(.white)
@@ -294,6 +294,7 @@ struct ChatRoomCellView: View {
                                 Image(systemName: "doc.on.doc.fill")
                             }
                         }
+                        .textSelection(.enabled)
                 }
                     
                 Spacer()
@@ -311,6 +312,7 @@ struct ChatRoomCellTextView: View {
             HStack {
                 Text(textModel.text)
                     .foregroundColor(.white)
+                    .textSelection(.enabled)
                 Spacer()
             }
             .fixedSize(horizontal: false, vertical: true)
@@ -330,6 +332,7 @@ struct ChatRoomCellTextView: View {
                         .foregroundColor(.white)
                         .frame(height: 20)
                         .padding(.leading, 10)
+                        .textSelection(.enabled)
                     Spacer()
                     Button(action: {
                         NSPasteboard.general.prepareForNewContents()
@@ -341,6 +344,7 @@ struct ChatRoomCellTextView: View {
                 }.background(Color.white.opacity(0.4))
                     .padding(0)
                     .padding(.leading, 0)
+                    
                 HStack {
                     Text(textModel.text)
                         .font(.custom("SF Mono Bold", size: 14.5))
@@ -350,8 +354,10 @@ struct ChatRoomCellTextView: View {
                         .padding(.top, 0)
                         .padding(.leading, 10)
                         .padding(.bottom, 15)
+                        .textSelection(.enabled)
                     Spacer()
                 }
+                
                 
             }.padding(.leading, 0)
                 .padding(.top, 0)
