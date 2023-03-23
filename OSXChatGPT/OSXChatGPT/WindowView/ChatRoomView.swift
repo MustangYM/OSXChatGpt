@@ -224,16 +224,6 @@ struct ChatRoomCellView: View {
                     .background(Color.blue.opacity(0.8))
                     .foregroundColor(.white)
                     .cornerRadius(6)
-                    .contextMenu {
-                        Button(action: {
-                            NSPasteboard.general.prepareForNewContents()
-                            NSPasteboard.general.setString(message.text ?? "", forType: .string)
-                        }) {
-                            Text("Copy")
-                            Image(systemName: "doc.on.doc.fill")
-                        }
-                    }
-                
                 VStack {
                     Image("User")
                         .resizable()
@@ -275,16 +265,19 @@ struct ChatRoomCellView: View {
                         .background(Color.gray.opacity(0.8))
                         .foregroundColor(.white)
                         .cornerRadius(6)
-                        .contextMenu {
-                            Button(action: {
-                                NSPasteboard.general.prepareForNewContents()
-                                NSPasteboard.general.setString(message.text ?? "", forType: .string)
-                            }) {
-                                Text("Copy")
-                                Image(systemName: "doc.on.doc.fill")
-                            }
-                        }
                         .textSelection(.enabled)
+                    
+                    if message.type == 2 && viewModel.messages.last?.id == message.id {
+                        Button {
+                            viewModel.resendMessage(sesstionId: message.sesstionId)
+                        } label: {
+                            Image("retry")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        }
+                        .frame(width: 30, height: 30)
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
                     
                 Spacer()
@@ -306,15 +299,6 @@ struct ChatRoomCellTextView: View {
                 Spacer()
             }
             .fixedSize(horizontal: false, vertical: true)
-            .contextMenu {
-                Button(action: {
-                    NSPasteboard.general.prepareForNewContents()
-                    NSPasteboard.general.setString(textModel.text, forType: .string)
-                }) {
-                    Text("Copy")
-                    Image(systemName: "doc.on.doc.fill")
-                }
-            }
         }else {
             VStack {
                 HStack {
@@ -337,9 +321,9 @@ struct ChatRoomCellTextView: View {
                     
                 HStack {
                     Text(textModel.text)
-                        .font(.custom("SF Mono Bold", size: 14.5))
+                        .font(.custom("SF Mono Bold", size: 14.0))
                         .kerning(0.5)
-                        .lineSpacing(5)
+                        .lineSpacing(0.2)
                         .foregroundColor(NSColor(r: 0, g: 195, b: 135).toColor())
                         .padding(.top, 0)
                         .padding(.leading, 10)
@@ -354,15 +338,6 @@ struct ChatRoomCellTextView: View {
                 .background(Color.black.opacity(0.7))
             .cornerRadius(5)
             .frame(minWidth: 20)
-            .contextMenu {
-                Button(action: {
-                    NSPasteboard.general.prepareForNewContents()
-                    NSPasteboard.general.setString(textModel.text, forType: .string)
-                }) {
-                    Text("Copy")
-                    Image(systemName: "doc.on.doc.fill")
-                }
-            }
         }
     }
 }

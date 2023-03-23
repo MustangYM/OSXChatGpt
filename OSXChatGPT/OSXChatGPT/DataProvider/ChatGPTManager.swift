@@ -10,10 +10,11 @@ import Foundation
 
 class ChatGPTManager {
     static let shared = ChatGPTManager()
+    private let saveApi_key: String = "OSXChatGPT_apiKey_key"
     private var messagesDict: [String:[Message]] = [:]
     private let httpClient: HTTPClient = HTTPClient()
     private lazy var apiKey : String = {
-        let key = UserDefaults.standard.value(forKey: "OSXChatGPT_apiKey_key") as? String
+        let key = UserDefaults.standard.value(forKey: saveApi_key) as? String
         return key ?? ""
     }()
     private var askContextCount: Int = 3
@@ -31,7 +32,11 @@ extension ChatGPTManager {
             return
         }
         self.apiKey = apiKey
-        UserDefaults.standard.set(apiKey, forKey: "OSXChatGPT_apiKey_key")
+        UserDefaults.standard.set(apiKey, forKey: saveApi_key)
+    }
+    func getApiKey() -> String {
+        let key = String(self.apiKey)
+        return key
     }
     func getMaskApiKey() -> String {
         var key = String(self.apiKey)
@@ -61,7 +66,10 @@ extension ChatGPTManager {
         let arr = messages.suffix(askContextCount * 2 + 1)
         var temp: [[String: String]] = []
         arr.forEach { msg in
-            temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])
+            if msg.type != 1 {
+                //移除错误的回复，不误导gpt
+                temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])
+            }
         }
         let parameters = [
             "model": "gpt-3.5-turbo-0301",
