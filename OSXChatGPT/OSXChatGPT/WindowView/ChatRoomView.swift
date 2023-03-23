@@ -90,7 +90,7 @@ struct ChatRoomView: View {
                     if #available(macOS 13.0, *) {
                         TextEditor(text: $newMessageText)
                             .font(.title3)
-                            .lineSpacing(5)
+                            .lineSpacing(2)
                             .disableAutocorrection(true)
                             .padding()
                             .background(Color.clear)
@@ -104,7 +104,7 @@ struct ChatRoomView: View {
                     } else {
                         TextEditor(text: $newMessageText)
                             .font(.title3)
-                            .lineSpacing(5)
+                            .lineSpacing(2)
                             .disableAutocorrection(true)
                             .padding()
                             .background(Color.clear)
@@ -122,11 +122,7 @@ struct ChatRoomView: View {
         
         .onAppear {
             print("View appeared!")
-            
-            if apiKey.count < 10 {
-                
-            }
-            
+            newMessageText = conversation?.lastInputText ?? ""
             KeyboardMonitor.shared.startMonitorPasteboard()
             KeyboardMonitor.shared.startMonitorShiftKey()
             viewModel.currentConversation = conversation
@@ -142,6 +138,7 @@ struct ChatRoomView: View {
         .onDisappear {
             print("View disappeared!")
             self.isOnAppear = false
+            conversation?.lastInputText = newMessageText
             
         }
         .sheet(isPresented: $openArgumentSeet) {
@@ -192,12 +189,12 @@ struct ChatRoomView: View {
         let msg = String(newMessageText.dropLast())
         let replaceStr = msg.replacingOccurrences(of: " ", with: "")
         if replaceStr.count == 0 {
-            newMessageText = ""
+            cleanText()
             return
         }else if replaceStr.contains("\n") {
             let repl = replaceStr.replacingOccurrences(of: "\n", with: "")
             if repl.count == 0 {
-                newMessageText = ""
+                cleanText()
                 return
             }
         }
@@ -210,12 +207,17 @@ struct ChatRoomView: View {
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             //清空
-            newMessageText = ""
-            lastMessageText = newMessageText
+            cleanText()
             withAnimation {
                 scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
             }
         }
+    }
+    
+    private func cleanText() {
+        newMessageText = ""
+        conversation?.lastInputText = ""
+        lastMessageText = ""
     }
 }
 
