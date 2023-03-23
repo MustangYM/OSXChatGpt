@@ -4,7 +4,9 @@
 //
 //  Created by MustangYM on 2023/3/11.
 //
-
+/*
+ https://platform.openai.com/docs/api-reference/introduction
+ */
 import AppKit
 import SwiftUI
 

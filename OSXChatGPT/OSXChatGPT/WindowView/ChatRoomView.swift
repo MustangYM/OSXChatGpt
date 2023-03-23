@@ -27,6 +27,8 @@ struct ChatRoomView: View {
     @State private var scrollID = UUID()
     
     @State private var isOnAppear: Bool = false
+    @State var apiKey: String = ChatGPTManager.shared.getMaskApiKey()
+    @State var openArgumentSeet: Bool = false
     
     init(conversation: Conversation?) {
         self.conversation = conversation
@@ -120,6 +122,11 @@ struct ChatRoomView: View {
         
         .onAppear {
             print("View appeared!")
+            
+            if apiKey.count < 10 {
+                
+            }
+            
             KeyboardMonitor.shared.startMonitorPasteboard()
             KeyboardMonitor.shared.startMonitorShiftKey()
             viewModel.currentConversation = conversation
@@ -136,6 +143,9 @@ struct ChatRoomView: View {
             print("View disappeared!")
             self.isOnAppear = false
             
+        }
+        .sheet(isPresented: $openArgumentSeet) {
+            EnterAPIView(apiKey: $apiKey)
         }
         
 
@@ -179,7 +189,7 @@ struct ChatRoomView: View {
     
     private func sendMessage(scrollView: ScrollViewProxy?, text: String) {
         guard !newMessageText.isEmpty else { return }
-        let msg = String(text)
+        let msg = String(newMessageText.dropLast())
         let replaceStr = msg.replacingOccurrences(of: " ", with: "")
         if replaceStr.count == 0 {
             newMessageText = ""

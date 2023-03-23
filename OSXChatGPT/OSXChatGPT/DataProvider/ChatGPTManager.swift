@@ -7,14 +7,14 @@
 
 import Foundation
 
+private let OSXChatGPTKEY = "OSXChatGPT_apiKey_key"
 
 class ChatGPTManager {
     static let shared = ChatGPTManager()
-    private let saveApi_key: String = "OSXChatGPT_apiKey_key"
     private var messagesDict: [String:[Message]] = [:]
     private let httpClient: HTTPClient = HTTPClient()
     private lazy var apiKey : String = {
-        let key = UserDefaults.standard.value(forKey: saveApi_key) as? String
+        let key = UserDefaults.standard.value(forKey: OSXChatGPTKEY) as? String
         return key ?? ""
     }()
     private var askContextCount: Int = 3
@@ -32,11 +32,12 @@ extension ChatGPTManager {
             return
         }
         self.apiKey = apiKey
-        UserDefaults.standard.set(apiKey, forKey: saveApi_key)
+        UserDefaults.standard.set(apiKey, forKey: OSXChatGPTKEY)
     }
     func getApiKey() -> String {
         let key = String(self.apiKey)
         return key
+        
     }
     func getMaskApiKey() -> String {
         var key = String(self.apiKey)
