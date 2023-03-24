@@ -11,5 +11,5 @@ import CoreData
 
 
 public class Conversation: NSManagedObject {
-
+    var lastInputText: String = ""
 }

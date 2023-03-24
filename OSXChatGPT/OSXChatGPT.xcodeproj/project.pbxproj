@@ -22,15 +22,13 @@
 		182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437829BC5D6200F06778 /* OSXChatGPTApp.swift */; };
 		182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437A29BC5FBE00F06778 /* EnterAPIView.swift */; };
 		182B43A429BF730300F06778 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B43A329BF730300F06778 /* NSColor.swift */; };
-		1843D43E29CDEB9F00697995 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1843D43D29CDEB9F00697995 /* MarkdownUI */; };
-		1843D44129CDEBFD00697995 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = 1843D44029CDEBFD00697995 /* Splash */; };
 		188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
 		CB28A51E29BF284000F0286A /* MessageTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A51D29BF284000F0286A /* MessageTextModel.swift */; };
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
-		CB5EC7FE29CC390600C890A6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = CB5EC7FD29CC390600C890A6 /* Starscream */; };
+		CB5EC80229CC457600C890A6 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5EC80129CC457600C890A6 /* WebSocketClient.swift */; };
 		CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
 		CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */; };
 		CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */; };
@@ -61,6 +59,7 @@
 		CB28A51D29BF284000F0286A /* MessageTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextModel.swift; sourceTree = "<group>"; };
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
+		CB5EC80129CC457600C890A6 /* WebSocketClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
 		CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -73,10 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1843D43E29CDEB9F00697995 /* MarkdownUI in Frameworks */,
-				1843D44129CDEBFD00697995 /* Splash in Frameworks */,
 				182B42C929BBB1C500F06778 /* Colorful in Frameworks */,
-				CB5EC7FE29CC390600C890A6 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +123,7 @@
 			children = (
 				182B437129BC5D1B00F06778 /* ChatGPTManager.swift */,
 				182B436F29BC5D1B00F06778 /* CoreDataManager.swift */,
+				CB5EC80129CC457600C890A6 /* WebSocketClient.swift */,
 				182B437029BC5D1B00F06778 /* ViewModel.swift */,
 				CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */,
 			);
@@ -206,9 +203,6 @@
 			name = OSXChatGPT;
 			packageProductDependencies = (
 				182B42C829BBB1C500F06778 /* Colorful */,
-				CB5EC7FD29CC390600C890A6 /* Starscream */,
-				1843D43D29CDEB9F00697995 /* MarkdownUI */,
-				1843D44029CDEBFD00697995 /* Splash */,
 			);
 			productName = OSXChatGPT;
 			productReference = CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */;
@@ -220,6 +214,7 @@
 		CB1DCAB629B4F09D00B1D4E1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
@@ -239,9 +234,6 @@
 			mainGroup = CB1DCAB529B4F09D00B1D4E1;
 			packageReferences = (
 				182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */,
-				CB5EC7FC29CC390600C890A6 /* XCRemoteSwiftPackageReference "Starscream" */,
-				1843D43C29CDEB9F00697995 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
-				1843D43F29CDEBFD00697995 /* XCRemoteSwiftPackageReference "Splash" */,
 			);
 			productRefGroup = CB1DCABF29B4F09D00B1D4E1 /* Products */;
 			projectDirPath = "";
@@ -289,6 +281,7 @@
 				182B436529BC5C8700F06778 /* SessionsView.swift in Sources */,
 				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
 				182B436829BC5C8700F06778 /* MainContentView.swift in Sources */,
+				CB5EC80229CC457600C890A6 /* WebSocketClient.swift in Sources */,
 				CBC4B12529B8D28D00650296 /* Conversation+CoreDataClass.swift in Sources */,
 				CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */,
 				182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */,
@@ -500,30 +493,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		1843D43C29CDEB9F00697995 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-		1843D43F29CDEBFD00697995 /* XCRemoteSwiftPackageReference "Splash" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/JohnSundell/Splash";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
-			};
-		};
-		CB5EC7FC29CC390600C890A6 /* XCRemoteSwiftPackageReference "Starscream" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daltoniam/Starscream.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -531,21 +500,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */;
 			productName = Colorful;
-		};
-		1843D43D29CDEB9F00697995 /* MarkdownUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1843D43C29CDEB9F00697995 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
-			productName = MarkdownUI;
-		};
-		1843D44029CDEBFD00697995 /* Splash */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1843D43F29CDEBFD00697995 /* XCRemoteSwiftPackageReference "Splash" */;
-			productName = Splash;
-		};
-		CB5EC7FD29CC390600C890A6 /* Starscream */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CB5EC7FC29CC390600C890A6 /* XCRemoteSwiftPackageReference "Starscream" */;
-			productName = Starscream;
 		};
 /* End XCSwiftPackageProductDependency section */
 

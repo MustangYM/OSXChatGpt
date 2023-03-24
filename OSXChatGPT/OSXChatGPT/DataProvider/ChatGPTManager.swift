@@ -34,6 +34,11 @@ extension ChatGPTManager {
         self.apiKey = apiKey
         UserDefaults.standard.set(apiKey, forKey: OSXChatGPTKEY)
     }
+    func getApiKey() -> String {
+        let key = String(self.apiKey)
+        return key
+        
+    }
     func getMaskApiKey() -> String {
         var key = String(self.apiKey)
         if key.count < 10 {
@@ -62,7 +67,10 @@ extension ChatGPTManager {
         let arr = messages.suffix(askContextCount * 2 + 1)
         var temp: [[String: String]] = []
         arr.forEach { msg in
-            temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])
+            if msg.type != 1 {
+                //移除错误的回复，不误导gpt
+                temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])
+            }
         }
         let parameters = [
             "model": "gpt-3.5-turbo-0301",
