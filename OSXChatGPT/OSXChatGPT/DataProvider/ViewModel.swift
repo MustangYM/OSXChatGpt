@@ -246,7 +246,7 @@ extension ViewModel {
                         newMsg?.sesstionId = sesstionId
                         newMsg?.role = ChatGPTManager.shared.gptRoleString
                         newMsg?.id = UUID()
-                        newMsg?.type = 1
+                        newMsg?.type = 2
                         newMsg?.createdDate = Date()
                     }
                     newMsg?.text = rsp.text
@@ -285,6 +285,14 @@ extension ViewModel {
                     }
                 }else if rsp.state == .replyFial {
                     //失败
+                    if newMsg == nil {
+                        newMsg = Message(context: CoreDataManager.shared.container.viewContext)
+                        newMsg?.sesstionId = sesstionId
+                        newMsg?.role = ChatGPTManager.shared.gptRoleString
+                        newMsg?.id = UUID()
+                        newMsg?.type = 2
+                        newMsg?.createdDate = Date()
+                    }
                     newMsg?.text = rsp.text
                     CoreDataManager.shared.saveData()
                     if self.currentConversation?.sesstionId == sesstionId {

@@ -26,7 +26,25 @@ struct ChatGPTRequest {
     let messages: [Message]
     let answerType: ChatGPTAnswerType//是否流式回答
     let contextCount: ChatGPTContext
-    let url: URL = URL(string: "https://api.openai.com/v1/chat/completions")!
+    
+//    static let completions = URL(string: "https://api.openai.com/v1/completions")!
+//    static let images = URL(string: "https://api.openai.com/v1/images/generations")!
+//    static let embeddings = URL(string: "https://api.openai.com/v1/embeddings")!
+//    static let chats = URL(string: "https://api.openai.com/v1/chat/completions")!
+    var url: URL {
+        switch model {
+        case .textDavinci001, .textDavinci002, .textDavinci003:
+            return URL(string: "https://api.openai.com/v1/completions")!
+        case .curie, .embeddingAda, .ada, .searchBabbadgeDoc, .searchBabbageQuery, .babbage:
+            return URL(string: "https://api.openai.com/v1/embeddings")!
+        //以上未验证
+        case .gpt35turbo,.gpt35turbo0301:
+            return URL(string: "https://api.openai.com/v1/chat/completions")!
+        default:
+            return URL(string: "https://api.openai.com/v1/chat/completions")!
+            
+        }
+    }
     let apiKey: String
     var headers: [String: String] {
         let dict = ["Content-Type": "application/json",
@@ -135,20 +153,65 @@ enum ChatGPTContext: CaseIterable, ToolBarMenuProtocol {
 enum ChatGPTModel: CaseIterable, ToolBarMenuProtocol {
     var value: String {
         switch self {
+        case .textDavinci001:
+            return "text-davinci-001"
+        case .textDavinci002:
+            return "text-davinci-002"
+        case .textDavinci003:
+            return "text-davinci-003"
+        case .curie:
+            return "text-curie-001"
+        case .babbage:
+            return "text-babbage-001"
+        case .searchBabbadgeDoc:
+            return "text-search-babbage-doc-001"
+        case .searchBabbageQuery:
+            return "text-search-babbage-query-001"
+        case .ada:
+            return "text-ada-001"
+        case .embeddingAda:
+            return "text-embedding-ada-002"
+            
         case .gpt35turbo:
             return "gpt-3.5-turbo"
         case .gpt35turbo0301:
             return "gpt-3.5-turbo-0301"
+            
+        case .gpt4:
+            return "gpt-4"
+        case .gpt40134:
+            return "gpt-4-0314"
+        case .gpt432k:
+            return "gpt-4-32k"
+        case .gpt432k0314:
+            return "gpt-4-32k-0314"
         }
     }
     
+    case textDavinci001
+    case textDavinci002
+    case textDavinci003
+    case curie
+    case babbage
+    case searchBabbadgeDoc
+    case searchBabbageQuery
+    case ada
+    case embeddingAda
+    //以上旧api，需要兼容
+    
     case gpt35turbo
     case gpt35turbo0301
+    
+    case gpt4
+    case gpt40134
+    case gpt432k
+    case gpt432k0314
     
     static var allCases: [ChatGPTModel] {
         return [.gpt35turbo, .gpt35turbo0301]
     }
 }
+
 
 
 class ChatGPTManager {
