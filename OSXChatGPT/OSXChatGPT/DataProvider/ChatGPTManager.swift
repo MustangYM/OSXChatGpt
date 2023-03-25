@@ -62,9 +62,9 @@ enum ChatGPTAnswerType: CaseIterable, ToolBarMenuProtocol {
     var value: String {
         switch self {
         case .stream:
-            return "流形式"
+            return "流式"
         case .oneTime:
-            return "一次性"
+            return "单式"
         }
     }
     case stream

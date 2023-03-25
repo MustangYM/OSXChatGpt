@@ -24,7 +24,9 @@ struct ChatRoomToolBar: View {
             }
             .frame(width: 60)
             Spacer()
-        }.padding(.leading, 12)
+        }
+        .padding(.leading, 12)
+        .background(Color.clear)
         
     }
 }

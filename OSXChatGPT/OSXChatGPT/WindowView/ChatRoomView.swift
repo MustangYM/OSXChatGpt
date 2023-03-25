@@ -71,10 +71,10 @@ struct ChatRoomView: View {
                 Spacer()
                 ChatRoomToolBar()
                     .frame(width: toolBarGeometry.size.width, height: toolBarGeometry.size.height)
-                    .background(Color.gray.opacity(0.1))
+                    .background(Color.clear)
                 
             }.frame(height: 28)
-            Divider()
+//            Divider()
             ChatRoomInputView(inputViewHeight: $inputViewHeight)
         }
         }
