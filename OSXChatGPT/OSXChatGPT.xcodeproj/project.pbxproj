@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,11 +25,12 @@
 		188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
-		CB28A51E29BF284000F0286A /* MessageTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A51D29BF284000F0286A /* MessageTextModel.swift */; };
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
-		CB5EC80229CC457600C890A6 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5EC80129CC457600C890A6 /* WebSocketClient.swift */; };
-		CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
+		CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = CB2F971E29CE12B6004EBD96 /* MarkdownUI */; };
+		CB2F972029CE1ADC004EBD96 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
+		CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */; };
+		CB2F972829CEFB65004EBD96 /* ChatRoomToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */; };
 		CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */; };
 		CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */; };
 		CBC4B12529B8D28D00650296 /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11F29B8D28D00650296 /* Conversation+CoreDataClass.swift */; };
@@ -56,10 +57,11 @@
 		CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSXChatGPT.entitlements; sourceTree = "<group>"; };
-		CB28A51D29BF284000F0286A /* MessageTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextModel.swift; sourceTree = "<group>"; };
+		CB228EA129CD4949006B3559 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
-		CB5EC80129CC457600C890A6 /* WebSocketClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
+		CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInputView.swift; sourceTree = "<group>"; };
+		CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomToolBar.swift; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
 		CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				182B42C929BBB1C500F06778 /* Colorful in Frameworks */,
+				CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +85,7 @@
 		182B42C229BBB00500F06778 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB228EA129CD4949006B3559 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -101,6 +105,8 @@
 				182B436329BC5C8700F06778 /* MainContentView.swift */,
 				182B436029BC5C8700F06778 /* SessionsView.swift */,
 				182B436229BC5C8700F06778 /* ChatRoomView.swift */,
+				CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */,
+				CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */,
 				182B436429BC5C8700F06778 /* UserInitializeView.swift */,
 				182B436129BC5C8700F06778 /* View.swift */,
 				182B437A29BC5FBE00F06778 /* EnterAPIView.swift */,
@@ -123,7 +129,6 @@
 			children = (
 				182B437129BC5D1B00F06778 /* ChatGPTManager.swift */,
 				182B436F29BC5D1B00F06778 /* CoreDataManager.swift */,
-				CB5EC80129CC457600C890A6 /* WebSocketClient.swift */,
 				182B437029BC5D1B00F06778 /* ViewModel.swift */,
 				CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */,
 			);
@@ -175,7 +180,6 @@
 		CBC4B11429B8CB1B00650296 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CB28A51D29BF284000F0286A /* MessageTextModel.swift */,
 				CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */,
 				CBC4B11E29B8D28D00650296 /* Message+CoreDataProperties.swift */,
 				CBC4B11F29B8D28D00650296 /* Conversation+CoreDataClass.swift */,
@@ -203,6 +207,7 @@
 			name = OSXChatGPT;
 			packageProductDependencies = (
 				182B42C829BBB1C500F06778 /* Colorful */,
+				CB2F971E29CE12B6004EBD96 /* MarkdownUI */,
 			);
 			productName = OSXChatGPT;
 			productReference = CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */;
@@ -214,7 +219,6 @@
 		CB1DCAB629B4F09D00B1D4E1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
@@ -234,6 +238,7 @@
 			mainGroup = CB1DCAB529B4F09D00B1D4E1;
 			packageReferences = (
 				182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */,
+				CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = CB1DCABF29B4F09D00B1D4E1 /* Products */;
 			projectDirPath = "";
@@ -262,7 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */,
+				CB2F972029CE1ADC004EBD96 /* OSXChatGPT.xcdatamodeld in Sources */,
 				182B436929BC5C8700F06778 /* UserInitializeView.swift in Sources */,
 				182B43A429BF730300F06778 /* NSColor.swift in Sources */,
 				182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */,
@@ -272,19 +277,18 @@
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
 				182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */,
 				CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */,
-				CB28A51E29BF284000F0286A /* MessageTextModel.swift in Sources */,
 				182B437429BC5D1B00F06778 /* ViewModel.swift in Sources */,
-				CBC4B0FF29B8BF9600650296 /* OSXChatGPT.xcdatamodeld in Sources */,
 				182B436729BC5C8700F06778 /* ChatRoomView.swift in Sources */,
 				CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */,
 				CBC4B12629B8D28D00650296 /* Conversation+CoreDataProperties.swift in Sources */,
 				182B436529BC5C8700F06778 /* SessionsView.swift in Sources */,
 				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
 				182B436829BC5C8700F06778 /* MainContentView.swift in Sources */,
-				CB5EC80229CC457600C890A6 /* WebSocketClient.swift in Sources */,
 				CBC4B12529B8D28D00650296 /* Conversation+CoreDataClass.swift in Sources */,
 				CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */,
 				182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */,
+				CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */,
+				CB2F972829CEFB65004EBD96 /* ChatRoomToolBar.swift in Sources */,
 				CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -493,6 +497,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -500,6 +512,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */;
 			productName = Colorful;
+		};
+		CB2F971E29CE12B6004EBD96 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 
