@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 import CoreData
 
+
+
 @MainActor class ViewModel: ObservableObject {
     @Published var conversations: [Conversation] = []//所有会话
     @Published var messages: [Message] = []//当前会话的消息
@@ -16,10 +18,11 @@ import CoreData
     @Published var showEditRemark: Bool = false//显示编辑备注
     var editConversation: Conversation?//编辑备注的会话
     @Published var createNewChat: Bool = false//创建新会话
-    
-    
+    @Published var changeMsgText: String = ""
+    @State var scrollID = UUID()
     var currentConversation: Conversation?//当前会话
     
+    @State var model: ChatGPTModel = ChatGPTManager.shared.model
     
     private var allChatRoomViews: [String:ChatRoomView] = [:]
     
@@ -181,58 +184,9 @@ extension ViewModel {
             messages.removeAll(where: {$0.id == lastMsg.id })
             CoreDataManager.shared.delete(objects: [lastMsg])
         }
-        var isFeedback = false
-        ChatGPTManager.shared.askChatGPT(messages: messages) { json, error in
-            if let err = error {
-                print("\(err)")
-                self.removeGptThinkMessage()
-                CoreDataManager.shared.saveData()
-                let msg = Message(context: CoreDataManager.shared.container.viewContext)
-                msg.sesstionId = sesstionId
-                msg.role = ChatGPTManager.shared.gptRoleString
-                msg.text = "啊哦～连接失败了！"
-                msg.type = 2
-                msg.createdDate = Date()
-                msg.id = UUID()
-                CoreDataManager.shared.saveData()
-                if self.currentConversation?.sesstionId == sesstionId {
-                    self.messages.append(msg)
-                }
-                self.updateConversation(sesstionId: sesstionId, message: msg)
-//                updateBlock()
-                isFeedback = true
-                return
-            }
-            self.removeGptThinkMessage()
-            CoreDataManager.shared.saveData()
-            let choices = json?["choices"] as? [Any]
-            let choice = choices?[0] as? [String: Any]
-            let myMessage = choice?["message"] as? [String: Any]
-            let content = myMessage?["content"] as? String
-            let roleStr = myMessage?["role"] as? String
-            let msg = Message(context: CoreDataManager.shared.container.viewContext)
-            msg.sesstionId = sesstionId
-            msg.role = roleStr ?? ChatGPTManager.shared.gptRoleString
-            msg.text = content ?? ""
-            msg.text = msg.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            msg.createdDate = Date()
-            msg.id = UUID()
-            CoreDataManager.shared.saveData()
-            if self.currentConversation?.sesstionId == sesstionId {
-                self.messages.append(msg)
-            }
-            self.updateConversation(sesstionId: sesstionId, message: msg)
-//            updateBlock()
-            isFeedback = true
-            print("回答的内容：\(String(describing: content))")
+        sendMessage(sesstionId: sesstionId, messages: messages) {
+            
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            if !isFeedback {
-                self.addGptThinkMessage(sesstionId: sesstionId)
-                
-            }
-        }
-        
     }
     func addNewMessage(sesstionId: String, text: String, role: String, updateBlock: @escaping(() -> ())) {
         if sesstionId.isEmpty {
@@ -247,62 +201,125 @@ extension ViewModel {
         messages.append(msg)
         CoreDataManager.shared.saveData()
         updateConversation(sesstionId: sesstionId, message:messages.last)
+        self.scrollID = msg.id!
+        self.changeMsgText = text
         print("发送问题：\(text)")
         var sendMsgs = messages
         sendMsgs.removeAll(where: {$0.type == 1})
+        sendMessage(sesstionId: sesstionId, messages: sendMsgs, updateBlock: updateBlock)
+    }
+
+    private func sendMessage(sesstionId: String, messages: [Message], updateBlock: @escaping(() -> ())) {
         var isFeedback = false
-        ChatGPTManager.shared.askChatGPT(messages: sendMsgs) { json, error in
-            if let err = error {
-                print("\(err)")
-                self.removeGptThinkMessage()
-                CoreDataManager.shared.saveData()
-                let msg = Message(context: CoreDataManager.shared.container.viewContext)
-                msg.sesstionId = sesstionId
-                msg.role = ChatGPTManager.shared.gptRoleString
-                msg.text = "啊哦～连接失败了！"
-                msg.type = 2
-                msg.createdDate = Date()
-                msg.id = UUID()
-                CoreDataManager.shared.saveData()
-                if self.currentConversation?.sesstionId == sesstionId {
-                    self.messages.append(msg)
-                }
-                self.updateConversation(sesstionId: sesstionId, message: msg)
-                updateBlock()
+        var newMsg: Message?
+        ChatGPTManager.shared.askChatGPTStream(messages: messages) { rsp in
+            if rsp.request.answerType == .stream {
                 isFeedback = true
-                return
+                //流式请求
+                if rsp.state == .replyStart {
+                    self.removeGptThinkMessage()
+                    newMsg = Message(context: CoreDataManager.shared.container.viewContext)
+                    newMsg?.sesstionId = sesstionId
+                    newMsg?.role = ChatGPTManager.shared.gptRoleString
+                    newMsg?.id = UUID()
+                    newMsg?.createdDate = Date()
+                    if self.currentConversation?.sesstionId == sesstionId {
+                        self.messages.append(newMsg!)
+                    }
+                    CoreDataManager.shared.saveData()
+                    self.updateConversation(sesstionId: sesstionId, message:newMsg)
+                    if self.currentConversation?.sesstionId == sesstionId {
+                        self.scrollID = newMsg!.id!
+                        self.changeMsgText = ""//更新滚动
+                    }
+                }else if rsp.state == .replying {
+                    self.scrollID = newMsg!.id!
+                    newMsg?.text = rsp.text
+                    if self.currentConversation?.sesstionId == sesstionId {
+                        self.messages[self.messages.count - 1] = newMsg!//更新UI
+                        self.changeMsgText = rsp.text//更新滚动
+                    }
+                }else if rsp.state == .replyFial {
+                    self.removeGptThinkMessage()
+                    if newMsg == nil {
+                        newMsg = Message(context: CoreDataManager.shared.container.viewContext)
+                        newMsg?.sesstionId = sesstionId
+                        newMsg?.role = ChatGPTManager.shared.gptRoleString
+                        newMsg?.id = UUID()
+                        newMsg?.type = 1
+                        newMsg?.createdDate = Date()
+                    }
+                    newMsg?.text = rsp.text
+                    //失败
+                    CoreDataManager.shared.saveData()
+                    newMsg?.text = rsp.text
+                    if self.currentConversation?.sesstionId == sesstionId {
+                        self.messages[self.messages.count - 1] = newMsg!//更新UI
+                        self.changeMsgText = rsp.text//更新滚动
+                    }
+                    updateBlock()
+                }else if rsp.state == .replyFinish {
+                    self.updateConversation(sesstionId: sesstionId, message:newMsg)
+                    CoreDataManager.shared.saveData()
+                    if self.currentConversation?.sesstionId == sesstionId {
+                        self.changeMsgText = rsp.text//更新滚动
+                    }
+                    updateBlock()
+                }
+            }else {
+                isFeedback = true
+                //完整请求
+                if rsp.state == .replyStart {
+                    self.removeGptThinkMessage()
+                    newMsg = Message(context: CoreDataManager.shared.container.viewContext)
+                    newMsg?.sesstionId = sesstionId
+                    newMsg?.role = ChatGPTManager.shared.gptRoleString
+                    newMsg?.id = UUID()
+                    newMsg?.createdDate = Date()
+                    CoreDataManager.shared.saveData()
+                    self.updateConversation(sesstionId: sesstionId, message:newMsg)
+                    if self.currentConversation?.sesstionId == sesstionId {
+                        self.scrollID = newMsg!.id!
+                        self.messages.append(newMsg!)
+                        self.changeMsgText = rsp.text//更新滚动
+                    }
+                }else if rsp.state == .replyFial {
+                    //失败
+                    newMsg?.text = rsp.text
+                    CoreDataManager.shared.saveData()
+                    if self.currentConversation?.sesstionId == sesstionId {
+                        self.scrollID = newMsg!.id!
+                        self.updateConversation(sesstionId: sesstionId, message:newMsg)
+                        self.messages[self.messages.count - 1] = newMsg!//更新UI
+                        self.changeMsgText = rsp.text//更新滚动
+                    }
+                    updateBlock()
+                }else if rsp.state == .replyFinish {
+                    //成功
+                    newMsg?.text = rsp.text
+                    CoreDataManager.shared.saveData()
+                    if self.currentConversation?.sesstionId == sesstionId {
+                        self.scrollID = newMsg!.id!
+                        self.updateConversation(sesstionId: sesstionId, message:newMsg)
+                        self.messages[self.messages.count - 1] = newMsg!//更新UI
+                        self.changeMsgText = rsp.text//更新滚动
+                    }
+                    updateBlock()
+                }
+                
             }
-            self.removeGptThinkMessage()
-            CoreDataManager.shared.saveData()
-            let choices = json?["choices"] as? [Any]
-            let choice = choices?[0] as? [String: Any]
-            let myMessage = choice?["message"] as? [String: Any]
-            let content = myMessage?["content"] as? String
-            let roleStr = myMessage?["role"] as? String
-            let msg = Message(context: CoreDataManager.shared.container.viewContext)
-            msg.sesstionId = sesstionId
-            msg.role = roleStr ?? ChatGPTManager.shared.gptRoleString
-            msg.text = content ?? ""
-            msg.text = msg.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            msg.createdDate = Date()
-            msg.id = UUID()
-            CoreDataManager.shared.saveData()
-            if self.currentConversation?.sesstionId == sesstionId {
-                self.messages.append(msg)
-            }
-            self.updateConversation(sesstionId: sesstionId, message: msg)
-            updateBlock()
-            isFeedback = true
-            print("回答的内容：\(String(describing: content))")
+            
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             if !isFeedback {
                 self.addGptThinkMessage(sesstionId: sesstionId)
-                
+                if let lastId = self.messages.last?.id {
+                    self.scrollID = lastId
+                }
+                self.changeMsgText = ""//更新滚动
             }
         }
     }
-
     
 }
 extension ViewModel {
