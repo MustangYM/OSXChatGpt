@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import CoreData
-
+import Splash
 
 
 @MainActor class ViewModel: ObservableObject {
@@ -25,6 +25,12 @@ import CoreData
     @State var model: ChatGPTModel = ChatGPTManager.shared.model
     
     private var allChatRoomViews: [String:ChatRoomView] = [:]
+    
+    var theme: Splash.Theme {
+        
+//        return .wwdc18(withFont: .init(size: 16))
+        return .sunset(withFont: .init(size: 16))
+    }
     
     init() {
         fetchConversations()

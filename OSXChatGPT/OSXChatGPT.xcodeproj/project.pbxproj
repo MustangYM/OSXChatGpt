@@ -23,8 +23,13 @@
 		182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B437A29BC5FBE00F06778 /* EnterAPIView.swift */; };
 		182B43A429BF730300F06778 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B43A329BF730300F06778 /* NSColor.swift */; };
 		188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */; };
+		CB0F5A5929D057FF005B71D2 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = CB0F5A5829D057FF005B71D2 /* Splash */; };
+		CB0F5A5B29D057FF005B71D2 /* SplashMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = CB0F5A5A29D057FF005B71D2 /* SplashMarkdown */; };
+		CB0F5A5F29D059C4005B71D2 /* TextOutputFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F5A5D29D059C4005B71D2 /* TextOutputFormat.swift */; };
+		CB0F5A6029D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F5A5E29D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
+		CB27655C29D1C12C00897E0E /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27655B29D1C12C00897E0E /* MarkdownView.swift */; };
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
 		CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = CB2F971E29CE12B6004EBD96 /* MarkdownUI */; };
@@ -53,11 +58,14 @@
 		182B437A29BC5FBE00F06778 /* EnterAPIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAPIView.swift; sourceTree = "<group>"; };
 		182B43A329BF730300F06778 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
 		188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EidtSessionRemarkView.swift; sourceTree = "<group>"; };
+		CB0F5A5D29D059C4005B71D2 /* TextOutputFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextOutputFormat.swift; sourceTree = "<group>"; };
+		CB0F5A5E29D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashCodeSyntaxHighlighter.swift; sourceTree = "<group>"; };
 		CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSXChatGPT.entitlements; sourceTree = "<group>"; };
 		CB228EA129CD4949006B3559 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		CB27655B29D1C12C00897E0E /* MarkdownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
 		CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInputView.swift; sourceTree = "<group>"; };
@@ -74,8 +82,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB0F5A5B29D057FF005B71D2 /* SplashMarkdown in Frameworks */,
 				182B42C929BBB1C500F06778 /* Colorful in Frameworks */,
 				CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */,
+				CB0F5A5929D057FF005B71D2 /* Splash in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +115,7 @@
 				182B436329BC5C8700F06778 /* MainContentView.swift */,
 				182B436029BC5C8700F06778 /* SessionsView.swift */,
 				182B436229BC5C8700F06778 /* ChatRoomView.swift */,
+				CB27655B29D1C12C00897E0E /* MarkdownView.swift */,
 				CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */,
 				CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */,
 				182B436429BC5C8700F06778 /* UserInitializeView.swift */,
@@ -135,6 +146,15 @@
 			path = DataProvider;
 			sourceTree = "<group>";
 		};
+		CB0F5A5C29D059C4005B71D2 /* SyntaxHighlighter */ = {
+			isa = PBXGroup;
+			children = (
+				CB0F5A5D29D059C4005B71D2 /* TextOutputFormat.swift */,
+				CB0F5A5E29D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift */,
+			);
+			path = SyntaxHighlighter;
+			sourceTree = "<group>";
+		};
 		CB1DCAB529B4F09D00B1D4E1 = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +175,7 @@
 		CB1DCAC029B4F09D00B1D4E1 /* OSXChatGPT */ = {
 			isa = PBXGroup;
 			children = (
+				CB0F5A5C29D059C4005B71D2 /* SyntaxHighlighter */,
 				182B436E29BC5D1B00F06778 /* DataProvider */,
 				182B436C29BC5D1B00F06778 /* NetWork */,
 				182B435E29BC5C8700F06778 /* Interface */,
@@ -208,6 +229,8 @@
 			packageProductDependencies = (
 				182B42C829BBB1C500F06778 /* Colorful */,
 				CB2F971E29CE12B6004EBD96 /* MarkdownUI */,
+				CB0F5A5829D057FF005B71D2 /* Splash */,
+				CB0F5A5A29D057FF005B71D2 /* SplashMarkdown */,
 			);
 			productName = OSXChatGPT;
 			productReference = CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */;
@@ -239,6 +262,7 @@
 			packageReferences = (
 				182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */,
 				CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */,
 			);
 			productRefGroup = CB1DCABF29B4F09D00B1D4E1 /* Products */;
 			projectDirPath = "";
@@ -275,10 +299,12 @@
 				188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
+				CB0F5A5F29D059C4005B71D2 /* TextOutputFormat.swift in Sources */,
 				182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */,
 				CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */,
 				182B437429BC5D1B00F06778 /* ViewModel.swift in Sources */,
 				182B436729BC5C8700F06778 /* ChatRoomView.swift in Sources */,
+				CB0F5A6029D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */,
 				CBC4B12629B8D28D00650296 /* Conversation+CoreDataProperties.swift in Sources */,
 				182B436529BC5C8700F06778 /* SessionsView.swift in Sources */,
@@ -290,6 +316,7 @@
 				CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */,
 				CB2F972829CEFB65004EBD96 /* ChatRoomToolBar.swift in Sources */,
 				CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */,
+				CB27655C29D1C12C00897E0E /* MarkdownView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,6 +524,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JohnSundell/Splash";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
 		CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
@@ -512,6 +547,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */;
 			productName = Colorful;
+		};
+		CB0F5A5829D057FF005B71D2 /* Splash */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */;
+			productName = Splash;
+		};
+		CB0F5A5A29D057FF005B71D2 /* SplashMarkdown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */;
+			productName = SplashMarkdown;
 		};
 		CB2F971E29CE12B6004EBD96 /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;

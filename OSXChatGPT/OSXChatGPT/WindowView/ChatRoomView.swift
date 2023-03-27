@@ -9,6 +9,7 @@ import SwiftUI
 import AppKit
 import MarkdownUI
 
+
 /// 聊天框
 struct ChatRoomView: View {
     var conversation: Conversation?
@@ -23,6 +24,8 @@ struct ChatRoomView: View {
     @State var openArgumentSeet: Bool = false
     
     @State private var inputViewHeight: CGFloat = 200
+    
+
     
     init(conversation: Conversation?) {
         self.conversation = conversation
@@ -182,6 +185,7 @@ struct ChatRoomView: View {
 struct ChatRoomCellView: View {
     let message: Message
     @EnvironmentObject var viewModel: ViewModel
+    private let theme: Theme = .basic
     var body: some View {
         HStack {
             if message.role != ChatGPTManager.shared.gptRoleString {
@@ -216,17 +220,14 @@ struct ChatRoomCellView: View {
                         .cornerRadius(6)
                 }
                 else {
-                    ScrollView {
-                        VStack {
-                            Markdown(message.text ?? "")
-                                .padding(12)
-                                .background(Color.gray.opacity(0.8))
-                                .foregroundColor(.white)
-                                .cornerRadius(6)
-                                .textSelection(.enabled)
-                        }
+                    MarkdownView {
+                        Markdown(message.text ?? "")
+                            .padding(12)
+                            .textSelection(.enabled)
+                            .markdownCodeSyntaxHighlighter(.splash(theme: viewModel.theme))
+                            .background(Color.white.opacity(0.8))
+                            .cornerRadius(6)
                     }
-                    
                     if message.type == 2 && viewModel.messages.last?.id == message.id {
                         Button {
                             viewModel.resendMessage(sesstionId: message.sesstionId)
