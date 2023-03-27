@@ -45,6 +45,8 @@ class HTTPClient {
 //    static let shared = HTTPClient()
     fileprivate var urlSession: URLSession!
     fileprivate var sessionConfiguration: URLSessionConfiguration!
+    private var isCancelStreamRequest: Bool = false
+    private var currentTask: URLSessionTask?
     private let jsonDecoder: JSONDecoder = {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -90,7 +92,10 @@ class HTTPClient {
         }
         task.resume()
     }
-    
+    func cancelStream() {
+        isCancelStreamRequest = true
+        currentTask?.cancel()
+    }
     func postStream(chatRequest: ChatGPTRequest) async throws -> AsyncThrowingStream<String, Error> {
         var request = URLRequest(url: chatRequest.url)
         request.allHTTPHeaderFields = chatRequest.headers
@@ -98,13 +103,23 @@ class HTTPClient {
             request.httpBody = postData
         }
         request.httpMethod = "POST"
+        isCancelStreamRequest = false
         let (result, response) = try await urlSession.bytes(for: request)
+        currentTask = result.task
+        if (isCancelStreamRequest) {
+            currentTask?.cancel()
+            currentTask = nil;
+        }
         guard let httpResponse = response as? HTTPURLResponse else {
             throw HTTPError.err(message: "Request Error")
         }
         guard 200...299 ~= httpResponse.statusCode else {
             var errorText = ""
             for try await line in result.lines {
+                if (isCancelStreamRequest) {
+                    currentTask?.cancel()
+                    currentTask = nil;
+                }
                 errorText += line
             }
             if let data = errorText.data(using: .utf8), let response = try? jsonDecoder.decode(HTTPResponseError.self, from: data).error {
@@ -112,10 +127,14 @@ class HTTPClient {
             }
             throw HTTPError.err(message: "Response Error code:\(httpResponse.statusCode) res:\(errorText)")
         }
+        
         return AsyncThrowingStream<String, Error> { continuation in
             Task(priority: .userInitiated) { [weak self] in
                 do {
                     for try await line in result.lines {
+                        if isCancelStreamRequest {
+                            result.task.cancel()
+                        }
                         if line.hasPrefix("data: "),
                            let data = line.dropFirst(6).data(using: .utf8),
                            let response = try? self?.jsonDecoder.decode(HTTPResponse.self, from: data),

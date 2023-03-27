@@ -197,6 +197,14 @@ struct ChatRoomCellView: View {
                     .background(Color.blue.opacity(0.8))
                     .foregroundColor(.white)
                     .cornerRadius(6)
+                    .contextMenu {
+                        Button(action: {
+                            viewModel.deleteMessage(message: message)
+                        }) {
+                            Text("删除消息")
+                        }
+                    }
+
                 VStack {
                     Image("User")
                         .resizable()
@@ -227,6 +235,12 @@ struct ChatRoomCellView: View {
                             .markdownCodeSyntaxHighlighter(.splash(theme: viewModel.theme))
                             .background(Color.white.opacity(0.8))
                             .cornerRadius(6)
+                    }.contextMenu {
+                        Button(action: {
+                            viewModel.deleteMessage(message: message)
+                        }) {
+                            Text("删除消息")
+                        }
                     }
                     if message.type == 2 && viewModel.messages.last?.id == message.id {
                         Button {

@@ -6,6 +6,7 @@
         <attribute name="sesstionId" attributeType="String"/>
         <attribute name="updateData" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="lastMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message"/>
+        <relationship name="prompt" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Prompt" inverseName="sesstion" inverseEntity="Prompt"/>
     </entity>
     <entity name="Message" representedClassName=".Message" syncable="YES">
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -14,5 +15,14 @@
         <attribute name="sesstionId" attributeType="String"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Prompt" representedClassName=".Prompt" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="prompt" optional="YES" attributeType="String"/>
+        <attribute name="serial" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="sesstion" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="prompt" inverseEntity="Conversation"/>
     </entity>
 </model>

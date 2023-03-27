@@ -11,11 +11,13 @@ import CoreData
 import Splash
 
 
+
 @MainActor class ViewModel: ObservableObject {
     @Published var conversations: [Conversation] = []//所有会话
     @Published var messages: [Message] = []//当前会话的消息
     @Published var showUserInitialize: Bool = false//显示设置页
     @Published var showEditRemark: Bool = false//显示编辑备注
+    @Published var showAIPrompt: Bool = false //显示自定义提示
     var editConversation: Conversation?//编辑备注的会话
     @Published var createNewChat: Bool = false//创建新会话
     @Published var changeMsgText: String = ""
@@ -23,6 +25,7 @@ import Splash
     var currentConversation: Conversation?//当前会话
     
     @State var model: ChatGPTModel = ChatGPTManager.shared.model
+    @Published var showStopAnswerBtn: Bool = false
     
     private var allChatRoomViews: [String:ChatRoomView] = [:]
     
@@ -156,6 +159,10 @@ extension ViewModel {
             messages.insert(contentsOf: results, at: 0)
         }
     }
+    func deleteMessage(message: Message) {
+        messages.removeAll(where: {$0.id == message.id})
+        CoreDataManager.shared.delete(object: message)
+    }
     func deleteAllMessage(sesstionId: String) {
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "sesstionId == %@", sesstionId)
@@ -198,6 +205,9 @@ extension ViewModel {
         if sesstionId.isEmpty {
             return
         }
+        if ChatGPTManager.shared.chatGPTSpeaking {
+            return
+        }
         let msg = Message(context: CoreDataManager.shared.container.viewContext)
         msg.sesstionId = sesstionId
         msg.text = text
@@ -214,10 +224,27 @@ extension ViewModel {
         sendMsgs.removeAll(where: {$0.type == 1})
         sendMessage(sesstionId: sesstionId, messages: sendMsgs, updateBlock: updateBlock)
     }
-
+    func cancel() {
+        ChatGPTManager.shared.stopResponse()
+        self.removeGptThinkMessage()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            //停止后保存数据到数据库
+            CoreDataManager.shared.saveData()
+            //删除最后一天没有内容的消息
+            if let lastMsg = self.messages.last {
+                if lastMsg.text == nil || lastMsg.text!.isEmpty {
+                    self.messages.removeAll(where: {$0.id == lastMsg.id})
+                    CoreDataManager.shared.delete(object: lastMsg)
+                }
+            }
+        }
+    }
     private func sendMessage(sesstionId: String, messages: [Message], updateBlock: @escaping(() -> ())) {
         var isFeedback = false
         var newMsg: Message?
+        if ChatGPTManager.shared.answerType.valueBool {
+            self.showStopAnswerBtn = true
+        }
         ChatGPTManager.shared.askChatGPTStream(messages: messages) { rsp in
             if rsp.request.answerType == .stream {
                 isFeedback = true
@@ -263,6 +290,7 @@ extension ViewModel {
                         self.messages[self.messages.count - 1] = newMsg!//更新UI
                         self.changeMsgText = rsp.text//更新滚动
                     }
+                    self.showStopAnswerBtn = false
                     updateBlock()
                 }else if rsp.state == .replyFinish {
                     self.updateConversation(sesstionId: sesstionId, message:newMsg)
@@ -270,6 +298,7 @@ extension ViewModel {
                     if self.currentConversation?.sesstionId == sesstionId {
                         self.changeMsgText = rsp.text//更新滚动
                     }
+                    self.showStopAnswerBtn = false
                     updateBlock()
                 }
             }else {

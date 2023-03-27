@@ -95,6 +95,7 @@ enum ChatGPTAnswerType: CaseIterable, ToolBarMenuProtocol {
     }
 }
 enum ChatGPTContext: CaseIterable, ToolBarMenuProtocol {
+    case context0
     case context1
     case context2
     case context3
@@ -109,6 +110,8 @@ enum ChatGPTContext: CaseIterable, ToolBarMenuProtocol {
     
     var value: String {
         switch self {
+        case .context0:
+            return "0"
         case .context1:
             return "1"
         case .context2:
@@ -130,14 +133,15 @@ enum ChatGPTContext: CaseIterable, ToolBarMenuProtocol {
         case .context10:
             return "10"
         case .infinite:
-            return "99999"
+            return "无限"
         }
     }
     var valyeInt: Int {
         return Int(self.value) ?? 1
     }
     static var allCases: [ChatGPTContext] {
-        return [.context1,
+        return [.context0,
+                .context1,
                 .context2,
                 .context3,
                 .context4,
@@ -222,7 +226,7 @@ class ChatGPTManager {
         let key = UserDefaults.standard.value(forKey: OSXChatGPTKEY) as? String
         return key ?? ""
     }()
-    var chatGPTSpeaking: Bool = false
+    @Published var chatGPTSpeaking: Bool = false
     var askContextCount: ChatGPTContext = .context3
     let gptRoleString: String = "assistant"
     var tempMessagePool = MessagePool()
@@ -260,6 +264,12 @@ extension ChatGPTManager {
 }
 // MARK: - Chat GTP 提问
 extension ChatGPTManager {
+    func stopResponse() {
+        httpClient.cancelStream()
+        self.chatGPTSpeaking = false
+        
+        
+    }
     func askChatGPTStream(messages: [Message], complete:((ChatGPTResponse) -> ())?) {
         if chatGPTSpeaking == true {
             return
@@ -271,6 +281,9 @@ extension ChatGPTManager {
                 let stream = try await httpClient.postStream(chatRequest: request)
                 let res = ChatGPTResponse(request: request ,state: .replyStart, text: "")
                 await tempMessagePool.reset()
+                if self.chatGPTSpeaking == false {
+                    return
+                }
                 DispatchQueue.main.async {
                     complete?(res)
                 }

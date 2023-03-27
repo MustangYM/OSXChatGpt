@@ -26,7 +26,7 @@ struct SessionsView: View {
                         viewModel.createNewChat = true
                     }) {
                         HStack(spacing: 0) {
-                            Text("     ")
+                            Text(" ")
                             Image(systemName: "plus.message.fill")
                             Text("New Chat        ")
                         }
@@ -38,10 +38,12 @@ struct SessionsView: View {
                     .buttonStyle(BorderlessButtonStyle())
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading,0)
+                    
                     NavigationLink(destination: UserInitializeView().environmentObject(viewModel), isActive: $viewModel.showUserInitialize) {
                         Button(action: {
                             // 点击右边按钮的操作
                             viewModel.currentConversation = nil//先取消会话
+                            viewModel.showAIPrompt = false
                             viewModel.showUserInitialize = true
                             KeyboardMonitor.shared.stopKeyMonitor()
                             KeyboardMonitor.shared.stopMonitorPasteboard()
@@ -53,8 +55,28 @@ struct SessionsView: View {
                                 .cornerRadius(5)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .padding(.trailing, 30)
+                        .padding(.trailing, 0)
                     }.buttonStyle(PlainButtonStyle())
+                    
+                    NavigationLink(destination: AIPromptView(sesstionId: nil), isActive: $viewModel.showAIPrompt) {
+                        Button(action: {
+                            // 点击右边按钮的操作
+                            viewModel.currentConversation = nil//先取消会话
+                            viewModel.showUserInitialize = false
+                            viewModel.showAIPrompt = true
+                            KeyboardMonitor.shared.stopKeyMonitor()
+                            KeyboardMonitor.shared.stopMonitorPasteboard()
+                        }) {
+                            Image(systemName: "swift")
+                                .padding(10)
+                                .foregroundColor(.white)
+                                .background(Color.gray)
+                                .cornerRadius(5)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.trailing, 10)
+                    }.buttonStyle(PlainButtonStyle())
+                    
                     
                 })
                 .frame(height: 20)

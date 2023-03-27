@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ChatRoomToolBar: View {
+    @State private var showPopover = false
+    @EnvironmentObject var viewModel: ViewModel
+    
+    @State private var isAnswerTypeTrue = ChatGPTManager.shared.answerType.valueBool
     var body: some View {
         Spacer()
         HStack {
@@ -23,7 +27,25 @@ struct ChatRoomToolBar: View {
                 ChatGPTManager.shared.answerType = model
             }
             .frame(width: 60)
+            
+            Button("Prompt") {
+                showPopover.toggle()
+            }
+            .popover(isPresented: $showPopover) {
+                AIPromptView(sesstionId: viewModel.currentConversation?.sesstionId)
+                    .frame(width: 600, height: 400)
+            }
+            
             Spacer()
+            if viewModel.showStopAnswerBtn {
+                Button("停止生成") {
+                    viewModel.cancel()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        viewModel.showStopAnswerBtn = false
+                    }
+                }.padding(.trailing, 15)
+            }
+            
         }
         .padding(.leading, 12)
         .background(Color.clear)
