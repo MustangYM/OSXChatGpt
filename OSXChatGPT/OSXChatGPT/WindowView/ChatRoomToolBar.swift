@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChatRoomToolBar: View {
     @State private var showPopover = false
+    @State private var showInputView = false
     @EnvironmentObject var viewModel: ViewModel
     
     @State private var isAnswerTypeTrue = ChatGPTManager.shared.answerType.valueBool
@@ -32,8 +33,7 @@ struct ChatRoomToolBar: View {
                 showPopover.toggle()
             }
             .popover(isPresented: $showPopover) {
-                AIPromptView(sesstionId: viewModel.currentConversation?.sesstionId)
-                    .frame(width: 600, height: 400)
+                AIPromptPopView(showInputView: $showInputView, showPopover: $showPopover)
             }
             
             Spacer()
@@ -46,6 +46,11 @@ struct ChatRoomToolBar: View {
                 }.padding(.trailing, 15)
             }
             
+            
+        }
+        .sheet(isPresented: $showInputView) {
+            // 在 sheet 中呈现表格
+            AIPromptInputView(isPresented: $showInputView)
         }
         .padding(.leading, 12)
         .background(Color.clear)

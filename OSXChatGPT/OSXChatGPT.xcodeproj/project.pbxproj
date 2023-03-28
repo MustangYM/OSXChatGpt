@@ -35,6 +35,8 @@
 		CB27656A29D1E65100897E0E /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27656829D1E65100897E0E /* Conversation+CoreDataProperties.swift */; };
 		CB27656D29D1E6A100897E0E /* Prompt+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27656B29D1E6A100897E0E /* Prompt+CoreDataClass.swift */; };
 		CB27656E29D1E6A100897E0E /* Prompt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27656C29D1E6A100897E0E /* Prompt+CoreDataProperties.swift */; };
+		CB27657329D30F1400897E0E /* AIPromptViewMdoel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */; };
+		CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27657429D33D7A00897E0E /* AIPromptInputView.swift */; };
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
 		CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = CB2F971E29CE12B6004EBD96 /* MarkdownUI */; };
@@ -74,6 +76,8 @@
 		CB27656829D1E65100897E0E /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB27656B29D1E6A100897E0E /* Prompt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CB27656C29D1E6A100897E0E /* Prompt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptViewMdoel.swift; sourceTree = "<group>"; };
+		CB27657429D33D7A00897E0E /* AIPromptInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptInputView.swift; sourceTree = "<group>"; };
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
 		CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInputView.swift; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 				CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */,
 				182B436429BC5C8700F06778 /* UserInitializeView.swift */,
 				CB27656529D1DA9800897E0E /* AIPromptView.swift */,
+				CB27657429D33D7A00897E0E /* AIPromptInputView.swift */,
 				182B436129BC5C8700F06778 /* View.swift */,
 				182B437A29BC5FBE00F06778 /* EnterAPIView.swift */,
 				188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */,
@@ -149,6 +154,7 @@
 				182B436F29BC5D1B00F06778 /* CoreDataManager.swift */,
 				182B437029BC5D1B00F06778 /* ViewModel.swift */,
 				CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */,
+				CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */,
 			);
 			path = DataProvider;
 			sourceTree = "<group>";
@@ -320,6 +326,7 @@
 				CB0F5A6029D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */,
 				182B436529BC5C8700F06778 /* SessionsView.swift in Sources */,
+				CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */,
 				CB27656D29D1E6A100897E0E /* Prompt+CoreDataClass.swift in Sources */,
 				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
 				182B436829BC5C8700F06778 /* MainContentView.swift in Sources */,
@@ -328,6 +335,7 @@
 				CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */,
 				CB2F972829CEFB65004EBD96 /* ChatRoomToolBar.swift in Sources */,
 				CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */,
+				CB27657329D30F1400897E0E /* AIPromptViewMdoel.swift in Sources */,
 				CB27655C29D1C12C00897E0E /* MarkdownView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
