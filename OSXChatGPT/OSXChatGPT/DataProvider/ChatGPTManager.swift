@@ -26,6 +26,7 @@ struct ChatGPTRequest {
     let messages: [Message]
     let answerType: ChatGPTAnswerType//是否流式回答
     let contextCount: ChatGPTContext
+    let systemMsg: String?//修饰语
     
 //    static let completions = URL(string: "https://api.openai.com/v1/completions")!
 //    static let images = URL(string: "https://api.openai.com/v1/images/generations")!
@@ -61,6 +62,10 @@ struct ChatGPTRequest {
                     //移除错误的回复，不误导gpt
                     temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])
                 }
+            }
+            if let system = systemMsg {
+                let sys = ["role":"system", "content":system]
+                temp.insert(sys, at: 0)
             }
             return temp
         }
@@ -270,12 +275,13 @@ extension ChatGPTManager {
         
         
     }
-    func askChatGPTStream(messages: [Message], complete:((ChatGPTResponse) -> ())?) {
+    func askChatGPTStream(messages: [Message], prompt: String?, complete:((ChatGPTResponse) -> ())?) {
         if chatGPTSpeaking == true {
             return
         }
         chatGPTSpeaking = true
-        let request = ChatGPTRequest(model: model, messages: messages, answerType: answerType, contextCount: askContextCount, apiKey: apiKey)
+        let request = ChatGPTRequest(model: model, messages: messages, answerType: answerType, contextCount: askContextCount, systemMsg: prompt, apiKey: apiKey)
+        
         Task {
             do {
                 let stream = try await httpClient.postStream(chatRequest: request)

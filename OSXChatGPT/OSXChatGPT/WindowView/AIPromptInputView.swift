@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AIPromptInputView: View {
+    @StateObject var viewModel = AIPromptViewMdoel(isSession: true)
     @Binding var isPresented: Bool
     @State private var title: String = ""
     @State private var prompt: String = ""
@@ -56,7 +57,7 @@ struct AIPromptInputView: View {
                     .padding(.trailing, 20)
                 
                 HStack {
-                    Text("Prompt")
+                    Text("修饰语")
                         .font(.title3)
                         .padding(.top, 5)
                         .padding(.leading, 20)
@@ -81,41 +82,41 @@ struct AIPromptInputView: View {
                 }.padding(.leading, 20)
                     .padding(.trailing, 20)
                 
-                HStack {
-                    Text("作者")
-                        .font(.title3)
-                        .padding(.top, 5)
-                        .padding(.leading, 20)
-                        .padding(.bottom, 0)
-                        .frame(height: 18)
-                    Text("(选填)可分享")
-                        .font(Font.system(size: 11))
-                        .padding(.top, 5)
-                        .foregroundColor(.gray.opacity(0.6))
-                        .frame(height: 18)
-                    Spacer()
-                }.padding(.top, 5)
-                HStack {
-                    TextField("", text: $author)
-                        .accentColor(nil)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .font(Font.system(size: 14))
-                        .padding(10)
-                        .background(Color.white)
-                        .cornerRadius(8)
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                }.padding(.leading, 20)
-                    .padding(.trailing, 20)
+//                HStack {
+//                    Text("作者")
+//                        .font(.title3)
+//                        .padding(.top, 5)
+//                        .padding(.leading, 20)
+//                        .padding(.bottom, 0)
+//                        .frame(height: 18)
+//                    Text("(选填)")
+//                        .font(Font.system(size: 11))
+//                        .padding(.top, 5)
+//                        .foregroundColor(.gray.opacity(0.6))
+//                        .frame(height: 18)
+//                    Spacer()
+//                }.padding(.top, 5)
+//                HStack {
+//                    TextField("", text: $author)
+//                        .accentColor(nil)
+//                        .textFieldStyle(PlainTextFieldStyle())
+//                        .font(Font.system(size: 14))
+//                        .padding(10)
+//                        .background(Color.white)
+//                        .cornerRadius(8)
+//                        .frame(minWidth: 0, maxWidth: .infinity)
+//                }.padding(.leading, 20)
+//                    .padding(.trailing, 20)
                 
             }
             Spacer()
             
             VStack {
                 HStack {
-                    Toggle("是否上传至云端", isOn: $isToggleOn)
-                                    .padding()
-                                    .foregroundColor(.gray)
-                                    .font(Font.system(size: 13))
+//                    Toggle("是否上传至云端", isOn: $isToggleOn)
+//                                    .padding()
+//                                    .foregroundColor(.gray)
+//                                    .font(Font.system(size: 13))
                     
                     Spacer()
                     Button {
@@ -125,10 +126,13 @@ struct AIPromptInputView: View {
                     }
                     
                     Button {
+                        viewModel.addPrompt(title: title, content: prompt)
                         self.isPresented = false
                     } label: {
                         Text("确定")
-                    }.padding(.trailing, 20)
+                        
+                    }
+                    .padding(.trailing, 20)
                 }
                 
             }.frame(height: 44)

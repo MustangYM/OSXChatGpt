@@ -17,24 +17,16 @@ struct AIPromptView: View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
-struct ListItem: Identifiable, Hashable {
-    let id = UUID()
-    let name: String
-    var isSelected: Bool = false
-    var title: String = "11"
-    var content: String = "444"
-}
+
 struct AIPromptPopView: View {
+    @EnvironmentObject var viewModel: ViewModel
+    @StateObject var data = AIPromptSessionViewMdoel()
     @Binding var showInputView: Bool
     @Binding var showPopover: Bool
     @State private var isPresented = false
-    @State var selectedItem :ListItem?
-    let items: [ListItem] = [ListItem(name: "123", isSelected: false),
-                            ListItem(name: "345", isSelected: false),
-                            ListItem(name: "567", isSelected: true)]
+    
     var body: some View {
         ZStack {
-//            Spacer()
             VStack {
                             Spacer()
                 Text("选择提示")
@@ -54,19 +46,30 @@ struct AIPromptPopView: View {
                 .padding(10)
             }
         }
-        List(items) { item in
-            AIPromptPopCellView(
-                item: item,
-                isSelected: self.selectedItem == item
-            ) {
-                self.selectedItem = item
+        List(data.allPrompts) { item in
+            AIPromptPopCellView(item: item, isSelected: data.selectedItem == item) {
+                data.selectedItem = item
+            }.contextMenu {
+                Button(action: {
+                    data.deletePrompt(prompt: item)
+                }) {
+                    Text("删除")
+                }
             }
         }.frame(width: 560, height: 380)
+            .onAppear {
+                if let conversation = viewModel.currentConversation {
+                    data.fetchAllPrompts(session: conversation)
+                }
+            }
+            .onDisappear {
+                viewModel.updateConversation(sesstionId: viewModel.currentConversation!.sesstionId, prompt: data.selectedItem!)
+            }
     }
 }
 
 struct AIPromptPopCellView: View {
-    let item: ListItem
+    let item: Prompt
         let isSelected: Bool
         let action: () -> Void
         
@@ -88,15 +91,35 @@ struct AIPromptPopCellView: View {
                         .frame(width: 20, height: 20)
                         .padding(5)
                 }
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(item.title)
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                    Text(item.content)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }.padding(.leading, 2)
+                if item.type == 1 {
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
+                            Text("【默认无修饰语】")
+                                .font(Font.system(size: 15))
+                                .foregroundColor(.white)
+                                .padding(.trailing, 6)
+                                .padding(.bottom, 6)
+                            Text("当前选中的修饰语")
+                                .font(Font.system(size: 14))
+                                .foregroundColor(.white)
+                                .padding(.bottom, 6)
+                        }
+                        Text("每个会话只能选择一个修饰语, 也可以自定义添加修饰语")
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(1))
+                    }.padding(.leading, 2)
+                }else {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(item.title ?? "")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .foregroundColor(.primary)
+                            .padding(.bottom, 6)
+                        Text(item.prompt ?? "")
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(1))
+                    }.padding(.leading, 2)
+                }
                 
                 Spacer()
             }
@@ -104,7 +127,7 @@ struct AIPromptPopCellView: View {
             .padding(.vertical, 5)
             .padding(.horizontal, 10)
             .background(
-                AIPromptViewMdoel.randomColor()
+                item.color
             )
             .cornerRadius(6)
             .onTapGesture {

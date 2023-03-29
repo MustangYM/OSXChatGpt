@@ -29,11 +29,11 @@ struct ChatRoomToolBar: View {
             }
             .frame(width: 60)
             
-            Button("Prompt") {
+            Button("修饰语") {
                 showPopover.toggle()
             }
             .popover(isPresented: $showPopover) {
-                AIPromptPopView(showInputView: $showInputView, showPopover: $showPopover)
+                AIPromptPopView(showInputView: $showInputView, showPopover: $showPopover).environmentObject(viewModel)
             }
             
             Spacer()

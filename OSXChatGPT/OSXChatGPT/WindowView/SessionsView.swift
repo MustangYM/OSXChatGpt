@@ -37,13 +37,13 @@ struct SessionsView: View {
                     }
                     .buttonStyle(BorderlessButtonStyle())
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading,0)
+                    .padding(.leading,10)
                     
                     NavigationLink(destination: UserInitializeView().environmentObject(viewModel), isActive: $viewModel.showUserInitialize) {
                         Button(action: {
                             // 点击右边按钮的操作
                             viewModel.currentConversation = nil//先取消会话
-                            viewModel.showAIPrompt = false
+//                            viewModel.showAIPrompt = false
                             viewModel.showUserInitialize = true
                             KeyboardMonitor.shared.stopKeyMonitor()
                             KeyboardMonitor.shared.stopMonitorPasteboard()
@@ -55,27 +55,27 @@ struct SessionsView: View {
                                 .cornerRadius(5)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .padding(.trailing, 0)
+                        .padding(.trailing, 20)
                     }.buttonStyle(PlainButtonStyle())
                     
-                    NavigationLink(destination: AIPromptView(sesstionId: nil), isActive: $viewModel.showAIPrompt) {
-                        Button(action: {
-                            // 点击右边按钮的操作
-                            viewModel.currentConversation = nil//先取消会话
-                            viewModel.showUserInitialize = false
-                            viewModel.showAIPrompt = true
-                            KeyboardMonitor.shared.stopKeyMonitor()
-                            KeyboardMonitor.shared.stopMonitorPasteboard()
-                        }) {
-                            Image(systemName: "swift")
-                                .padding(10)
-                                .foregroundColor(.white)
-                                .background(Color.gray)
-                                .cornerRadius(5)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .padding(.trailing, 10)
-                    }.buttonStyle(PlainButtonStyle())
+//                    NavigationLink(destination: AIPromptView(sesstionId: nil), isActive: $viewModel.showAIPrompt) {
+//                        Button(action: {
+//                            // 点击右边按钮的操作
+//                            viewModel.currentConversation = nil//先取消会话
+//                            viewModel.showUserInitialize = false
+//                            viewModel.showAIPrompt = true
+//                            KeyboardMonitor.shared.stopKeyMonitor()
+//                            KeyboardMonitor.shared.stopMonitorPasteboard()
+//                        }) {
+//                            Image(systemName: "swift")
+//                                .padding(10)
+//                                .foregroundColor(.white)
+//                                .background(Color.gray)
+//                                .cornerRadius(5)
+//                        }
+//                        .buttonStyle(PlainButtonStyle())
+//                        .padding(.trailing, 10)
+//                    }.buttonStyle(PlainButtonStyle())
                     
                     
                 })
@@ -125,8 +125,15 @@ struct ChatRowView: View {
                 .frame(width: 40, height: 40)
                 .padding(.leading, 5)
             VStack(alignment: .leading) {
-                Text(chat.remark ?? chat.lastMessage?.text ?? "New Chat")
-                    .font(.headline)
+                if let prompt = chat.prompt?.title {
+                    Text("[修饰]\(prompt)")
+                        .font(.headline)
+                        .foregroundColor(NSColor(r: 224, g: 87, b: 114).toColor())
+                }else {
+                    Text(chat.prompt?.title ?? chat.remark ?? chat.lastMessage?.text ?? "New Chat")
+                        .font(.headline)
+                }
+                
                 Spacer()
                 if chat.updateData != nil {
                     let dateTime = dateFormatter(chat.updateData!)

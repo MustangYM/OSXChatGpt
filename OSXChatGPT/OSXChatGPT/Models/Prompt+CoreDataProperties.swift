@@ -2,7 +2,7 @@
 //  Prompt+CoreDataProperties.swift
 //  OSXChatGPT
 //
-//  Created by CoderChan on 2023/3/27.
+//  Created by CoderChan on 2023/3/29.
 //
 //
 
@@ -16,12 +16,14 @@ extension Prompt {
         return NSFetchRequest<Prompt>(entityName: "Prompt")
     }
 
-    @NSManaged public var title: String?
-    @NSManaged public var prompt: String?
     @NSManaged public var author: String?
-    @NSManaged public var id: UUID?
     @NSManaged public var createdDate: Date?
+    @NSManaged public var id: UUID?
+    @NSManaged public var prompt: String?
     @NSManaged public var serial: Int64
+    @NSManaged public var title: String?
+    @NSManaged public var type: Int16
+    @NSManaged public var hexColor: String?
     @NSManaged public var sesstion: NSSet?
 
 }

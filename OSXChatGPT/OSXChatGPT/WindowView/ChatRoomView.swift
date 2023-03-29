@@ -37,7 +37,7 @@ struct ChatRoomView: View {
             ScrollView {
                 ScrollViewReader { scrollView in
                     LazyVStack(alignment: .trailing, spacing: 8) {
-                        ForEach(viewModel.messages) { message in
+                        ForEach(viewModel.messages, id: \.id) { message in
                             ChatRoomCellView(message: message).environmentObject(viewModel)
                                 .id(message.id) // 添加唯一标识符
                                 .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
@@ -72,7 +72,7 @@ struct ChatRoomView: View {
             Divider()
             GeometryReader { toolBarGeometry in
                 Spacer()
-                ChatRoomToolBar()
+                ChatRoomToolBar().environmentObject(viewModel)
                     .frame(width: toolBarGeometry.size.width, height: toolBarGeometry.size.height)
                     .background(Color.clear)
                 
@@ -113,72 +113,7 @@ struct ChatRoomView: View {
 
     }
 
-    private func compareText(newText: String, lastText: String) -> String {
-        var newValue = String(newText)
-        var lastValue = String(lastText)
-        //比较两个字符串，找出新输入的那个字符
-        newText.forEach { chart in
-            if let index = newValue.firstIndex(of: chart) {
-                if let idx = lastValue.firstIndex(of: chart) {
-                    newValue.remove(at: index)
-                    lastValue.remove(at: idx)
-                }
-            }
-        }
-        return newValue
-    }
-    
-    private func onTextViewChange(_ newValue: String) {
-        
-        if (KeyboardMonitor.shared.shiftKeyPressed) {
-            //按下shift
-        }else if newMessageText.count < lastMessageText.count {
-            //删除操作
-        }else if newMessageText.count - 1 == lastMessageText.count {
-            //在中间任意地方按下空格键发送
-            let charts = compareText(newText: newMessageText, lastText: lastMessageText)
-            if charts == "\n" {
-                if KeyboardMonitor.shared.currentPasteboardText == newMessageText {
-                    //复制进来的，不发送
-                }else {
-                    //输入的是空格，则发送
-                    sendMessage(scrollView: scrollView, text: lastMessageText)
-                }
-            }
-        }
-        lastMessageText = newMessageText
-    }
-    
-    private func sendMessage(scrollView: ScrollViewProxy?, text: String) {
-        guard !newMessageText.isEmpty else { return }
-        let msg = String(newMessageText.dropLast())
-        let replaceStr = msg.replacingOccurrences(of: " ", with: "")
-        if replaceStr.count == 0 {
-            cleanText()
-            return
-        }else if replaceStr.contains("\n") {
-            let repl = replaceStr.replacingOccurrences(of: "\n", with: "")
-            if repl.count == 0 {
-                cleanText()
-                return
-            }
-        }
-        viewModel.addNewMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", text: msg, role: "user") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                withAnimation {
-                    scrollView?.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
-                }
-            }
-        }
-        //清空
-        cleanText()
-    }
-    
-    private func cleanText() {
-        newMessageText = ""
-        conversation?.lastInputText = ""
-        lastMessageText = ""
-    }
+
 }
 
 
@@ -193,6 +128,7 @@ struct ChatRoomCellView: View {
                 VStack {
                     Text(message.text ?? "")
                         .textSelection(.enabled)
+                        .id(message.id)
                 }.padding(12)
                     .background(Color.blue.opacity(0.8))
                     .foregroundColor(.white)
@@ -235,16 +171,23 @@ struct ChatRoomCellView: View {
                             .markdownCodeSyntaxHighlighter(.splash(theme: viewModel.theme))
                             .background(Color.white.opacity(0.8))
                             .cornerRadius(6)
-                    }.contextMenu {
+                    }.id(message.id)
+                    .contextMenu {
                         Button(action: {
                             viewModel.deleteMessage(message: message)
                         }) {
                             Text("删除消息")
                         }
+                        Button(action: {
+                            NSPasteboard.general.prepareForNewContents()
+                            NSPasteboard.general.setString(message.text ?? "", forType: .string)
+                        }) {
+                            Text("复制消息")
+                        }
                     }
                     if message.type == 2 && viewModel.messages.last?.id == message.id {
                         Button {
-                            viewModel.resendMessage(sesstionId: message.sesstionId)
+                            viewModel.resendMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", prompt: viewModel.currentConversation?.prompt?.prompt)
                         } label: {
                             Image("retry")
                                 .resizable()

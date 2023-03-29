@@ -38,6 +38,22 @@ import Splash
     init() {
         fetchConversations()
     }
+    func updateConversation(sesstionId: String, prompt: Prompt) {
+        var con = fetchConversation(sesstionId: sesstionId)
+        if con == nil {
+            con = Conversation(context: CoreDataManager.shared.container.viewContext)
+            con?.sesstionId = sesstionId
+            con?.id = UUID()
+        }
+        con!.updateData = Date()
+        con?.prompt = prompt
+        CoreDataManager.shared.saveData()
+        if let index = conversations.firstIndex(where: { $0.sesstionId == sesstionId}) {
+            conversations[index] = con!
+        } else {
+            conversations.insert(con!, at: 0)
+        }
+    }
     func updateConversation(sesstionId: String, message: Message?) {
         var con = fetchConversation(sesstionId: sesstionId)
         if con == nil {
@@ -192,16 +208,16 @@ extension ViewModel {
         CoreDataManager.shared.delete(objects: msg)
         
     }
-    func resendMessage(sesstionId: String) {
+    func resendMessage(sesstionId: String, prompt: String?) {
         if let lastMsg = messages.last {
             messages.removeAll(where: {$0.id == lastMsg.id })
             CoreDataManager.shared.delete(objects: [lastMsg])
         }
-        sendMessage(sesstionId: sesstionId, messages: messages) {
+        sendMessage(sesstionId: sesstionId, messages: messages, prompt:prompt) {
             
         }
     }
-    func addNewMessage(sesstionId: String, text: String, role: String, updateBlock: @escaping(() -> ())) {
+    func addNewMessage(sesstionId: String, text: String, role: String, prompt: String?, updateBlock: @escaping(() -> ())) {
         if sesstionId.isEmpty {
             return
         }
@@ -222,7 +238,7 @@ extension ViewModel {
         print("发送问题：\(text)")
         var sendMsgs = messages
         sendMsgs.removeAll(where: {$0.type == 1})
-        sendMessage(sesstionId: sesstionId, messages: sendMsgs, updateBlock: updateBlock)
+        sendMessage(sesstionId: sesstionId, messages: sendMsgs, prompt: prompt, updateBlock: updateBlock)
     }
     func cancel() {
         ChatGPTManager.shared.stopResponse()
@@ -239,13 +255,13 @@ extension ViewModel {
             }
         }
     }
-    private func sendMessage(sesstionId: String, messages: [Message], updateBlock: @escaping(() -> ())) {
+    private func sendMessage(sesstionId: String, messages: [Message], prompt: String?, updateBlock: @escaping(() -> ())) {
         var isFeedback = false
         var newMsg: Message?
         if ChatGPTManager.shared.answerType.valueBool {
             self.showStopAnswerBtn = true
         }
-        ChatGPTManager.shared.askChatGPTStream(messages: messages) { rsp in
+        ChatGPTManager.shared.askChatGPTStream(messages: messages, prompt: prompt) { rsp in
             if rsp.request.answerType == .stream {
                 isFeedback = true
                 //流式请求

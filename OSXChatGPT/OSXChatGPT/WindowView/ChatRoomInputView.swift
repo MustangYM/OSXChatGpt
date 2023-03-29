@@ -83,7 +83,7 @@ struct ChatRoomInputView: View {
                 return
             }
         }
-        viewModel.addNewMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", text: msg, role: "user") {
+        viewModel.addNewMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", text: msg, role: "user", prompt: viewModel.currentConversation?.prompt?.prompt) {
             
         }
         //清空
