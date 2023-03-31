@@ -8,6 +8,12 @@
 import Foundation
 import SwiftUI
 
+let githubToken = "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"
+let githubUrl = "https://api.github.com/repos/CoderLineChan/OSXChatGptDataUpload/contents/data"
+let githubGetToken = "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"
+let githubGetUrl = "https://api.github.com/repos/CoderLineChan/OSXChatGptData/contents/data/data.json"
+
+
 class AIPromptSessionViewMdoel: ObservableObject {
     @Published var allPrompts: [Prompt] = []
     @Published var selectedItem :Prompt?
@@ -21,7 +27,7 @@ class AIPromptSessionViewMdoel: ObservableObject {
         }
         
         if let prompt = session.prompt {
-            if aa.contains(where: {$0.id == prompt.id}) {
+            if aa.contains(where: {$0.id == prompt.id && $0.type != 1}) {
                 selectedItem = prompt
             }
         }
@@ -62,14 +68,6 @@ class AIPromptSessionViewMdoel: ObservableObject {
         prompt1.hexColor = NSColor.randomColor().toHexString()
         temp.append(prompt1)
         
-        let prompt2 = Prompt(context: CoreDataManager.shared.container.viewContext)
-        prompt2.id = UUID()
-        prompt2.createdDate = Date()
-        prompt2.title = "iOS开发者"
-        prompt2.prompt = "假设你是一名iOS开发者，使用的是swift语言"
-        prompt2.hexColor = NSColor.randomColor().toHexString()
-        temp.append(prompt2)
-        
         
         CoreDataManager.shared.saveData()
         return temp
@@ -99,14 +97,17 @@ class AIPromptViewMdoel: ObservableObject {
     }
     
     
-    func addPrompt(title: String, content: String) {
+    func addPrompt(title: String, content: String, author: String, isToggleOn: Bool) {
         let prompt = Prompt(context: CoreDataManager.shared.container.viewContext)
         prompt.title = title
         prompt.prompt = content
+        prompt.author = author
         prompt.id = UUID()
         prompt.createdDate = Date()
         CoreDataManager.shared.saveData()
-        
+        if isToggleOn {
+            HTTPClient.uploadPrompt(prompt: prompt)
+        }
 //        AIPromptDataManager.shared.addPrompt(prompt: prompt)
     }
     

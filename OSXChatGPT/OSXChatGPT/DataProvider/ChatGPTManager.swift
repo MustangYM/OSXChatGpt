@@ -217,7 +217,7 @@ enum ChatGPTModel: CaseIterable, ToolBarMenuProtocol {
     case gpt432k0314
     
     static var allCases: [ChatGPTModel] {
-        return [.gpt35turbo, .gpt35turbo0301]
+        return [.gpt35turbo, .gpt35turbo0301, .gpt4]
     }
 }
 
@@ -246,6 +246,8 @@ class ChatGPTManager {
 // MARK: - 一些接口
 extension ChatGPTManager {
     func updateApiKey(apiKey: String) {
+//        httpClient.testSha()
+        
         if apiKey.contains("********") {
             //没有修改
             return

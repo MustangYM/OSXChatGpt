@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Security
 
 
 class AIPromptDataManager {
@@ -26,6 +27,9 @@ class AIPromptDataManager {
     func deletePrompt(prompt: Prompt) {
         
     }
+    
+    
+    
     
 }
 

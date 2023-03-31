@@ -12,6 +12,9 @@ import SwiftUI
 
 
 public class Prompt: NSManagedObject {
+    var idString: String {
+        return id!.uuidString
+    }
     var color: Color {
         if let hex = hexColor {
             return NSColor(hex: hex).toColor()

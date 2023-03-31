@@ -99,6 +99,9 @@ struct ChatRoomView: View {
                     self.isOnAppear = true
                 }
             }
+            
+            let _ = SystemManager.shared//初始化
+            
         }
         .onDisappear {
             print("View disappeared!")

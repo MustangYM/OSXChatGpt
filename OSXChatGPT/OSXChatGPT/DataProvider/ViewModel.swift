@@ -144,6 +144,9 @@ extension ViewModel {
         fetchMoreMessage(sesstionId: sesstionId)
     }
     func fetchMoreMessage(sesstionId: String) {
+        
+        
+        
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "sesstionId == %@", sesstionId)
         let timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)

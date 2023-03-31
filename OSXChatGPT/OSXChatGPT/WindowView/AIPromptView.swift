@@ -55,6 +55,11 @@ struct AIPromptPopView: View {
                 }) {
                     Text("删除")
                 }
+//                Button(action: {
+//
+//                }) {
+//                    Text("编辑")
+//                }
             }
         }.frame(width: 560, height: 380)
             .onAppear {
@@ -64,6 +69,7 @@ struct AIPromptPopView: View {
             }
             .onDisappear {
                 viewModel.updateConversation(sesstionId: viewModel.currentConversation!.sesstionId, prompt: data.selectedItem!)
+                
             }
     }
 }
