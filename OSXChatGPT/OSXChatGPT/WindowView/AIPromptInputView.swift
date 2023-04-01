@@ -14,6 +14,7 @@ struct AIPromptInputView: View {
     @State private var prompt: String = ""
     @State private var author: String = ""
     @State private var isToggleOn: Bool = true
+    @Environment(\.colorScheme) private var colorScheme
     func cancelAction() {
         self.isPresented = false
     }
@@ -23,11 +24,11 @@ struct AIPromptInputView: View {
                 Spacer()
                 Text("自定义提示")
                     .font(.title3)
-                    .foregroundColor(.black.opacity(0.9))
+                    .foregroundColor((colorScheme == .dark) ? .white.opacity(0.9) :.black.opacity(0.9))
                 Spacer()
             }.frame(height: 40)
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .background(.white)
+                .background((colorScheme == .dark) ? .gray.opacity(0.1) : .white)
             
             VStack {
                 HStack {
@@ -50,7 +51,7 @@ struct AIPromptInputView: View {
                         .textFieldStyle(PlainTextFieldStyle())
                         .font(Font.system(size: 14))
                         .padding(10)
-                        .background(Color.white)
+                        .background((colorScheme == .dark) ? .gray.opacity(0.1) :.white.opacity(0.9))
                         .cornerRadius(8)
                         .frame(minWidth: 0, maxWidth: .infinity)
                 }.padding(.leading, 20)
@@ -75,7 +76,7 @@ struct AIPromptInputView: View {
                     TextEditor(text: $prompt)
                         .font(Font.system(size: 13))
                         .padding(8)
-                        .background(Color.white)
+                        .background((colorScheme == .dark) ? .gray.opacity(0.1) :.white.opacity(0.9))
                         .cornerRadius(8)
                         .frame(height: 90)
                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -107,7 +108,7 @@ struct AIPromptInputView: View {
                         .textFieldStyle(PlainTextFieldStyle())
                         .font(Font.system(size: 14))
                         .padding(10)
-                        .background(Color.white)
+                        .background((colorScheme == .dark) ? .gray.opacity(0.1) :.white.opacity(0.9))
                         .cornerRadius(8)
                         .frame(minWidth: 0, maxWidth: .infinity)
                 }.padding(.leading, 20)
@@ -143,7 +144,7 @@ struct AIPromptInputView: View {
                 
             }.frame(height: 44)
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .background(.white)
+                .background((colorScheme == .dark) ? .gray.opacity(0.1) : .white)
             
             
 

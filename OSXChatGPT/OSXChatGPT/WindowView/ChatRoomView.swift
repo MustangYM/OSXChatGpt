@@ -123,7 +123,15 @@ struct ChatRoomView: View {
 struct ChatRoomCellView: View {
     let message: Message
     @EnvironmentObject var viewModel: ViewModel
-    private let theme: Theme = .basic
+    @Environment(\.colorScheme) private var colorScheme
+    var gptBubbleColor: Color {
+        switch colorScheme {
+        case .dark:
+            return Color.gray.opacity(0.1)
+        default:
+            return Color.white.opacity(0.9)
+        }
+    }
     var body: some View {
         HStack {
             if message.role != ChatGPTManager.shared.gptRoleString {
@@ -171,8 +179,8 @@ struct ChatRoomCellView: View {
                         Markdown(message.text ?? "")
                             .padding(12)
                             .textSelection(.enabled)
-                            .markdownCodeSyntaxHighlighter(.splash(theme: viewModel.theme))
-                            .background(Color.white.opacity(0.8))
+                            .markdownCodeSyntaxHighlighter(.splash(theme: viewModel.codeTheme(scheme: colorScheme)))
+                            .background(gptBubbleColor)
                             .cornerRadius(6)
                     }.id(message.id)
                     .contextMenu {

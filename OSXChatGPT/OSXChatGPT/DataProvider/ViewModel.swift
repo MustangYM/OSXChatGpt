@@ -29,10 +29,24 @@ import Splash
     
     private var allChatRoomViews: [String:ChatRoomView] = [:]
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var theme: Splash.Theme {
-        
-//        return .wwdc18(withFont: .init(size: 16))
-        return .sunset(withFont: .init(size: 16))
+        switch colorScheme {
+        case .dark:
+            return .wwdc17(withFont: .init(size: 16))
+        default:
+            return .sunset(withFont: .init(size: 16))
+        }
+    }
+    
+    func codeTheme(scheme: ColorScheme) -> Splash.Theme {
+        switch scheme {
+        case .dark:
+            return .wwdc17(withFont: .init(size: 16))
+        default:
+            return .sunset(withFont: .init(size: 16))
+        }
     }
     
     init() {

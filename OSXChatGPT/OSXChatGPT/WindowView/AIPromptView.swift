@@ -19,11 +19,21 @@ struct AIPromptView: View {
 }
 
 struct AIPromptPopView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var viewModel: ViewModel
     @StateObject var data = AIPromptSessionViewMdoel()
     @Binding var showInputView: Bool
     @Binding var showPopover: Bool
     @State private var isPresented = false
+    
+    var titleColor: Color {
+        switch colorScheme {
+        case .dark:
+            return Color.white.opacity(0.9)
+        default:
+            return Color.black.opacity(0.9)
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -31,7 +41,7 @@ struct AIPromptPopView: View {
                             Spacer()
                 Text("选择提示")
                     .font(.title3)
-                    .foregroundColor(.black.opacity(0.9))
+                    .foregroundColor(titleColor)
                             Spacer()
                 
             }
@@ -75,6 +85,7 @@ struct AIPromptPopView: View {
 }
 
 struct AIPromptPopCellView: View {
+    @Environment(\.colorScheme) private var colorScheme
     let item: Prompt
         let isSelected: Bool
         let action: () -> Void
@@ -86,7 +97,7 @@ struct AIPromptPopCellView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20, height: 20)
-                        .foregroundColor(.white)
+                        .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
                         .background(Color.blue)
                         .clipShape(Circle())
                         .padding(5)
@@ -102,28 +113,28 @@ struct AIPromptPopCellView: View {
                         HStack {
                             Text("【默认无修饰语】")
                                 .font(Font.system(size: 15))
-                                .foregroundColor(.white)
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
                                 .padding(.trailing, 6)
                                 .padding(.bottom, 6)
                             Text("当前选中的修饰语")
                                 .font(Font.system(size: 14))
-                                .foregroundColor(.white)
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
                                 .padding(.bottom, 6)
                         }
                         Text("每个会话只能选择一个修饰语, 也可以自定义添加修饰语")
                             .font(.subheadline)
-                            .foregroundColor(.white.opacity(1))
+                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.6) : .white)
                     }.padding(.leading, 2)
                 }else {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(item.title ?? "")
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
                             .foregroundColor(.primary)
                             .padding(.bottom, 6)
                         Text(item.prompt ?? "")
                             .font(.subheadline)
-                            .foregroundColor(.white.opacity(1))
+                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.6) : .white)
                     }.padding(.leading, 2)
                 }
                 
@@ -133,7 +144,7 @@ struct AIPromptPopCellView: View {
             .padding(.vertical, 5)
             .padding(.horizontal, 10)
             .background(
-                item.color
+                item.color.brightness((self.colorScheme == .dark) ? -0.5 : -0.2)
             )
             .cornerRadius(6)
             .onTapGesture {
