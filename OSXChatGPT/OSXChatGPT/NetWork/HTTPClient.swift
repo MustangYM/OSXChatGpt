@@ -210,7 +210,7 @@ extension HTTPClient {
         let url = URL(string: urlString)!
     
         var request = URLRequest(url: url)
-        let authorizationValue = "Bearer \(githubToken)"
+        let authorizationValue = "Bearer \(ServerManager.shared.uploadDataToken)"
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(authorizationValue, forHTTPHeaderField: "Authorization")
@@ -237,7 +237,7 @@ extension HTTPClient {
     static func getShaString(callback:@escaping (_ sha: String?, _ err: String?) -> Void) {
         let url = URL(string: githubUrl)!
         var request = URLRequest(url: url)
-        let authorizationValue = "Bearer \(githubToken)"
+        let authorizationValue = "Bearer \(ServerManager.shared.uploadDataToken)"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(authorizationValue, forHTTPHeaderField: "Authorization")
         request.httpMethod = "GET"
@@ -270,7 +270,7 @@ extension HTTPClient {
     static func getPrompt(callback:@escaping (_ datas: [Any], _ err: String?) -> Void) {
         let url = URL(string: githubGetUrl)!
         var request = URLRequest(url: url)
-        let authorizationValue = "Bearer \(githubGetToken)"
+        let authorizationValue = "Bearer \(ServerManager.shared.getDataToken)"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(authorizationValue, forHTTPHeaderField: "Authorization")
         request.httpMethod = "GET"
@@ -302,6 +302,31 @@ extension HTTPClient {
         }
         task.resume()
     }
+    static func getToken(callback:@escaping (_ datas: [String: Any]?, _ err: String?) -> Void) {
+        let url = URL(string: getTokenUrl)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                callback(nil, error.localizedDescription)
+                return
+            }
+            var code = 0
+            if let response = response as? HTTPURLResponse {
+                code = response.statusCode
+            }
+            if let data = data,
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                callback(json, "data error code:\(code)")
+            }
+            else {
+                callback(nil, "data error code:\(code)")
+            }
+        }
+        task.resume()
+    }
     
 }
 
@@ -314,25 +339,3 @@ struct HTTPResponse2: Decodable {
     let sha: String
     
 }
-
-
-//- (void)requestVerify{
-//    return;
-//    NSURL *getURL = [NSURL URLWithString:@"https://raw.githubusercontent.com/VerifyChan/Verify/main/WeChat/test1.json"];
-//    NSURLSessionDataTask *getTask = [self.URLSession dataTaskWithURL:getURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-//        if (httpResponse.statusCode == 200) {
-//            NSLog(@"请求成功!!!");
-//            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-//            NSLog(@"Get方式获取到的数据为：%@", dict);
-//            NSNumber *hideRecords = [dict valueForKey:@"hideRecords"];
-//            NSNumber *dynamicBackground = [dict valueForKey:@"dynamicBackground"];
-//
-//        }else {
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self requestVerify];
-//            });
-//        }
-//    }];
-//    [getTask resume];
-//}

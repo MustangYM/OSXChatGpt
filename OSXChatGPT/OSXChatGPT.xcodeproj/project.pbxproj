@@ -30,6 +30,7 @@
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
 		CB2449F829D721F3006EE829 /* SystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2449F729D721F3006EE829 /* SystemManager.swift */; };
+		CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2449F929D7FE38006EE829 /* ServerManager.swift */; };
 		CB27655C29D1C12C00897E0E /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27655B29D1C12C00897E0E /* MarkdownView.swift */; };
 		CB27656629D1DA9800897E0E /* AIPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27656529D1DA9800897E0E /* AIPromptView.swift */; };
 		CB27656929D1E65100897E0E /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27656729D1E65100897E0E /* Conversation+CoreDataClass.swift */; };
@@ -73,6 +74,7 @@
 		CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSXChatGPT.entitlements; sourceTree = "<group>"; };
 		CB228EA129CD4949006B3559 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		CB2449F729D721F3006EE829 /* SystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemManager.swift; sourceTree = "<group>"; };
+		CB2449F929D7FE38006EE829 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		CB27655B29D1C12C00897E0E /* MarkdownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
 		CB27656529D1DA9800897E0E /* AIPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptView.swift; sourceTree = "<group>"; };
 		CB27656729D1E65100897E0E /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */,
 				CB53A3BA29D4795300A5B8FC /* AIPromptDataManager.swift */,
 				CB2449F729D721F3006EE829 /* SystemManager.swift */,
+				CB2449F929D7FE38006EE829 /* ServerManager.swift */,
 			);
 			path = DataProvider;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */,
 				CB2F972029CE1ADC004EBD96 /* OSXChatGPT.xcdatamodeld in Sources */,
 				182B436929BC5C8700F06778 /* UserInitializeView.swift in Sources */,
 				CB2449F829D721F3006EE829 /* SystemManager.swift in Sources */,

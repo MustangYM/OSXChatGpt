@@ -100,8 +100,8 @@ struct ChatRoomView: View {
                 }
             }
             
-            let _ = SystemManager.shared//初始化
-            
+            let _ = SystemManager.shared//获取系统用户名以及版本号
+            ServerManager.shared.checkToken()//获取最新teton
         }
         .onDisappear {
             print("View disappeared!")

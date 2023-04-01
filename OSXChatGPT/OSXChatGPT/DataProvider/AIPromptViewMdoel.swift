@@ -8,30 +8,21 @@
 import Foundation
 import SwiftUI
 
-let githubToken = "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"
-let githubUrl = "https://api.github.com/repos/CoderLineChan/OSXChatGptDataUpload/contents/data"
-let githubGetToken = "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"
-let githubGetUrl = "https://api.github.com/repos/CoderLineChan/OSXChatGptData/contents/data/data.json"
-
-
 class AIPromptSessionViewMdoel: ObservableObject {
     @Published var allPrompts: [Prompt] = []
     @Published var selectedItem :Prompt?
     
     func fetchAllPrompts(session: Conversation) {
-        let completedDateSort = NSSortDescriptor(keyPath: \Prompt.serial, ascending: false)
+        let completedDateSort = NSSortDescriptor(keyPath: \Prompt.createdDate, ascending: false)
         var aa: [Prompt] = CoreDataManager.shared.fetch("Prompt", sorting: [completedDateSort])
-        
         if (aa.count == 0) {
             aa = AIPromptSessionViewMdoel.createDefaultPrompt()
         }
-        
         if let prompt = session.prompt {
             if aa.contains(where: {$0.id == prompt.id && $0.type != 1}) {
                 selectedItem = prompt
             }
         }
-        
         aa.removeAll(where: {$0.type == 1})
         let prompt = Prompt(context: CoreDataManager.shared.container.viewContext)
         prompt.type = 1
@@ -42,9 +33,48 @@ class AIPromptSessionViewMdoel: ObservableObject {
         if selectedItem == nil {
             selectedItem = prompt
         }
-        
         CoreDataManager.shared.saveData()
         allPrompts = aa
+        
+        // 获取云端数据
+        HTTPClient.getPrompt { [weak self] datas, err in
+            print("获取云端数据成功")
+            guard let self = self else { return }
+            var temp: [Prompt] = []
+            datas.forEach { json in
+                if let jsonData = json as? [String: Any] {
+                    if let idString = jsonData["idString"] as? String {
+                        if !self.allPrompts.contains(where: {$0.idString == idString}) {
+                            let p = Prompt(context: CoreDataManager.shared.container.viewContext)
+                            p.id = UUID(uuidString: idString)
+                            p.createdDate = Date()
+                            p.author = jsonData["author"] as? String
+                            p.title = jsonData["title"] as? String
+                            p.prompt = jsonData["prompt"] as? String
+                            p.hexColor = NSColor.randomColor().toHexString()
+                            CoreDataManager.shared.saveData()
+                            temp.append(p)
+                        }
+                    }else {
+                        let p = Prompt(context: CoreDataManager.shared.container.viewContext)
+                        p.id = UUID()
+                        p.createdDate = Date()
+                        p.author = jsonData["author"] as? String
+                        p.title = jsonData["title"] as? String
+                        p.prompt = jsonData["prompt"] as? String
+                        p.hexColor = NSColor.randomColor().toHexString()
+                        CoreDataManager.shared.saveData()
+                        temp.append(p)
+                    }
+                }
+            }
+            if temp.count > 0 {
+                DispatchQueue.main.async {
+                    self.allPrompts += temp
+                }
+            }
+        }
+        
     }
     
     func deletePrompt(prompt: Prompt) {
@@ -108,7 +138,6 @@ class AIPromptViewMdoel: ObservableObject {
         if isToggleOn {
             HTTPClient.uploadPrompt(prompt: prompt)
         }
-//        AIPromptDataManager.shared.addPrompt(prompt: prompt)
     }
     
     
@@ -124,7 +153,6 @@ extension AIPromptViewMdoel {
     private func fetchPrompts() {
         let completedDateSort = NSSortDescriptor(keyPath: \Prompt.serial, ascending: false)
         let aa: [Prompt] = CoreDataManager.shared.fetch("Prompt", sorting: [completedDateSort])
-        
         prompts = aa
     }
 }
