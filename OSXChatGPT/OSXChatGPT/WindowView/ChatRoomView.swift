@@ -77,7 +77,6 @@ struct ChatRoomView: View {
                     .background(Color.clear)
                 
             }.frame(height: 28)
-//            Divider()
             ChatRoomInputView(inputViewHeight: $inputViewHeight)
         }
         }
@@ -167,7 +166,7 @@ struct ChatRoomCellView: View {
                         .padding(0)
                     Spacer()
                 }
-                if message.type == 1 {
+                if message.msgType == .waitingReply {
                     //等待chatGPT回复的动画
                     ThinkingAnimationView()
                         .padding(12)
@@ -196,7 +195,7 @@ struct ChatRoomCellView: View {
                             Text("复制消息")
                         }
                     }
-                    if message.type == 2 && viewModel.messages.last?.id == message.id {
+                    if message.msgType == .fialMsg && viewModel.messages.last?.id == message.id {
                         Button {
                             viewModel.resendMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", prompt: viewModel.currentConversation?.prompt?.prompt)
                         } label: {

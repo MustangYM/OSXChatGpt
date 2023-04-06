@@ -292,7 +292,9 @@ extension HTTPClient {
                        let dataString = String(data: da as Data, encoding: .utf8),
                        let jsonData = dataString.data(using: .utf8),
                        let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [Any] {
-                        callback(jsonObject, nil)
+                        DispatchQueue.main.async {
+                            callback(jsonObject, nil)
+                        }
                     }else {
                         callback([], "data error code:\(code)")
                     }

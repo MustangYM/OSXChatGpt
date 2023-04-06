@@ -178,9 +178,9 @@ extension ViewModel {
                 if last.role == ChatGPTManager.shared.gptRoleString {
                     //最后一条是gpt消息，并且已经回复，则删除以前的回复中
                     if last.type != 1 {
-                        let thinks = results.filter({$0.type == 1 })
+                        let thinks = results.filter({$0.msgType == .waitingReply })
                         if thinks.count > 0 {
-                            results.removeAll(where: {$0.type == 1})
+                            results.removeAll(where: {$0.msgType == .waitingReply})
                             CoreDataManager.shared.delete(objects: thinks)
                         }
                     }
@@ -210,17 +210,17 @@ extension ViewModel {
         msg.createdDate = Date()
         msg.text = "......"
         msg.role = ChatGPTManager.shared.gptRoleString
-        msg.type = 1
+        msg.msgType = .waitingReply
         messages.append(msg)
         CoreDataManager.shared.saveData()
     }
     func removeGptThinkMessage() {
-        let msg = messages.filter({ $0.type == 1})
+        let msg = messages.filter({ $0.msgType == .waitingReply})
         if msg.count == 0 {
             return
         }
-        if messages.contains(where: { $0.type == 1}) {
-            messages.removeAll(where: { $0.type == 1} )
+        if messages.contains(where: { $0.msgType == .waitingReply}) {
+            messages.removeAll(where: { $0.msgType == .waitingReply} )
         }
         CoreDataManager.shared.delete(objects: msg)
         
@@ -252,9 +252,9 @@ extension ViewModel {
         updateConversation(sesstionId: sesstionId, message:messages.last)
         self.scrollID = msg.id!
         self.changeMsgText = text
-        print("发送问题：\(text)")
+        print("发送提问：\(text)")
         var sendMsgs = messages
-        sendMsgs.removeAll(where: {$0.type == 1})
+        sendMsgs.removeAll(where: {$0.msgType == .waitingReply})
         sendMessage(sesstionId: sesstionId, messages: sendMsgs, prompt: prompt, updateBlock: updateBlock)
     }
     func cancel() {
@@ -312,7 +312,7 @@ extension ViewModel {
                         newMsg?.sesstionId = sesstionId
                         newMsg?.role = ChatGPTManager.shared.gptRoleString
                         newMsg?.id = UUID()
-                        newMsg?.type = 2
+                        newMsg?.msgType = .fialMsg
                         newMsg?.createdDate = Date()
                     }
                     newMsg?.text = rsp.text
@@ -358,7 +358,7 @@ extension ViewModel {
                         newMsg?.sesstionId = sesstionId
                         newMsg?.role = ChatGPTManager.shared.gptRoleString
                         newMsg?.id = UUID()
-                        newMsg?.type = 2
+                        newMsg?.msgType = .fialMsg
                         newMsg?.createdDate = Date()
                     }
                     newMsg?.text = rsp.text

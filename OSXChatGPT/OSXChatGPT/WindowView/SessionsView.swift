@@ -84,6 +84,7 @@ struct SessionsView: View {
                         }
                         .buttonStyle(PlainButtonStyle())
                         .padding(.trailing, 10)
+                        
                     }.buttonStyle(PlainButtonStyle())
                     
                     
