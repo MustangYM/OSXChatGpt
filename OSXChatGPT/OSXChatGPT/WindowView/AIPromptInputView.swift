@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct AIPromptInputView: View {
-    @StateObject var viewModel = AIPromptViewMdoel(isSession: true)
+    @StateObject var viewModel: AIPromptViewMdoel
     @Binding var isPresented: Bool
     @State private var title: String = ""
-    @State private var prompt: String = ""
+    @State private var content: String = ""
     @State private var author: String = ""
     @State private var isToggleOn: Bool = true
     @Environment(\.colorScheme) private var colorScheme
@@ -22,7 +22,7 @@ struct AIPromptInputView: View {
         VStack {
             VStack {
                 Spacer()
-                Text("自定义提示")
+                Text("自定义添加")
                     .font(.title3)
                     .foregroundColor((colorScheme == .dark) ? .white.opacity(0.9) :.black.opacity(0.9))
                 Spacer()
@@ -73,7 +73,7 @@ struct AIPromptInputView: View {
                 }.padding(.top, 5)
                 
                 HStack {
-                    TextEditor(text: $prompt)
+                    TextEditor(text: $content)
                         .font(Font.system(size: 13))
                         .padding(8)
                         .background((colorScheme == .dark) ? .gray.opacity(0.1) :.white.opacity(0.9))
@@ -90,12 +90,12 @@ struct AIPromptInputView: View {
                         .padding(.leading, 20)
                         .padding(.bottom, 0)
                         .frame(height: 18)
-                    Text("(选填)")
-                        .font(Font.system(size: 11))
-                        .padding(.top, 5)
-                        .foregroundColor(.gray.opacity(0.6))
-                        .frame(height: 18)
-                    Text("后台审核通过后可分享给其他人")
+//                    Text("(选填)")
+//                        .font(Font.system(size: 11))
+//                        .padding(.top, 5)
+//                        .foregroundColor(.gray.opacity(0.6))
+//                        .frame(height: 18)
+                    Text("分享您的修饰语到词库")
                         .font(Font.system(size: 10))
                         .padding(.top, 5)
                         .foregroundColor(.gray.opacity(0.6))
@@ -119,7 +119,7 @@ struct AIPromptInputView: View {
             
             VStack {
                 HStack {
-                    Toggle("是否上传至云端", isOn: $isToggleOn)
+                    Toggle("是否分享", isOn: $isToggleOn)
                                     .padding()
                                     .foregroundColor(.gray)
                                     .font(Font.system(size: 13))
@@ -132,7 +132,11 @@ struct AIPromptInputView: View {
                     }
                     
                     Button {
-                        viewModel.addPrompt(title: title, content: prompt, author: author, isToggleOn: isToggleOn)
+                        if title.isEmpty || content.isEmpty {
+                            self.isPresented = false
+                            return
+                        }
+                        viewModel.addPrompt(title: title, content: content, author: author, isToggleOn: isToggleOn)
                         self.isPresented = false
                         
                     } label: {

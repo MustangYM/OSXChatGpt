@@ -285,19 +285,22 @@ extension HTTPClient {
                 code = response.statusCode
             }
             if let data = data,
-               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let base64Str = json["content"] as? String {
-                let base64String = base64Str.replacingOccurrences(of: "\n", with: "")
-                if let da = NSData(base64Encoded: base64String, options: NSData.Base64DecodingOptions.init(rawValue: 0)),
-                   let dataString = String(data: da as Data, encoding: .utf8),
-                   let jsonData = dataString.data(using: .utf8),
-                   let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [Any] {
-                    callback(jsonObject, nil)
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let base64Str = json["content"] as? String {
+                    let base64String = base64Str.replacingOccurrences(of: "\n", with: "")
+                    if let da = NSData(base64Encoded: base64String, options: NSData.Base64DecodingOptions.init(rawValue: 0)),
+                       let dataString = String(data: da as Data, encoding: .utf8),
+                       let jsonData = dataString.data(using: .utf8),
+                       let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [Any] {
+                        callback(jsonObject, nil)
+                    }else {
+                        callback([], "data error code:\(code)")
+                    }
                 }else {
+                    //获取不到数据，需要更新token
                     callback([], "data error code:\(code)")
+                    
                 }
-            }else {
-                callback([], "data error code:\(code)")
             }
         }
         task.resume()

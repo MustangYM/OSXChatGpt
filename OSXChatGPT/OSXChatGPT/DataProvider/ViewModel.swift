@@ -427,9 +427,9 @@ extension ViewModel {
     func fetchConversations() {
         let completedDateSort = NSSortDescriptor(keyPath: \Conversation.updateData, ascending: false)
         var aa: [Conversation] = CoreDataManager.shared.fetch("Conversation", sorting: [completedDateSort])
-        let remove = aa.filter { $0.lastMessage == nil}
+        let remove = aa.filter { $0.lastMessage == nil && $0.prompt == nil }
         CoreDataManager.shared.delete(objects: remove)
-        aa.removeAll { $0.lastMessage == nil}
+        aa.removeAll { $0.lastMessage == nil && $0.prompt == nil}
         conversations = aa
     }
     private func fetchConversation(sesstionId: String) -> Conversation? {

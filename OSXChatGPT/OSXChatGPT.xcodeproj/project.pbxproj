@@ -29,6 +29,7 @@
 		CB0F5A6029D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F5A5E29D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
+		CB1F1DD029DDBA0B008CFD0B /* AIPromptPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F1DCF29DDBA0B008CFD0B /* AIPromptPopView.swift */; };
 		CB2449F829D721F3006EE829 /* SystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2449F729D721F3006EE829 /* SystemManager.swift */; };
 		CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2449F929D7FE38006EE829 /* ServerManager.swift */; };
 		CB27655C29D1C12C00897E0E /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27655B29D1C12C00897E0E /* MarkdownView.swift */; };
@@ -72,6 +73,7 @@
 		CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSXChatGPT.entitlements; sourceTree = "<group>"; };
+		CB1F1DCF29DDBA0B008CFD0B /* AIPromptPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptPopView.swift; sourceTree = "<group>"; };
 		CB228EA129CD4949006B3559 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		CB2449F729D721F3006EE829 /* SystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemManager.swift; sourceTree = "<group>"; };
 		CB2449F929D7FE38006EE829 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */,
 				182B436429BC5C8700F06778 /* UserInitializeView.swift */,
 				CB27656529D1DA9800897E0E /* AIPromptView.swift */,
+				CB1F1DCF29DDBA0B008CFD0B /* AIPromptPopView.swift */,
 				CB27657429D33D7A00897E0E /* AIPromptInputView.swift */,
 				182B436129BC5C8700F06778 /* View.swift */,
 				182B437A29BC5FBE00F06778 /* EnterAPIView.swift */,
@@ -348,6 +351,7 @@
 				CB2F972829CEFB65004EBD96 /* ChatRoomToolBar.swift in Sources */,
 				CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */,
 				CB27657329D30F1400897E0E /* AIPromptViewMdoel.swift in Sources */,
+				CB1F1DD029DDBA0B008CFD0B /* AIPromptPopView.swift in Sources */,
 				CB27655C29D1C12C00897E0E /* MarkdownView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -21,6 +21,9 @@ struct SessionsView: View {
                     }.buttonStyle(BorderlessButtonStyle())
                     Spacer()
                     Button(action: {
+                        viewModel.showUserInitialize = false
+                        viewModel.showAIPrompt = false
+                        
                         // 点击 New Chat 按钮的操作
                         viewModel.currentConversation = viewModel.addNewConversation()
                         viewModel.createNewChat = true
@@ -37,13 +40,16 @@ struct SessionsView: View {
                     }
                     .buttonStyle(BorderlessButtonStyle())
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading,10)
+                    .padding(.leading,0)
                     
                     NavigationLink(destination: UserInitializeView().environmentObject(viewModel), isActive: $viewModel.showUserInitialize) {
                         Button(action: {
                             // 点击右边按钮的操作
-                            viewModel.currentConversation = nil//先取消会话
-//                            viewModel.showAIPrompt = false
+                            if viewModel.currentConversation != nil {
+                                viewModel.currentConversation = nil//先取消会话
+                            }
+                            viewModel.createNewChat = false
+                            viewModel.showAIPrompt = false
                             viewModel.showUserInitialize = true
                             KeyboardMonitor.shared.stopKeyMonitor()
                             KeyboardMonitor.shared.stopMonitorPasteboard()
@@ -55,27 +61,30 @@ struct SessionsView: View {
                                 .cornerRadius(5)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .padding(.trailing, 20)
+                        .padding(.trailing, 0)
                     }.buttonStyle(PlainButtonStyle())
                     
-//                    NavigationLink(destination: AIPromptView(sesstionId: nil), isActive: $viewModel.showAIPrompt) {
-//                        Button(action: {
-//                            // 点击右边按钮的操作
-//                            viewModel.currentConversation = nil//先取消会话
-//                            viewModel.showUserInitialize = false
-//                            viewModel.showAIPrompt = true
-//                            KeyboardMonitor.shared.stopKeyMonitor()
-//                            KeyboardMonitor.shared.stopMonitorPasteboard()
-//                        }) {
-//                            Image(systemName: "swift")
-//                                .padding(10)
-//                                .foregroundColor(.white)
-//                                .background(Color.gray)
-//                                .cornerRadius(5)
-//                        }
-//                        .buttonStyle(PlainButtonStyle())
-//                        .padding(.trailing, 10)
-//                    }.buttonStyle(PlainButtonStyle())
+                    NavigationLink(destination: AIPromptView().environmentObject(viewModel), isActive: $viewModel.showAIPrompt) {
+                        Button(action: {
+                            // 点击右边按钮的操作
+                            if viewModel.currentConversation != nil {
+                                viewModel.currentConversation = nil//先取消会话
+                            }
+                            viewModel.createNewChat = false
+                            viewModel.showUserInitialize = false
+                            viewModel.showAIPrompt = true
+                            KeyboardMonitor.shared.stopKeyMonitor()
+                            KeyboardMonitor.shared.stopMonitorPasteboard()
+                        }) {
+                            Image(systemName: "swift")
+                                .padding(10)
+                                .foregroundColor(.white)
+                                .background(Color.gray)
+                                .cornerRadius(5)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.trailing, 10)
+                    }.buttonStyle(PlainButtonStyle())
                     
                     
                 })
@@ -98,6 +107,9 @@ struct SessionsView: View {
             }
             .leftSessionContentSize()
             
+        }
+        .onAppear {
+            let _ = ServerManager.shared.checkToken()
         }
     }
 }
