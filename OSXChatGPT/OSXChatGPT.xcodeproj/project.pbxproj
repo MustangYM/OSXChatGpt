@@ -44,7 +44,6 @@
 		CB2F972029CE1ADC004EBD96 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
 		CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */; };
 		CB2F972829CEFB65004EBD96 /* ChatRoomToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */; };
-		CB53A3BB29D4795300A5B8FC /* AIPromptDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53A3BA29D4795300A5B8FC /* AIPromptDataManager.swift */; };
 		CB53A3BE29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */; };
 		CB53A3BF29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */; };
 		CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B11D29B8D28D00650296 /* Message+CoreDataClass.swift */; };
@@ -87,7 +86,6 @@
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
 		CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInputView.swift; sourceTree = "<group>"; };
 		CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomToolBar.swift; sourceTree = "<group>"; };
-		CB53A3BA29D4795300A5B8FC /* AIPromptDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptDataManager.swift; sourceTree = "<group>"; };
 		CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 				182B437029BC5D1B00F06778 /* ViewModel.swift */,
 				CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */,
 				CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */,
-				CB53A3BA29D4795300A5B8FC /* AIPromptDataManager.swift */,
 				CB2449F729D721F3006EE829 /* SystemManager.swift */,
 				CB2449F929D7FE38006EE829 /* ServerManager.swift */,
 			);
@@ -341,7 +338,6 @@
 				CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */,
 				182B436529BC5C8700F06778 /* SessionsView.swift in Sources */,
 				CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */,
-				CB53A3BB29D4795300A5B8FC /* AIPromptDataManager.swift in Sources */,
 				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
 				CB53A3BF29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift in Sources */,
 				182B436829BC5C8700F06778 /* MainContentView.swift in Sources */,
@@ -492,7 +488,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = MustangYM.OSXChatGPT.OSXChatGPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -520,7 +516,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = MustangYM.OSXChatGPT.OSXChatGPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

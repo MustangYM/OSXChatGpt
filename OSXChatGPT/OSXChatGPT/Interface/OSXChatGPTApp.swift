@@ -15,7 +15,7 @@ struct OSXChatGPTApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                ColorfulView(colors: [.accentColor], colorCount: 2)
+                ColorfulView(colors: [.accentColor], colorCount: 1)
                     .ignoresSafeArea()
                 MainContentView().environmentObject(viewModel).edgesIgnoringSafeArea(.top).frame(minWidth: 900, maxWidth: .infinity, minHeight: 600, maxHeight: .infinity)
             }

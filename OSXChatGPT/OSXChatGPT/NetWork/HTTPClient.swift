@@ -169,7 +169,7 @@ class HTTPClient {
     
 
 }
-
+/// upload
 extension HTTPClient {
     static func uploadPrompt(prompt: Prompt) {
         getShaString { sha, err in
@@ -197,7 +197,7 @@ extension HTTPClient {
         dateFormatter.dateFormat = "yyyyMMddHHmm"
         let date = dateFormatter.string(from: currentDate)
         let urlString = "\(githubUrl)/\(user)/\(date)"
-        var dict = prompt.dictionaryWithValues(forKeys: ["author", "prompt", "title"])
+        var dict = prompt.dictionaryWithValues(forKeys: ["author", "prompt", "title", "hexColor"])
         dict["idString"] = prompt.idString
         guard let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted) else {
             return

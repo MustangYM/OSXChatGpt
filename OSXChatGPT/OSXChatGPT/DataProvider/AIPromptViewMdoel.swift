@@ -14,20 +14,20 @@ class AIPromptSessionViewMdoel: ObservableObject {
     
     func fetchAllPrompts(session: Conversation) {
         let request: NSFetchRequest<Prompt> = Prompt.fetchRequest()
-        request.predicate = NSPredicate(format: "type == %d", 3)
+        request.predicate = NSPredicate(format: "type == %d", PromptType.userLocalInUse.rawValue)
         let timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
         request.sortDescriptors = [timestampSortDescriptor]
         
         var aa: [Prompt] = CoreDataManager.shared.fetch(request: request)
         
         if let prompt = session.prompt {
-            if aa.contains(where: {$0.id == prompt.id && $0.type != 1}) {
+            if aa.contains(where: {$0.id == prompt.id && $0.promptType != .hint}) {
                 selectedItem = prompt
             }
         }
-        aa.removeAll(where: {$0.type == 1})
+        aa.removeAll(where: {$0.promptType == .hint})
         let prompt = Prompt(context: CoreDataManager.shared.container.viewContext)
-        prompt.type = 1
+        prompt.promptType = .hint
         prompt.id = UUID()
         prompt.createdDate = Date()
         prompt.hexColor = "#999999"
@@ -40,14 +40,14 @@ class AIPromptSessionViewMdoel: ObservableObject {
     }
     
     func deletePrompt(prompt: Prompt) {
-        if prompt.type == 1 {
+        if prompt.promptType == .hint {
             return
         }
-        prompt.type = 2
+        prompt.promptType = .userLocal
         if let idx = allPrompts.firstIndex(where: {$0.id == prompt.id}) {
-            allPrompts[idx].type = 2
+            allPrompts[idx].promptType = .userLocal
         }
-        allPrompts.removeAll(where: {$0.type == 2 })
+        allPrompts.removeAll(where: {$0.promptType == .userLocal })
         if prompt.id == selectedItem?.id {
             selectedItem = allPrompts.first
         }
@@ -79,7 +79,8 @@ class AIPromptViewMdoel: ObservableObject {
         prompt.author = author
         prompt.id = UUID()
         prompt.createdDate = Date()
-        prompt.type = 2
+        prompt.promptType = .userLocal
+        prompt.hexColor = NSColor.randomColor().toHexString()
         allPrompts.insert(prompt, at: 0)
         CoreDataManager.shared.saveData()
         if isToggleOn {
@@ -117,8 +118,8 @@ extension AIPromptViewMdoel {
         
         //检索本地自定义数据
         let request: NSFetchRequest<Prompt> = Prompt.fetchRequest()
-        let type2Predicate = NSPredicate(format: "type == %d", 2)
-        let type3Predicate = NSPredicate(format: "type == %d", 3)
+        let type2Predicate = NSPredicate(format: "type == %d", PromptType.userLocal.rawValue)
+        let type3Predicate = NSPredicate(format: "type == %d", PromptType.userLocalInUse.rawValue)
         let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [type2Predicate, type3Predicate])
         request.predicate = compoundPredicate
         
@@ -148,12 +149,16 @@ extension AIPromptViewMdoel {
                         if !self.allPrompts.contains(where: {$0.idString == idString}) {
                             let p = Prompt(context: CoreDataManager.shared.container.viewContext)
                             p.id = UUID(uuidString: idString)
-                            p.type = 0
+                            p.promptType = .cloud
                             p.createdDate = Date()
                             p.author = jsonData["author"] as? String
                             p.title = jsonData["title"] as? String
                             p.prompt = jsonData["prompt"] as? String
-                            p.hexColor = NSColor.randomColor().toHexString()
+                            if let hexColor = jsonData["hexColor"] as? String, !hexColor.isEmpty {
+                                p.hexColor = hexColor
+                            }else {
+                                p.hexColor = NSColor.randomColor().toHexString()
+                            }
                             p.cloudId = jsonData["cloudId"] as? Int32 ?? 0
                             CoreDataManager.shared.saveData()
                             temp.append(p)
@@ -161,13 +166,17 @@ extension AIPromptViewMdoel {
                     }else {
                         let p = Prompt(context: CoreDataManager.shared.container.viewContext)
                         p.id = UUID()
-                        p.type = 0
+                        p.promptType = .cloud
                         p.createdDate = Date()
                         p.author = jsonData["author"] as? String
                         p.title = jsonData["title"] as? String
                         p.prompt = jsonData["prompt"] as? String
                         p.cloudId = jsonData["cloudId"] as? Int32 ?? 0
-                        p.hexColor = NSColor.randomColor().toHexString()
+                        if let hexColor = jsonData["hexColor"] as? String, !hexColor.isEmpty {
+                            p.hexColor = hexColor
+                        }else {
+                            p.hexColor = NSColor.randomColor().toHexString()
+                        }
                         CoreDataManager.shared.saveData()
                         temp.append(p)
                     }

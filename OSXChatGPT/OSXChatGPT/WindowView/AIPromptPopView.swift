@@ -101,7 +101,7 @@ struct AIPromptPopCellView: View {
                     .frame(width: 20, height: 20)
                     .padding(5)
             }
-            if item.type == 1 {
+            if item.promptType == .hint {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text("【默认无修饰语】")

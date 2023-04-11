@@ -24,14 +24,14 @@ struct AIPromptDetailView: View {
                                 .padding(.bottom, 6)
                             HStack {
                                 Button {
-                                    if prompt.type == 3 {
+                                    if prompt.promptType == .userLocalInUse {
                                         //移除，
-                                        prompt.type = 2
+                                        prompt.promptType = .userLocal
                                         data.updatePrompt(prompt: prompt, isToggleOn: false)
                                         presentationMode.wrappedValue.dismiss()
                                     }else {
                                         //添加，
-                                        prompt.type = 3
+                                        prompt.promptType = .userLocalInUse
                                         data.updatePrompt(prompt: prompt, isToggleOn: false)
                                         presentationMode.wrappedValue.dismiss()
                                     }
@@ -68,7 +68,7 @@ struct AIPromptDetailView: View {
                                         .stroke(Color.white, lineWidth: 0.5)
                                 )
                                 
-                                if prompt.type == 2 {
+                                if prompt.promptType == .userLocal {
                                     Button {
                                         data.deletePrompt(prompt: prompt)
                                     } label: {
@@ -209,7 +209,7 @@ struct AIPromptCellView: View {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                if item.type == 3 {
+                                if item.promptType == .userLocalInUse {
                                     Image(systemName: "checkmark.square")
                                         .resizable()
                                         .frame(width: 10, height: 10)
