@@ -13,6 +13,7 @@ import Splash
 
 
 @MainActor class ViewModel: ObservableObject {
+    @Published var showDynamicBackground: Bool = ProjectSettingManager.shared.showDynamicBackground//动态背景
     @Published var conversations: [Conversation] = []//所有会话
     @Published var messages: [Message] = []//当前会话的消息
     @Published var showUserInitialize: Bool = false//显示设置页
