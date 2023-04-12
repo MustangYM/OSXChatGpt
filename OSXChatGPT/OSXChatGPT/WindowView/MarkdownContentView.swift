@@ -18,7 +18,7 @@ struct YYThemeOption: Hashable {
   static let gitHub = YYThemeOption(name: "GitHub", theme: .gitHub)
 }
 
-struct MarkdownView<Content: View>: View {
+struct MarkdownContentView<Content: View>: View {
   private let themeOptions: [YYThemeOption]
   private let about: MarkdownContent?
   private let content: Content

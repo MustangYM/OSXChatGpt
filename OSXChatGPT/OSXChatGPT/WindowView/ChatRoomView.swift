@@ -174,14 +174,15 @@ struct ChatRoomCellView: View {
                         .cornerRadius(6)
                 }
                 else {
-                    MarkdownView {
+                    MarkdownContentView {
                         Markdown(message.text ?? "")
                             .padding(12)
                             .textSelection(.enabled)
                             .markdownCodeSyntaxHighlighter(.splash(theme: viewModel.codeTheme(scheme: colorScheme)))
                             .background(gptBubbleColor)
                             .cornerRadius(6)
-                    }.id(message.id)
+                    }
+                    .id(message.id)
                     .contextMenu {
                         Button(action: {
                             viewModel.deleteMessage(message: message)
