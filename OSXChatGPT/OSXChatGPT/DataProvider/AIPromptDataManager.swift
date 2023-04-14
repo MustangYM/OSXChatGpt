@@ -32,7 +32,7 @@ class AIPromptDataManager {
 extension AIPromptDataManager {
     private func fetchAllPrompts() {
         let completedDateSort = NSSortDescriptor(keyPath: \Prompt.createdDate, ascending: false)
-        let aa: [Prompt] = CoreDataManager.shared.fetch("Prompt", sorting: [completedDateSort])
+        let aa: [Prompt] = CoreDataManager.shared.fetch(OSXChatGPTPrompt, sorting: [completedDateSort])
         allPrompts = aa
     }
 }

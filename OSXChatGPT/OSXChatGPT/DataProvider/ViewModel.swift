@@ -303,7 +303,9 @@ extension ViewModel {
                     CoreDataManager.shared.saveData()
                     newMsg?.text = rsp.text
                     if self.currentConversation?.sesstionId == sesstionId {
-                        self.messages[self.messages.count - 1] = newMsg!//更新UI
+                        if self.messages.count > 0 {
+                            self.messages[self.messages.count - 1] = newMsg!//更新UI
+                        }
                         self.changeMsgText = rsp.text//更新滚动
                     }
                     self.showStopAnswerBtn = false

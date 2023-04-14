@@ -7,14 +7,14 @@
 
 import Foundation
 import SwiftUI
-
+public let OSXChatGPTPrompt = "Prompt"
 class AIPromptSessionViewMdoel: ObservableObject {
     @Published var allPrompts: [Prompt] = []
     @Published var selectedItem :Prompt?
     
     func fetchAllPrompts(session: Conversation) {
         let completedDateSort = NSSortDescriptor(keyPath: \Prompt.serial, ascending: false)
-        var aa: [Prompt] = CoreDataManager.shared.fetch("Prompt", sorting: [completedDateSort])
+        var aa: [Prompt] = CoreDataManager.shared.fetch(OSXChatGPTPrompt, sorting: [completedDateSort])
         
         if (aa.count == 0) {
             aa = AIPromptSessionViewMdoel.createDefaultPrompt()
@@ -65,8 +65,8 @@ class AIPromptSessionViewMdoel: ObservableObject {
         let prompt2 = Prompt(context: CoreDataManager.shared.container.viewContext)
         prompt2.id = UUID()
         prompt2.createdDate = Date()
-        prompt2.title = "iOS开发者"
-        prompt2.prompt = "假设你是一名iOS开发者，使用的是swift语言"
+        prompt2.title = "Java开发者"
+        prompt2.prompt = "假设你是一名Java开发者，使用的是Java语言"
         prompt2.hexColor = NSColor.randomColor().toHexString()
         temp.append(prompt2)
         
@@ -116,13 +116,13 @@ class AIPromptViewMdoel: ObservableObject {
 extension AIPromptViewMdoel {
     private func fetchAllPrompts() {
         let completedDateSort = NSSortDescriptor(keyPath: \Prompt.serial, ascending: false)
-        let aa: [Prompt] = CoreDataManager.shared.fetch("Prompt", sorting: [completedDateSort])
+        let aa: [Prompt] = CoreDataManager.shared.fetch(OSXChatGPTPrompt, sorting: [completedDateSort])
         allPrompts = aa
     }
     
     private func fetchPrompts() {
         let completedDateSort = NSSortDescriptor(keyPath: \Prompt.serial, ascending: false)
-        let aa: [Prompt] = CoreDataManager.shared.fetch("Prompt", sorting: [completedDateSort])
+        let aa: [Prompt] = CoreDataManager.shared.fetch(OSXChatGPTPrompt, sorting: [completedDateSort])
         
         prompts = aa
     }
