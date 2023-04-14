@@ -165,5 +165,182 @@ class HTTPClient {
         request.httpMethod = "POST"
         return request
     }
+    
+    
 
+}
+/// upload
+extension HTTPClient {
+    static func uploadPrompt(prompt: Prompt) {
+        getShaString { sha, err in
+            if let shaString = sha {
+                uploadPrompt(prompt: prompt, sha: shaString)
+            }else {
+                print("获取sha失败")
+            }
+        }
+    }
+    static func uploadPrompt(prompt: Prompt, sha: String) {
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        let userDate = dateFormatter.string(from: currentDate)
+        
+        var user = "User"
+        if let userName = SystemManager.shared.userName {
+            user = userName
+        }
+        if let version = SystemManager.shared.OSVersion {
+            user = user + "OS\(version)_"
+        }
+        user = user + userDate
+        dateFormatter.dateFormat = "yyyyMMddHHmm"
+        let date = dateFormatter.string(from: currentDate)
+        let urlString = "\(githubUrl)/\(user)/\(date)"
+        var dict = prompt.dictionaryWithValues(forKeys: ["author", "prompt", "title", "hexColor"])
+        dict["idString"] = prompt.idString
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted) else {
+            return
+        }
+        let base64String = jsonData.base64EncodedString()
+        print(base64String)
+        let parameters = ["message": user,
+                          "content":base64String,
+                          "sha":sha] as [String : Any]
+        let url = URL(string: urlString)!
+    
+        var request = URLRequest(url: url)
+        let authorizationValue = "Bearer \(ServerManager.shared.uploadDataToken)"
+        request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(authorizationValue, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "PUT"
+        if let postData = try? JSONSerialization.data(withJSONObject: parameters, options: []) {
+            request.httpBody = postData
+        }
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                return
+            }
+            if let response = response as? HTTPURLResponse {
+                print("statusCode: \(response.statusCode)")
+            }
+            if let data = data {
+                let responseString = String(data: data, encoding: .utf8)
+                print("response: \(responseString ?? "")")
+            }
+        }
+        task.resume()
+    }
+    
+    static func getShaString(callback:@escaping (_ sha: String?, _ err: String?) -> Void) {
+        let url = URL(string: githubUrl)!
+        var request = URLRequest(url: url)
+        let authorizationValue = "Bearer \(ServerManager.shared.uploadDataToken)"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(authorizationValue, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                callback(nil, error.localizedDescription)
+                return
+            }
+            var code = 0
+            if let response = response as? HTTPURLResponse {
+                code = response.statusCode
+            }
+            if let data = data {
+                let responseString = String(data: data, encoding: .utf8)
+                print("response1: \(responseString ?? "")")
+                if let json = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]],
+                   let sha = json[0]["sha"] as? String {
+                    callback(sha, nil)
+                }else {
+                    callback(nil, "response error code:\(code)")
+                }
+            }else {
+                callback(nil, "data error code:\(code)")
+            }
+        }
+        task.resume()
+    }
+    
+    static func getPrompt(callback:@escaping (_ datas: [Any], _ err: String?) -> Void) {
+        let url = URL(string: githubGetUrl)!
+        var request = URLRequest(url: url)
+        let authorizationValue = "Bearer \(ServerManager.shared.getDataToken)"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(authorizationValue, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                callback([], error.localizedDescription)
+                return
+            }
+            var code = 0
+            if let response = response as? HTTPURLResponse {
+                code = response.statusCode
+            }
+            if let data = data,
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let base64Str = json["content"] as? String {
+                    let base64String = base64Str.replacingOccurrences(of: "\n", with: "")
+                    if let da = NSData(base64Encoded: base64String, options: NSData.Base64DecodingOptions.init(rawValue: 0)),
+                       let dataString = String(data: da as Data, encoding: .utf8),
+                       let jsonData = dataString.data(using: .utf8),
+                       let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [Any] {
+                        DispatchQueue.main.async {
+                            callback(jsonObject, nil)
+                        }
+                    }else {
+                        callback([], "data error code:\(code)")
+                    }
+                }else {
+                    //获取不到数据，需要更新token
+                    callback([], "data error code:\(code)")
+                    
+                }
+            }
+        }
+        task.resume()
+    }
+    static func getToken(callback:@escaping (_ datas: [String: Any]?, _ err: String?) -> Void) {
+        let url = URL(string: getTokenUrl)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                callback(nil, error.localizedDescription)
+                return
+            }
+            var code = 0
+            if let response = response as? HTTPURLResponse {
+                code = response.statusCode
+            }
+            if let data = data,
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                callback(json, "data error code:\(code)")
+            }
+            else {
+                callback(nil, "data error code:\(code)")
+            }
+        }
+        task.resume()
+    }
+    
+}
+
+struct HTTPResponse1: Decodable {
+    let json: HTTPResponse2
+    
+}
+
+struct HTTPResponse2: Decodable {
+    let sha: String
+    
 }

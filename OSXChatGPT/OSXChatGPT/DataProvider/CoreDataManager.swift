@@ -64,7 +64,9 @@ class CoreDataManager {
         withAnimation {
             objects.forEach { container.viewContext.delete($0) }
             saveData()
-            container.viewContext.refreshAllObjects()
+            DispatchQueue.main.async {
+                self.container.viewContext.refreshAllObjects()
+            }
         }
     }
 

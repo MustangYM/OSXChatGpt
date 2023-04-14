@@ -10,6 +10,8 @@ import Foundation
 import CoreData
 
 
+
+
 extension Prompt {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Prompt> {
@@ -25,6 +27,7 @@ extension Prompt {
     @NSManaged public var type: Int16
     @NSManaged public var hexColor: String?
     @NSManaged public var sesstion: NSSet?
+    @NSManaged public var cloudId: Int32
 
 }
 

@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct AIPromptInputView: View {
-    @StateObject var viewModel = AIPromptViewMdoel(isSession: true)
+    @StateObject var viewModel: AIPromptViewMdoel
     @Binding var isPresented: Bool
     @State private var title: String = ""
-    @State private var prompt: String = ""
+    @State private var content: String = ""
     @State private var author: String = ""
     @State private var isToggleOn: Bool = true
+    @Environment(\.colorScheme) private var colorScheme
     func cancelAction() {
         self.isPresented = false
     }
@@ -21,13 +22,13 @@ struct AIPromptInputView: View {
         VStack {
             VStack {
                 Spacer()
-                Text("自定义提示")
+                Text("自定义添加")
                     .font(.title3)
-                    .foregroundColor(.black.opacity(0.9))
+                    .foregroundColor((colorScheme == .dark) ? .white.opacity(0.9) :.black.opacity(0.9))
                 Spacer()
             }.frame(height: 40)
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .background(.white)
+                .background((colorScheme == .dark) ? .gray.opacity(0.1) : .white)
             
             VStack {
                 HStack {
@@ -50,7 +51,7 @@ struct AIPromptInputView: View {
                         .textFieldStyle(PlainTextFieldStyle())
                         .font(Font.system(size: 14))
                         .padding(10)
-                        .background(Color.white)
+                        .background((colorScheme == .dark) ? .gray.opacity(0.1) :.white.opacity(0.9))
                         .cornerRadius(8)
                         .frame(minWidth: 0, maxWidth: .infinity)
                 }.padding(.leading, 20)
@@ -72,51 +73,56 @@ struct AIPromptInputView: View {
                 }.padding(.top, 5)
                 
                 HStack {
-                    TextEditor(text: $prompt)
+                    TextEditor(text: $content)
                         .font(Font.system(size: 13))
                         .padding(8)
-                        .background(Color.white)
+                        .background((colorScheme == .dark) ? .gray.opacity(0.1) :.white.opacity(0.9))
                         .cornerRadius(8)
                         .frame(height: 90)
                         .frame(minWidth: 0, maxWidth: .infinity)
                 }.padding(.leading, 20)
                     .padding(.trailing, 20)
                 
-//                HStack {
-//                    Text("作者")
-//                        .font(.title3)
-//                        .padding(.top, 5)
-//                        .padding(.leading, 20)
-//                        .padding(.bottom, 0)
-//                        .frame(height: 18)
+                HStack {
+                    Text("作者")
+                        .font(.title3)
+                        .padding(.top, 5)
+                        .padding(.leading, 20)
+                        .padding(.bottom, 0)
+                        .frame(height: 18)
 //                    Text("(选填)")
 //                        .font(Font.system(size: 11))
 //                        .padding(.top, 5)
 //                        .foregroundColor(.gray.opacity(0.6))
 //                        .frame(height: 18)
-//                    Spacer()
-//                }.padding(.top, 5)
-//                HStack {
-//                    TextField("", text: $author)
-//                        .accentColor(nil)
-//                        .textFieldStyle(PlainTextFieldStyle())
-//                        .font(Font.system(size: 14))
-//                        .padding(10)
-//                        .background(Color.white)
-//                        .cornerRadius(8)
-//                        .frame(minWidth: 0, maxWidth: .infinity)
-//                }.padding(.leading, 20)
-//                    .padding(.trailing, 20)
+                    Text("分享您的修饰语到词库")
+                        .font(Font.system(size: 10))
+                        .padding(.top, 5)
+                        .foregroundColor(.gray.opacity(0.6))
+                        .frame(height: 18)
+                    Spacer()
+                }.padding(.top, 5)
+                HStack {
+                    TextField("", text: $author)
+                        .accentColor(nil)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .font(Font.system(size: 14))
+                        .padding(10)
+                        .background((colorScheme == .dark) ? .gray.opacity(0.1) :.white.opacity(0.9))
+                        .cornerRadius(8)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                }.padding(.leading, 20)
+                    .padding(.trailing, 20)
                 
             }
             Spacer()
             
             VStack {
                 HStack {
-//                    Toggle("是否上传至云端", isOn: $isToggleOn)
-//                                    .padding()
-//                                    .foregroundColor(.gray)
-//                                    .font(Font.system(size: 13))
+                    Toggle("是否分享", isOn: $isToggleOn)
+                                    .padding()
+                                    .foregroundColor(.gray)
+                                    .font(Font.system(size: 13))
                     
                     Spacer()
                     Button {
@@ -126,8 +132,13 @@ struct AIPromptInputView: View {
                     }
                     
                     Button {
-                        viewModel.addPrompt(title: title, content: prompt)
+                        if title.isEmpty || content.isEmpty {
+                            self.isPresented = false
+                            return
+                        }
+                        viewModel.addPrompt(title: title, content: content, author: author, isToggleOn: isToggleOn)
                         self.isPresented = false
+                        
                     } label: {
                         Text("确定")
                         
@@ -137,7 +148,7 @@ struct AIPromptInputView: View {
                 
             }.frame(height: 44)
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .background(.white)
+                .background((colorScheme == .dark) ? .gray.opacity(0.1) : .white)
             
             
 

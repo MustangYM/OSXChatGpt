@@ -13,6 +13,7 @@ import Splash
 
 
 @MainActor class ViewModel: ObservableObject {
+    @Published var showDynamicBackground: Bool = ProjectSettingManager.shared.showDynamicBackground//动态背景
     @Published var conversations: [Conversation] = []//所有会话
     @Published var messages: [Message] = []//当前会话的消息
     @Published var showUserInitialize: Bool = false//显示设置页
@@ -29,10 +30,24 @@ import Splash
     
     private var allChatRoomViews: [String:ChatRoomView] = [:]
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var theme: Splash.Theme {
-        
-//        return .wwdc18(withFont: .init(size: 16))
-        return .sunset(withFont: .init(size: 16))
+        switch colorScheme {
+        case .dark:
+            return .wwdc17(withFont: .init(size: 16))
+        default:
+            return .sunset(withFont: .init(size: 16))
+        }
+    }
+    
+    func codeTheme(scheme: ColorScheme) -> Splash.Theme {
+        switch scheme {
+        case .dark:
+            return .wwdc17(withFont: .init(size: 16))
+        default:
+            return .sunset(withFont: .init(size: 16))
+        }
     }
     
     init() {
@@ -144,6 +159,9 @@ extension ViewModel {
         fetchMoreMessage(sesstionId: sesstionId)
     }
     func fetchMoreMessage(sesstionId: String) {
+        
+        
+        
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "sesstionId == %@", sesstionId)
         let timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
@@ -161,9 +179,9 @@ extension ViewModel {
                 if last.role == ChatGPTManager.shared.gptRoleString {
                     //最后一条是gpt消息，并且已经回复，则删除以前的回复中
                     if last.type != 1 {
-                        let thinks = results.filter({$0.type == 1 })
+                        let thinks = results.filter({$0.msgType == .waitingReply })
                         if thinks.count > 0 {
-                            results.removeAll(where: {$0.type == 1})
+                            results.removeAll(where: {$0.msgType == .waitingReply})
                             CoreDataManager.shared.delete(objects: thinks)
                         }
                     }
@@ -193,17 +211,17 @@ extension ViewModel {
         msg.createdDate = Date()
         msg.text = "......"
         msg.role = ChatGPTManager.shared.gptRoleString
-        msg.type = 1
+        msg.msgType = .waitingReply
         messages.append(msg)
         CoreDataManager.shared.saveData()
     }
     func removeGptThinkMessage() {
-        let msg = messages.filter({ $0.type == 1})
+        let msg = messages.filter({ $0.msgType == .waitingReply})
         if msg.count == 0 {
             return
         }
-        if messages.contains(where: { $0.type == 1}) {
-            messages.removeAll(where: { $0.type == 1} )
+        if messages.contains(where: { $0.msgType == .waitingReply}) {
+            messages.removeAll(where: { $0.msgType == .waitingReply} )
         }
         CoreDataManager.shared.delete(objects: msg)
         
@@ -235,9 +253,9 @@ extension ViewModel {
         updateConversation(sesstionId: sesstionId, message:messages.last)
         self.scrollID = msg.id!
         self.changeMsgText = text
-        print("发送问题：\(text)")
+        print("发送提问：\(text)")
         var sendMsgs = messages
-        sendMsgs.removeAll(where: {$0.type == 1})
+        sendMsgs.removeAll(where: {$0.msgType == .waitingReply})
         sendMessage(sesstionId: sesstionId, messages: sendMsgs, prompt: prompt, updateBlock: updateBlock)
     }
     func cancel() {
@@ -295,7 +313,7 @@ extension ViewModel {
                         newMsg?.sesstionId = sesstionId
                         newMsg?.role = ChatGPTManager.shared.gptRoleString
                         newMsg?.id = UUID()
-                        newMsg?.type = 2
+                        newMsg?.msgType = .fialMsg
                         newMsg?.createdDate = Date()
                     }
                     newMsg?.text = rsp.text
@@ -343,7 +361,7 @@ extension ViewModel {
                         newMsg?.sesstionId = sesstionId
                         newMsg?.role = ChatGPTManager.shared.gptRoleString
                         newMsg?.id = UUID()
-                        newMsg?.type = 2
+                        newMsg?.msgType = .fialMsg
                         newMsg?.createdDate = Date()
                     }
                     newMsg?.text = rsp.text
@@ -412,9 +430,9 @@ extension ViewModel {
     func fetchConversations() {
         let completedDateSort = NSSortDescriptor(keyPath: \Conversation.updateData, ascending: false)
         var aa: [Conversation] = CoreDataManager.shared.fetch("Conversation", sorting: [completedDateSort])
-        let remove = aa.filter { $0.lastMessage == nil}
+        let remove = aa.filter { $0.lastMessage == nil && $0.prompt == nil }
         CoreDataManager.shared.delete(objects: remove)
-        aa.removeAll { $0.lastMessage == nil}
+        aa.removeAll { $0.lastMessage == nil && $0.prompt == nil}
         conversations = aa
     }
     private func fetchConversation(sesstionId: String) -> Conversation? {

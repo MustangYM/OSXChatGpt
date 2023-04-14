@@ -70,8 +70,8 @@ struct ChatRoomInputView: View {
     }
     
     private func sendMessage(scrollView: ScrollViewProxy?, text: String) {
-        guard !newMessageText.isEmpty else { return }
-        let msg = String(newMessageText.dropLast())
+        guard !text.isEmpty else { return }
+        let msg = String(text)
         let replaceStr = msg.replacingOccurrences(of: " ", with: "")
         if replaceStr.count == 0 {
             cleanText()
@@ -92,7 +92,6 @@ struct ChatRoomInputView: View {
     
     private func cleanText() {
         newMessageText = ""
-//        conversation?.lastInputText = ""
         lastMessageText = ""
     }
     

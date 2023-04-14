@@ -77,7 +77,6 @@ struct ChatRoomView: View {
                     .background(Color.clear)
                 
             }.frame(height: 28)
-//            Divider()
             ChatRoomInputView(inputViewHeight: $inputViewHeight)
         }
         }
@@ -99,6 +98,9 @@ struct ChatRoomView: View {
                     self.isOnAppear = true
                 }
             }
+            
+            let _ = SystemManager.shared//获取系统用户名以及版本号
+            ServerManager.shared.checkToken()//获取最新teton
         }
         .onDisappear {
             print("View disappeared!")
@@ -120,7 +122,15 @@ struct ChatRoomView: View {
 struct ChatRoomCellView: View {
     let message: Message
     @EnvironmentObject var viewModel: ViewModel
-    private let theme: Theme = .basic
+    @Environment(\.colorScheme) private var colorScheme
+    var gptBubbleColor: Color {
+        switch colorScheme {
+        case .dark:
+            return Color.gray.opacity(0.1)
+        default:
+            return Color.white.opacity(0.9)
+        }
+    }
     var body: some View {
         HStack {
             if message.role != ChatGPTManager.shared.gptRoleString {
@@ -156,7 +166,7 @@ struct ChatRoomCellView: View {
                         .padding(0)
                     Spacer()
                 }
-                if message.type == 1 {
+                if message.msgType == .waitingReply {
                     //等待chatGPT回复的动画
                     ThinkingAnimationView()
                         .padding(12)
@@ -164,14 +174,15 @@ struct ChatRoomCellView: View {
                         .cornerRadius(6)
                 }
                 else {
-                    MarkdownView {
+                    MarkdownContentView {
                         Markdown(message.text ?? "")
                             .padding(12)
                             .textSelection(.enabled)
-                            .markdownCodeSyntaxHighlighter(.splash(theme: viewModel.theme))
-                            .background(Color.white.opacity(0.8))
+                            .markdownCodeSyntaxHighlighter(.splash(theme: viewModel.codeTheme(scheme: colorScheme)))
+                            .background(gptBubbleColor)
                             .cornerRadius(6)
-                    }.id(message.id)
+                    }
+                    .id(message.id)
                     .contextMenu {
                         Button(action: {
                             viewModel.deleteMessage(message: message)
@@ -185,7 +196,7 @@ struct ChatRoomCellView: View {
                             Text("复制消息")
                         }
                     }
-                    if message.type == 2 && viewModel.messages.last?.id == message.id {
+                    if message.msgType == .fialMsg && viewModel.messages.last?.id == message.id {
                         Button {
                             viewModel.resendMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", prompt: viewModel.currentConversation?.prompt?.prompt)
                         } label: {

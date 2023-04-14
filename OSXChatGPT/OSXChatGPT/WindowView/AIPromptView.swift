@@ -7,137 +7,277 @@
 
 import SwiftUI
 
+struct AIPromptDetailView: View {
+    let prompt: Prompt
+    @StateObject var data: AIPromptViewMdoel
+    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) private var colorScheme
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(prompt.title ?? "")
+                                .font(.headline)
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
+                                .padding(.bottom, 6)
+                            HStack {
+                                Button {
+                                    if prompt.promptType == .userLocalInUse {
+                                        //移除，
+                                        prompt.promptType = .userLocal
+                                        data.updatePrompt(prompt: prompt, isToggleOn: false)
+                                        presentationMode.wrappedValue.dismiss()
+                                    }else {
+                                        //添加，
+                                        prompt.promptType = .userLocalInUse
+                                        data.updatePrompt(prompt: prompt, isToggleOn: false)
+                                        presentationMode.wrappedValue.dismiss()
+                                    }
+                                } label: {
+                                    HStack {
+                                        if prompt.type == 3 {
+                                            Image(systemName: "minus.square")
+                                                .resizable()
+                                                .frame(width: 10, height: 10)
+                                                .foregroundColor(.white)
+                                                .padding(0)
+                                            Text("移除快捷方式")
+                                                .padding(0)
+                                                .foregroundColor(.white)
+                                        }else {
+                                            HStack {
+                                                Image(systemName: "plus.app")
+                                                    .resizable()
+                                                    .frame(width: 10, height: 10)
+                                                    .foregroundColor(.white)
+                                                    .padding(0)
+                                                Text("添加快捷方式")
+                                                    .padding(0)
+                                                    .foregroundColor(.white)
+                                            }
+                                        }
+                                    }
+                                    .padding(EdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10))
+                                    
+                                }
+                                .buttonStyle(LinkButtonStyle())
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color.white, lineWidth: 0.5)
+                                )
+                                
+                                if prompt.promptType == .userLocal {
+                                    Button {
+                                        data.deletePrompt(prompt: prompt)
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "trash.slash")
+                                                .resizable()
+                                                .frame(width: 10, height: 10)
+                                                .foregroundColor(.white)
+                                                .padding(0)
+                                            Text("删除数据")
+                                                .padding(0)
+                                                .foregroundColor(.white)
+                                        }
+                                        .padding(EdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10))
+                                        
+                                    }.buttonStyle(LinkButtonStyle())
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .stroke(Color.white, lineWidth: 0.5)
+                                        )
+                                }
+                            }
+                            
+                            
+                        }.padding(.leading, 6)
+                        Spacer()
+                    }.padding(.bottom, 10)
+                    ScrollView {
+                        HStack() {
+                            Text(prompt.prompt ?? "")
+                                .font(.subheadline)
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.6) : .white)
+                                .padding(10)
+                            Spacer()
+                            
+                        }
+                        
+                    }
+                    .frame(width: geometry.size.width - 30, height: geometry.size.height - 120)
+                    .background(.white.opacity(0.1))
+                    .cornerRadius(5)
+                }
+                
+                if let author = prompt.author {
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Text("\(author)")
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
+                                .font(.system(size: 11))
+                                .padding(.top, 5)
+                        }
+                        Spacer()
+                    }
+                }
+            }
+            .padding()
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .cornerRadius(6)
+            .background(
+                prompt.color.brightness((self.colorScheme == .dark) ? -0.5 : -0.2)
+            )
+        }
+        .frame(width: 500, height: 350)
+        
+    }
+}
 
 
 
 struct AIPromptView: View {
-    let sesstionId: String? //有则表示在会话中打开
-    
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct AIPromptPopView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var viewModel: ViewModel
-    @StateObject var data = AIPromptSessionViewMdoel()
-    @Binding var showInputView: Bool
-    @Binding var showPopover: Bool
+    @StateObject var data = AIPromptViewMdoel()
     @State private var isPresented = false
+    @State private var showInputView = false
+    
+    var titleColor: Color {
+        switch colorScheme {
+        case .dark:
+            return Color.white.opacity(0.9)
+        default:
+            return Color.black.opacity(0.9)
+        }
+    }
     
     var body: some View {
-        ZStack {
-            VStack {
-                            Spacer()
-                Text("选择提示")
-                    .font(.title3)
-                    .foregroundColor(.black.opacity(0.9))
-                            Spacer()
-                
-            }
-            HStack {
-                Spacer()
-                Button {
-                    self.showPopover = false
-                    self.showInputView = true
-                } label: {
-                    Text("自定义")
+        GeometryReader { geometry in
+            if data.allPrompts.count > 0 {
+                ScrollView {
+                    LazyVStack(spacing: 8) {
+                        ForEach(data.allPrompts) { (item) in
+                            AIPromptCellView(data: data, item: item)
+                        }
+                    }
+                    .background(Color.clear)
                 }
-                .padding(10)
+                .padding(.leading, 16)
+                .padding(.trailing, 16)
+                .frame(width: geometry.size.width, height: geometry.size.height - 50)
+                
+                .onAppear {
+                    
+                }
+            }else {
+                VStack(alignment: .center) {
+                    Text("请点击右上角自定义添加新的修饰语")
+                }.frame(width: geometry.size.width, height: geometry.size.height - 50)
+            }
+            
+            
+        }
+        .padding(.top, 1)
+        .toolbar {
+            Spacer()
+            Button(action: {
+                showInputView.toggle()
+            }) {
+                Image(systemName: "plus")
             }
         }
-        List(data.allPrompts) { item in
-            AIPromptPopCellView(item: item, isSelected: data.selectedItem == item) {
-                data.selectedItem = item
-            }.contextMenu {
-                Button(action: {
-                    data.deletePrompt(prompt: item)
-                }) {
-                    Text("删除")
-                }
-            }
-        }.frame(width: 560, height: 380)
-            .onAppear {
-                if let conversation = viewModel.currentConversation {
-                    data.fetchAllPrompts(session: conversation)
-                }
-            }
-            .onDisappear {
-                viewModel.updateConversation(sesstionId: viewModel.currentConversation!.sesstionId, prompt: data.selectedItem!)
-            }
+        .sheet(isPresented: $showInputView) {
+            AIPromptInputView(viewModel: data, isPresented: $showInputView)
+        }
+        
+        
     }
 }
 
-struct AIPromptPopCellView: View {
-    let item: Prompt
-        let isSelected: Bool
-        let action: () -> Void
-        
+struct AIPromptCellView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    @StateObject var data: AIPromptViewMdoel
+    @State private var isTapped = false
+    @State var item: Prompt
         var body: some View {
-            HStack {
-                if self.isSelected {
-                    Image(systemName: "checkmark.square.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.white)
-                        .background(Color.blue)
-                        .clipShape(Circle())
-                        .padding(5)
-                        
-                } else {
-                    Circle()
-                        .stroke(Color.blue, lineWidth: 1)
-                        .frame(width: 20, height: 20)
-                        .padding(5)
-                }
-                if item.type == 1 {
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack {
-                            Text("【默认无修饰语】")
-                                .font(Font.system(size: 15))
-                                .foregroundColor(.white)
-                                .padding(.trailing, 6)
-                                .padding(.bottom, 6)
-                            Text("当前选中的修饰语")
-                                .font(Font.system(size: 14))
-                                .foregroundColor(.white)
-                                .padding(.bottom, 6)
-                        }
-                        Text("每个会话只能选择一个修饰语, 也可以自定义添加修饰语")
-                            .font(.subheadline)
-                            .foregroundColor(.white.opacity(1))
-                    }.padding(.leading, 2)
-                }else {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(item.title ?? "")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .foregroundColor(.primary)
-                            .padding(.bottom, 6)
-                        Text(item.prompt ?? "")
-                            .font(.subheadline)
-                            .foregroundColor(.white.opacity(1))
-                    }.padding(.leading, 2)
+            ZStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                if item.promptType == .userLocalInUse {
+                                    Image(systemName: "checkmark.square")
+                                        .resizable()
+                                        .frame(width: 10, height: 10)
+                                        .foregroundColor(.white)
+                                        .padding(.trailing, 0)
+                                }else {
+                                    Image(systemName: "plus.app")
+                                        .resizable()
+                                        .frame(width: 10, height: 10)
+                                        .foregroundColor(.white)
+                                        .padding(.trailing, 0)
+                                }
+                                
+                                Text(item.title ?? "")
+                                    .font(.headline)
+                                    .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
+                                    .padding(.leading, 0)
+                                
+                            }.padding(.bottom, 6)
+                            Text(item.prompt ?? "")
+                                .font(.subheadline)
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.6) : .white)
+                        }.padding(.leading, 2)
+                        Spacer()
+                    }
+                    
                 }
                 
-                Spacer()
+                if let author = item.author {
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Text("\(author)")
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
+                                .font(.system(size: 11))
+                                .padding(.top, 5)
+                        }
+                        Spacer()
+                    }
+                }
+                
+                
             }
             .frame(height: 60)
             .padding(.vertical, 5)
             .padding(.horizontal, 10)
             .background(
-                item.color
+                item.color.brightness((self.colorScheme == .dark) ? -0.5 : -0.2)
             )
             .cornerRadius(6)
             .onTapGesture {
-                self.action()
+                self.isTapped.toggle()
             }
+            .sheet(isPresented: $isTapped) {
+                AIPromptDetailView(prompt: item, data: data)
+                    .onTapGesture {
+                        isTapped = false
+                    }
+                
+            }
+            
         }
 }
 
-struct AIPromptView_Previews: PreviewProvider {
-    static var previews: some View {
-        AIPromptView(sesstionId: nil)
-    }
-}
+
+
+//struct AIPromptView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AIPromptView(sesstionId: nil)
+//    }
+//}

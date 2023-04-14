@@ -36,6 +36,12 @@ struct ChatRoomToolBar: View {
                 AIPromptPopView(showInputView: $showInputView, showPopover: $showPopover).environmentObject(viewModel)
             }
             
+            Button("清空消息") {
+                viewModel.messages.removeAll()
+                viewModel.deleteAllMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "")
+                viewModel.updateConversation(sesstionId: viewModel.currentConversation?.sesstionId ?? "", message: nil)
+            }
+            
             Spacer()
             if viewModel.showStopAnswerBtn {
                 Button("停止生成") {
@@ -47,10 +53,6 @@ struct ChatRoomToolBar: View {
             }
             
             
-        }
-        .sheet(isPresented: $showInputView) {
-            // 在 sheet 中呈现表格
-            AIPromptInputView(isPresented: $showInputView)
         }
         .padding(.leading, 12)
         .background(Color.clear)

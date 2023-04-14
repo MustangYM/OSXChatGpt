@@ -18,6 +18,7 @@
     </entity>
     <entity name="Prompt" representedClassName=".Prompt" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="cloudId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="hexColor" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
