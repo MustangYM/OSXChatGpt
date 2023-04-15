@@ -29,6 +29,26 @@
 		CB0F5A6029D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F5A5E29D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift */; };
 		CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */; };
 		CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */; };
+		CB1F012729E9832F009CF942 /* MarkdownTextAttributesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F012629E9832F009CF942 /* MarkdownTextAttributesReader.swift */; };
+		CB1F012929E995BA009CF942 /* MarkdownTextBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F012829E995BA009CF942 /* MarkdownTextBuilder.swift */; };
+		CB1F012C29E99982009CF942 /* SwiftGrammar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F012A29E99982009CF942 /* SwiftGrammar.swift */; };
+		CB1F012D29E99982009CF942 /* Grammar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F012B29E99982009CF942 /* Grammar.swift */; };
+		CB1F012F29E999EF009CF942 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F012E29E999EF009CF942 /* Segment.swift */; };
+		CB1F013129E99A18009CF942 /* SyntaxRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013029E99A18009CF942 /* SyntaxRule.swift */; };
+		CB1F014229E99B5E009CF942 /* CharacterSet+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013429E99B5E009CF942 /* CharacterSet+Contains.swift */; };
+		CB1F014329E99B5E009CF942 /* Substring+HasSuffix.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013629E99B5E009CF942 /* Substring+HasSuffix.swift */; };
+		CB1F014429E99B5E009CF942 /* String+PrefixChecking.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013729E99B5E009CF942 /* String+PrefixChecking.swift */; };
+		CB1F014529E99B5E009CF942 /* String+Removing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013829E99B5E009CF942 /* String+Removing.swift */; };
+		CB1F014629E99B5E009CF942 /* String+IsNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013929E99B5E009CF942 /* String+IsNumber.swift */; };
+		CB1F014729E99B5E009CF942 /* String+HTMLEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013A29E99B5E009CF942 /* String+HTMLEntities.swift */; };
+		CB1F014829E99B5E009CF942 /* Int+IsOdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013C29E99B5E009CF942 /* Int+IsOdd.swift */; };
+		CB1F014929E99B5E009CF942 /* Sequence+Occurrences.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013E29E99B5E009CF942 /* Sequence+Occurrences.swift */; };
+		CB1F014A29E99B5E009CF942 /* Sequence+AnyOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F013F29E99B5E009CF942 /* Sequence+AnyOf.swift */; };
+		CB1F014B29E99B5E009CF942 /* Equatable+AnyOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F014129E99B5E009CF942 /* Equatable+AnyOf.swift */; };
+		CB1F014D29E9A4CC009CF942 /* MessageTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F014C29E9A4CC009CF942 /* MessageTextModel.swift */; };
+		CB1F014F29E9B6BC009CF942 /* CodeHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F014E29E9B6BC009CF942 /* CodeHighlighter.swift */; };
+		CB1F015129E9BC8C009CF942 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F015029E9BC8C009CF942 /* Tokenizer.swift */; };
+		CB1F015429EAD9E9009CF942 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = CB1F015329EAD9E9009CF942 /* Introspect */; };
 		CB1F1DD029DDBA0B008CFD0B /* AIPromptPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F1DCF29DDBA0B008CFD0B /* AIPromptPopView.swift */; };
 		CB2449F829D721F3006EE829 /* SystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2449F729D721F3006EE829 /* SystemManager.swift */; };
 		CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2449F929D7FE38006EE829 /* ServerManager.swift */; };
@@ -76,6 +96,25 @@
 		CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB1DCAC829B4F09F00B1D4E1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSXChatGPT.entitlements; sourceTree = "<group>"; };
+		CB1F012629E9832F009CF942 /* MarkdownTextAttributesReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextAttributesReader.swift; sourceTree = "<group>"; };
+		CB1F012829E995BA009CF942 /* MarkdownTextBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextBuilder.swift; sourceTree = "<group>"; };
+		CB1F012A29E99982009CF942 /* SwiftGrammar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftGrammar.swift; sourceTree = "<group>"; };
+		CB1F012B29E99982009CF942 /* Grammar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grammar.swift; sourceTree = "<group>"; };
+		CB1F012E29E999EF009CF942 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
+		CB1F013029E99A18009CF942 /* SyntaxRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyntaxRule.swift; sourceTree = "<group>"; };
+		CB1F013429E99B5E009CF942 /* CharacterSet+Contains.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CharacterSet+Contains.swift"; sourceTree = "<group>"; };
+		CB1F013629E99B5E009CF942 /* Substring+HasSuffix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Substring+HasSuffix.swift"; sourceTree = "<group>"; };
+		CB1F013729E99B5E009CF942 /* String+PrefixChecking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+PrefixChecking.swift"; sourceTree = "<group>"; };
+		CB1F013829E99B5E009CF942 /* String+Removing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Removing.swift"; sourceTree = "<group>"; };
+		CB1F013929E99B5E009CF942 /* String+IsNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+IsNumber.swift"; sourceTree = "<group>"; };
+		CB1F013A29E99B5E009CF942 /* String+HTMLEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HTMLEntities.swift"; sourceTree = "<group>"; };
+		CB1F013C29E99B5E009CF942 /* Int+IsOdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+IsOdd.swift"; sourceTree = "<group>"; };
+		CB1F013E29E99B5E009CF942 /* Sequence+Occurrences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sequence+Occurrences.swift"; sourceTree = "<group>"; };
+		CB1F013F29E99B5E009CF942 /* Sequence+AnyOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sequence+AnyOf.swift"; sourceTree = "<group>"; };
+		CB1F014129E99B5E009CF942 /* Equatable+AnyOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Equatable+AnyOf.swift"; sourceTree = "<group>"; };
+		CB1F014C29E9A4CC009CF942 /* MessageTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextModel.swift; sourceTree = "<group>"; };
+		CB1F014E29E9B6BC009CF942 /* CodeHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeHighlighter.swift; sourceTree = "<group>"; };
+		CB1F015029E9BC8C009CF942 /* Tokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
 		CB1F1DCF29DDBA0B008CFD0B /* AIPromptPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptPopView.swift; sourceTree = "<group>"; };
 		CB228EA129CD4949006B3559 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		CB2449F729D721F3006EE829 /* SystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemManager.swift; sourceTree = "<group>"; };
@@ -108,6 +147,7 @@
 			files = (
 				CB0F5A5B29D057FF005B71D2 /* SplashMarkdown in Frameworks */,
 				182B42C929BBB1C500F06778 /* Colorful in Frameworks */,
+				CB1F015429EAD9E9009CF942 /* Introspect in Frameworks */,
 				CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */,
 				CB0F5A5929D057FF005B71D2 /* Splash in Frameworks */,
 			);
@@ -230,6 +270,63 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		CB1F013229E99B5E009CF942 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CB1F013329E99B5E009CF942 /* CharacterSet */,
+				CB1F013529E99B5E009CF942 /* Strings */,
+				CB1F013B29E99B5E009CF942 /* Int */,
+				CB1F013D29E99B5E009CF942 /* Sequence */,
+				CB1F014029E99B5E009CF942 /* Equatable */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		CB1F013329E99B5E009CF942 /* CharacterSet */ = {
+			isa = PBXGroup;
+			children = (
+				CB1F013429E99B5E009CF942 /* CharacterSet+Contains.swift */,
+			);
+			path = CharacterSet;
+			sourceTree = "<group>";
+		};
+		CB1F013529E99B5E009CF942 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				CB1F013629E99B5E009CF942 /* Substring+HasSuffix.swift */,
+				CB1F013729E99B5E009CF942 /* String+PrefixChecking.swift */,
+				CB1F013829E99B5E009CF942 /* String+Removing.swift */,
+				CB1F013929E99B5E009CF942 /* String+IsNumber.swift */,
+				CB1F013A29E99B5E009CF942 /* String+HTMLEntities.swift */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		CB1F013B29E99B5E009CF942 /* Int */ = {
+			isa = PBXGroup;
+			children = (
+				CB1F013C29E99B5E009CF942 /* Int+IsOdd.swift */,
+			);
+			path = Int;
+			sourceTree = "<group>";
+		};
+		CB1F013D29E99B5E009CF942 /* Sequence */ = {
+			isa = PBXGroup;
+			children = (
+				CB1F013E29E99B5E009CF942 /* Sequence+Occurrences.swift */,
+				CB1F013F29E99B5E009CF942 /* Sequence+AnyOf.swift */,
+			);
+			path = Sequence;
+			sourceTree = "<group>";
+		};
+		CB1F014029E99B5E009CF942 /* Equatable */ = {
+			isa = PBXGroup;
+			children = (
+				CB1F014129E99B5E009CF942 /* Equatable+AnyOf.swift */,
+			);
+			path = Equatable;
+			sourceTree = "<group>";
+		};
 		CBC4B11429B8CB1B00650296 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,9 +344,19 @@
 		CBD5AB6729E7078E007B6625 /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
+				CB1F013229E99B5E009CF942 /* Extensions */,
+				CB1F013029E99A18009CF942 /* SyntaxRule.swift */,
+				CB1F014E29E9B6BC009CF942 /* CodeHighlighter.swift */,
+				CB1F015029E9BC8C009CF942 /* Tokenizer.swift */,
+				CB1F012E29E999EF009CF942 /* Segment.swift */,
+				CB1F012B29E99982009CF942 /* Grammar.swift */,
+				CB1F012A29E99982009CF942 /* SwiftGrammar.swift */,
 				CBD5AB6529E6EFE3007B6625 /* MarkdownView.swift */,
+				CB1F014C29E9A4CC009CF942 /* MessageTextModel.swift */,
+				CB1F012829E995BA009CF942 /* MarkdownTextBuilder.swift */,
 				CBD5AB6829E707A1007B6625 /* MarkdownTheme.swift */,
 				CBD5AB6A29E707F0007B6625 /* MarkdownTokenType.swift */,
+				CB1F012629E9832F009CF942 /* MarkdownTextAttributesReader.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
@@ -275,6 +382,7 @@
 				CB2F971E29CE12B6004EBD96 /* MarkdownUI */,
 				CB0F5A5829D057FF005B71D2 /* Splash */,
 				CB0F5A5A29D057FF005B71D2 /* SplashMarkdown */,
+				CB1F015329EAD9E9009CF942 /* Introspect */,
 			);
 			productName = OSXChatGPT;
 			productReference = CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */;
@@ -307,6 +415,7 @@
 				182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */,
 				CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */,
+				CB1F015229EAD9E9009CF942 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = CB1DCABF29B4F09D00B1D4E1 /* Products */;
 			projectDirPath = "";
@@ -335,32 +444,49 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB1F012F29E999EF009CF942 /* Segment.swift in Sources */,
+				CB1F015129E9BC8C009CF942 /* Tokenizer.swift in Sources */,
 				CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */,
+				CB1F014829E99B5E009CF942 /* Int+IsOdd.swift in Sources */,
 				CB2F972029CE1ADC004EBD96 /* OSXChatGPT.xcdatamodeld in Sources */,
 				182B436929BC5C8700F06778 /* UserInitializeView.swift in Sources */,
 				CB2449F829D721F3006EE829 /* SystemManager.swift in Sources */,
 				182B43A429BF730300F06778 /* NSColor.swift in Sources */,
+				CB1F012D29E99982009CF942 /* Grammar.swift in Sources */,
 				CB27656629D1DA9800897E0E /* AIPromptView.swift in Sources */,
+				CB1F014929E99B5E009CF942 /* Sequence+Occurrences.swift in Sources */,
 				182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */,
 				182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */,
 				188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */,
 				CB27656A29D1E65100897E0E /* Conversation+CoreDataProperties.swift in Sources */,
+				CB1F014229E99B5E009CF942 /* CharacterSet+Contains.swift in Sources */,
+				CB1F014629E99B5E009CF942 /* String+IsNumber.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
+				CB1F012929E995BA009CF942 /* MarkdownTextBuilder.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
 				CB0F5A5F29D059C4005B71D2 /* TextOutputFormat.swift in Sources */,
 				182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */,
 				CBD5AB6929E707A1007B6625 /* MarkdownTheme.swift in Sources */,
 				CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */,
+				CB1F014A29E99B5E009CF942 /* Sequence+AnyOf.swift in Sources */,
 				182B437429BC5D1B00F06778 /* ViewModel.swift in Sources */,
+				CB1F014329E99B5E009CF942 /* Substring+HasSuffix.swift in Sources */,
 				CB53A3BE29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift in Sources */,
 				182B436729BC5C8700F06778 /* ChatRoomView.swift in Sources */,
+				CB1F014B29E99B5E009CF942 /* Equatable+AnyOf.swift in Sources */,
+				CB1F014F29E9B6BC009CF942 /* CodeHighlighter.swift in Sources */,
 				CB27656929D1E65100897E0E /* Conversation+CoreDataClass.swift in Sources */,
+				CB1F014729E99B5E009CF942 /* String+HTMLEntities.swift in Sources */,
 				CB0F5A6029D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				CBC4B12429B8D28D00650296 /* Message+CoreDataProperties.swift in Sources */,
+				CB1F014D29E9A4CC009CF942 /* MessageTextModel.swift in Sources */,
 				182B436529BC5C8700F06778 /* SessionsView.swift in Sources */,
+				CB1F014429E99B5E009CF942 /* String+PrefixChecking.swift in Sources */,
 				CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */,
 				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
 				CB53A3BF29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift in Sources */,
+				CB1F012729E9832F009CF942 /* MarkdownTextAttributesReader.swift in Sources */,
+				CB1F012C29E99982009CF942 /* SwiftGrammar.swift in Sources */,
 				CBD5AB6429E6DE9A007B6625 /* ProjectSettingManager.swift in Sources */,
 				182B436829BC5C8700F06778 /* MainContentView.swift in Sources */,
 				CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */,
@@ -368,10 +494,12 @@
 				CBD5AB6B29E707F0007B6625 /* MarkdownTokenType.swift in Sources */,
 				182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */,
 				CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */,
+				CB1F014529E99B5E009CF942 /* String+Removing.swift in Sources */,
 				CB2F972829CEFB65004EBD96 /* ChatRoomToolBar.swift in Sources */,
 				CBC4B12329B8D28D00650296 /* Message+CoreDataClass.swift in Sources */,
 				CB27657329D30F1400897E0E /* AIPromptViewMdoel.swift in Sources */,
 				CB1F1DD029DDBA0B008CFD0B /* AIPromptPopView.swift in Sources */,
+				CB1F013129E99A18009CF942 /* SyntaxRule.swift in Sources */,
 				CB27655C29D1C12C00897E0E /* MarkdownContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,6 +716,14 @@
 				minimumVersion = 0.9.0;
 			};
 		};
+		CB1F015229EAD9E9009CF942 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.3;
+			};
+		};
 		CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
@@ -613,6 +749,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */;
 			productName = SplashMarkdown;
+		};
+		CB1F015329EAD9E9009CF942 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB1F015229EAD9E9009CF942 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
 		};
 		CB2F971E29CE12B6004EBD96 /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;

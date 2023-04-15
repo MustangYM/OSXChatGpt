@@ -15,7 +15,7 @@ import CoreData
 extension Prompt {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Prompt> {
-        return NSFetchRequest<Prompt>(entityName: OSXChatGPTPrompt)
+        return NSFetchRequest<Prompt>(entityName: "Prompt")
     }
 
     @NSManaged public var author: String?

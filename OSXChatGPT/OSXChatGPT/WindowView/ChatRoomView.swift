@@ -8,6 +8,8 @@
 import SwiftUI
 import AppKit
 import MarkdownUI
+import Introspect
+
 
 
 /// 聊天框
@@ -34,9 +36,8 @@ struct ChatRoomView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-            ScrollView {
                 ScrollViewReader { scrollView in
-                    LazyVStack(alignment: .trailing, spacing: 8) {
+                    List {
                         ForEach(viewModel.messages, id: \.id) { message in
                             ChatRoomCellView(message: message).environmentObject(viewModel)
                                 .id(message.id) // 添加唯一标识符
@@ -50,7 +51,8 @@ struct ChatRoomView: View {
                                     }
                                 }
                         }
-                    }.padding(.bottom, 25)
+                    }
+                    .removeBackground()
                     .onChange(of: viewModel.changeMsgText) { _ in
                         withAnimation {
                             if let msgId = viewModel.messages.last?.id {
@@ -58,16 +60,13 @@ struct ChatRoomView: View {
                             }
                         }
                     }
-                    .background(Color.clear)
+                    
                     .onAppear {
                         // 将 ScrollViewProxy 存储在状态中
                         self.scrollView = scrollView
                     }
                 }
                 .background(Color.clear)
-                
-                
-            }
             .frame(maxHeight: geometry.size.height - inputViewHeight) // 限制高度以便滚动
             Divider()
             GeometryReader { toolBarGeometry in
@@ -117,7 +116,14 @@ struct ChatRoomView: View {
 
 
 }
-
+extension List {
+    func removeBackground() -> some View {
+        return introspectTableView { tableView in
+            tableView.backgroundColor = .clear
+            tableView.enclosingScrollView!.drawsBackground = false
+        }
+    }
+}
 
 struct ChatRoomCellView: View {
     let message: Message
@@ -131,6 +137,15 @@ struct ChatRoomCellView: View {
             return Color.white.opacity(0.9)
         }
     }
+    var markdownTheme: MarkdownTheme {
+        switch colorScheme {
+        case .dark:
+            return .wwdc17()
+        default:
+            return .sunset()
+        }
+        
+    }
     var body: some View {
         HStack {
             if message.role != ChatGPTManager.shared.gptRoleString {
@@ -138,6 +153,8 @@ struct ChatRoomCellView: View {
                 VStack {
                     Text(message.text ?? "")
                         .textSelection(.enabled)
+                        .font(Font.system(size: 13, weight: .regular, design: .monospaced))
+                        .lineSpacing(1.5)
                         .id(message.id)
                 }.padding(12)
                     .background(Color.blue.opacity(0.8))
@@ -174,6 +191,7 @@ struct ChatRoomCellView: View {
                         .cornerRadius(6)
                 }
                 else {
+//                    MarkdownView(message.text ?? "", theme: markdownTheme)//自定义
                     MarkdownContentView {
                         Markdown(message.text ?? "")
                             .padding(12)
