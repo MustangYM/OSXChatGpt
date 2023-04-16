@@ -159,9 +159,6 @@ extension ViewModel {
         fetchMoreMessage(sesstionId: sesstionId)
     }
     func fetchMoreMessage(sesstionId: String) {
-        
-        
-        
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "sesstionId == %@", sesstionId)
         let timestampSortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
@@ -174,6 +171,22 @@ extension ViewModel {
         if results.count == 0 {
             return
         }
+//        results.forEach { message in
+//            if let tempArray = message.textModel.array as? [MessageText] {
+//                tempArray.forEach { item in
+//                    message.removeFromTextModel(item)
+//                }
+//                CoreDataManager.shared.delete(objects: tempArray)
+//            }
+//            if message.textModel.array.count == 0 {
+//                let arr = self.generateContent(message.text ?? "")
+//                arr.forEach { item in
+//                    message.addToTextModel(item)
+//                }
+//            }
+//        }
+//        CoreDataManager.shared.saveData()
+        
         if messages.count == 0 {
             if let last = results.last {
                 if last.role == ChatGPTManager.shared.gptRoleString {
@@ -279,111 +292,195 @@ extension ViewModel {
         if ChatGPTManager.shared.answerType.valueBool {
             self.showStopAnswerBtn = true
         }
+        var stream: String = ""
         ChatGPTManager.shared.askChatGPTStream(messages: messages, prompt: prompt) { rsp in
             if rsp.request.answerType == .stream {
                 isFeedback = true
                 //流式请求
                 if rsp.state == .replyStart {
-                    self.removeGptThinkMessage()
-                    newMsg = Message(context: CoreDataManager.shared.container.viewContext)
-                    newMsg?.sesstionId = sesstionId
-                    newMsg?.role = ChatGPTManager.shared.gptRoleString
-                    newMsg?.id = UUID()
-                    newMsg?.createdDate = Date()
-                    if self.currentConversation?.sesstionId == sesstionId {
-                        self.messages.append(newMsg!)
-                    }
-                    CoreDataManager.shared.saveData()
-                    self.updateConversation(sesstionId: sesstionId, message:newMsg)
-                    if self.currentConversation?.sesstionId == sesstionId {
-                        self.scrollID = newMsg!.id!
-                        self.changeMsgText = ""//更新滚动
-                    }
-                }else if rsp.state == .replying {
-                    self.scrollID = newMsg!.id!
-                    newMsg?.text = rsp.text
-                    if self.currentConversation?.sesstionId == sesstionId {
-                        self.messages[self.messages.count - 1] = newMsg!//更新UI
-                        self.changeMsgText = rsp.text//更新滚动
-                    }
-                }else if rsp.state == .replyFial {
-                    self.removeGptThinkMessage()
-                    if newMsg == nil {
+                    stream = ""
+                    DispatchQueue.main.async {
+                        self.removeGptThinkMessage()
                         newMsg = Message(context: CoreDataManager.shared.container.viewContext)
                         newMsg?.sesstionId = sesstionId
                         newMsg?.role = ChatGPTManager.shared.gptRoleString
                         newMsg?.id = UUID()
-                        newMsg?.msgType = .fialMsg
                         newMsg?.createdDate = Date()
-                    }
-                    newMsg?.text = rsp.text
-                    //失败
-                    CoreDataManager.shared.saveData()
-                    newMsg?.text = rsp.text
-                    if self.currentConversation?.sesstionId == sesstionId {
-                        if self.messages.count > 0 {
-                            self.messages[self.messages.count - 1] = newMsg!//更新UI
+                        newMsg?.msgTextType = .none
+//                        let textModel = MessageText(context: CoreDataManager.shared.container.viewContext)
+//                        textModel.id = UUID()
+//                        textModel.textType = .text
+//                        newMsg?.addToTextModel(textModel)
+                        
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            self.messages.append(newMsg!)
                         }
-                        self.changeMsgText = rsp.text//更新滚动
+                        CoreDataManager.shared.saveData()
+                        self.updateConversation(sesstionId: sesstionId, message:newMsg)
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            self.scrollID = newMsg!.id!
+                            self.changeMsgText = ""//更新滚动
+                        }
                     }
-                    self.showStopAnswerBtn = false
-                    updateBlock()
+                }else if rsp.state == .replying {
+                    if newMsg == nil {
+                        return
+                    }
+                    self.scrollID = newMsg!.id!
+                    newMsg?.text = rsp.text
+//                    stream += rsp.stream
+//                    if stream.contains("```") {//有代码块
+//                        let arr = stream.components(separatedBy: "```")
+//                        let first = arr.first ?? ""
+//                        let second = arr.last ?? ""
+//                        let textModel = newMsg?.textModel.array.last as? MessageText
+//                        textModel?.text = first
+//                        if newMsg!.msgTextType == .text || newMsg!.msgTextType == .none {
+//                            //文本变代码块
+//                            textModel?.textType = .text
+//                            textModel?.isFull = true
+//                            textModel?.text = textModel?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//                            stream = second
+//                            newMsg?.msgTextType = .code
+//                            DispatchQueue.main.async {
+//                                let codeModel = MessageText(context: CoreDataManager.shared.container.viewContext)
+//                                codeModel.text = second
+//                                codeModel.id = UUID()
+//                                codeModel.textType = .code
+//                                newMsg?.msgTextType = .code
+//                                newMsg?.addToTextModel(codeModel)
+////                                CoreDataManager.shared.saveData()
+//                            }
+//                        }else if newMsg!.msgTextType == .code {
+//                            //代码块变文本
+//                            textModel?.textType = .code
+//                            textModel?.isFull = true
+//                            textModel?.text = textModel?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//                            stream = second
+//                            newMsg?.msgTextType = .text
+//                            DispatchQueue.main.async {
+//                                let codeModel = MessageText(context: CoreDataManager.shared.container.viewContext)
+//                                codeModel.text = second
+//                                codeModel.id = UUID()
+//                                codeModel.textType = .text
+//                                newMsg?.msgTextType = .text
+//                                newMsg?.addToTextModel(codeModel)
+////                                CoreDataManager.shared.saveData()
+//                            }
+//                        }
+//
+//
+//                    }else {//没有新代码块，则添加到最后一个
+//                        let textModel = newMsg?.textModel.array.last as? MessageText
+//                        textModel?.text = stream
+//                    }
+
+                    DispatchQueue.main.async {
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            self.messages[self.messages.count - 1] = newMsg!//更新UI
+                            self.changeMsgText = rsp.text//更新滚动
+                        }
+                    }
+                }else if rsp.state == .replyFial {
+                    DispatchQueue.main.async {
+                        self.removeGptThinkMessage()
+                        if newMsg == nil {
+                            newMsg = Message(context: CoreDataManager.shared.container.viewContext)
+                            newMsg?.sesstionId = sesstionId
+                            newMsg?.role = ChatGPTManager.shared.gptRoleString
+                            newMsg?.id = UUID()
+                            newMsg?.msgType = .fialMsg
+                            newMsg?.createdDate = Date()
+                        }
+                        newMsg?.text = rsp.text
+                        //失败
+                        CoreDataManager.shared.saveData()
+                        newMsg?.text = rsp.text
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            if self.messages.count > 0 {
+                                self.messages[self.messages.count - 1] = newMsg!//更新UI
+                            }
+                            self.changeMsgText = rsp.text//更新滚动
+                        }
+                        self.showStopAnswerBtn = false
+                        updateBlock()
+                    }
                 }else if rsp.state == .replyFinish {
-                    self.updateConversation(sesstionId: sesstionId, message:newMsg)
-                    CoreDataManager.shared.saveData()
-                    if self.currentConversation?.sesstionId == sesstionId {
-                        self.changeMsgText = rsp.text//更新滚动
+                    DispatchQueue.main.async {
+//                        let arr = self.generateContent(rsp.text)
+//                        if let taskListTasks = newMsg?.textModel.array as? [MessageText] {
+//                            taskListTasks.forEach({ item in
+//                                newMsg?.removeFromTextModel(item)
+//                            })
+//                            CoreDataManager.shared.delete(objects: taskListTasks)
+//                        }
+//                        arr.forEach { item in
+//                            newMsg?.addToTextModel(item)
+//                        }
+                        self.updateConversation(sesstionId: sesstionId, message:newMsg)
+                        CoreDataManager.shared.saveData()
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            self.changeMsgText = rsp.text//更新滚动
+                        }
+                        self.showStopAnswerBtn = false
+                        updateBlock()
                     }
-                    self.showStopAnswerBtn = false
-                    updateBlock()
                 }
             }else {
                 isFeedback = true
                 //完整请求
                 if rsp.state == .replyStart {
-                    self.removeGptThinkMessage()
-                    newMsg = Message(context: CoreDataManager.shared.container.viewContext)
-                    newMsg?.sesstionId = sesstionId
-                    newMsg?.role = ChatGPTManager.shared.gptRoleString
-                    newMsg?.id = UUID()
-                    newMsg?.createdDate = Date()
-                    CoreDataManager.shared.saveData()
-                    self.updateConversation(sesstionId: sesstionId, message:newMsg)
-                    if self.currentConversation?.sesstionId == sesstionId {
-                        self.scrollID = newMsg!.id!
-                        self.messages.append(newMsg!)
-                        self.changeMsgText = rsp.text//更新滚动
-                    }
-                }else if rsp.state == .replyFial {
-                    //失败
-                    if newMsg == nil {
+                    DispatchQueue.main.async {
+                        self.removeGptThinkMessage()
                         newMsg = Message(context: CoreDataManager.shared.container.viewContext)
                         newMsg?.sesstionId = sesstionId
                         newMsg?.role = ChatGPTManager.shared.gptRoleString
                         newMsg?.id = UUID()
-                        newMsg?.msgType = .fialMsg
                         newMsg?.createdDate = Date()
-                    }
-                    newMsg?.text = rsp.text
-                    CoreDataManager.shared.saveData()
-                    if self.currentConversation?.sesstionId == sesstionId {
-                        self.scrollID = newMsg!.id!
+                        CoreDataManager.shared.saveData()
                         self.updateConversation(sesstionId: sesstionId, message:newMsg)
-                        self.messages[self.messages.count - 1] = newMsg!//更新UI
-                        self.changeMsgText = rsp.text//更新滚动
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            self.scrollID = newMsg!.id!
+                            self.messages.append(newMsg!)
+                            self.changeMsgText = rsp.text//更新滚动
+                        }
                     }
-                    updateBlock()
+                }else if rsp.state == .replyFial {
+                    DispatchQueue.main.async {
+                        //失败
+                        if newMsg == nil {
+                            newMsg = Message(context: CoreDataManager.shared.container.viewContext)
+                            newMsg?.sesstionId = sesstionId
+                            newMsg?.role = ChatGPTManager.shared.gptRoleString
+                            newMsg?.id = UUID()
+                            newMsg?.msgType = .fialMsg
+                            newMsg?.createdDate = Date()
+                        }
+                        newMsg?.text = rsp.text
+                        CoreDataManager.shared.saveData()
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            self.scrollID = newMsg!.id!
+                            self.updateConversation(sesstionId: sesstionId, message:newMsg)
+                            self.messages[self.messages.count - 1] = newMsg!//更新UI
+                            self.changeMsgText = rsp.text//更新滚动
+                        }
+                        updateBlock()
+                    }
                 }else if rsp.state == .replyFinish {
-                    //成功
-                    newMsg?.text = rsp.text
-                    CoreDataManager.shared.saveData()
-                    if self.currentConversation?.sesstionId == sesstionId {
-                        self.scrollID = newMsg!.id!
-                        self.updateConversation(sesstionId: sesstionId, message:newMsg)
-                        self.messages[self.messages.count - 1] = newMsg!//更新UI
-                        self.changeMsgText = rsp.text//更新滚动
+                    DispatchQueue.main.async {
+                        //成功
+                        newMsg?.text = rsp.text
+                        CoreDataManager.shared.saveData()
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            self.scrollID = newMsg!.id!
+                            self.updateConversation(sesstionId: sesstionId, message:newMsg)
+                            self.messages[self.messages.count - 1] = newMsg!//更新UI
+                            self.changeMsgText = rsp.text//更新滚动
+                        }
+                        updateBlock()
                     }
-                    updateBlock()
                 }
                 
             }
@@ -424,6 +521,82 @@ extension ViewModel {
             return Int64(Date().timeIntervalSince1970)
         }
     }
+    
+    private func generateContent(_ content:String) -> [MessageText] {
+            var array: [MessageText] = []
+            if !content.contains("```") {
+                let codeModel = MessageText(context: CoreDataManager.shared.container.viewContext)
+                codeModel.text = content
+                codeModel.id = UUID()
+                codeModel.textType = .text
+                array.append(codeModel)
+            }else {
+                let components = content.components(separatedBy: "```")
+                var idx: Int = 0// 0: code， 1: text
+                for (index, str) in components.enumerated() {
+                    if index == 0 {
+                        if (content.hasPrefix("```")) {
+                            idx = 0
+                        }else {
+                            idx = 1
+                        }
+                        if idx == 0 {
+                            let model = self.createMessageCodeModel(text: str)
+                            array.append(model)
+                            
+                        }else {
+                            let content = str.trimmingCharacters(in: .whitespacesAndNewlines)
+                            let codeModel = MessageText(context: CoreDataManager.shared.container.viewContext)
+                            codeModel.text = content
+                            codeModel.id = UUID()
+                            codeModel.textType = .text
+                            array.append(codeModel)
+                        }
+                        if idx == 0 {
+                            idx = 1
+                        }else {
+                            idx = 0
+                        }
+    
+                    }else {
+                        if idx == 0 {
+                            let model = self.createMessageCodeModel(text: str)
+                            array.append(model)
+                        }else {
+                            let content = str.trimmingCharacters(in: .whitespacesAndNewlines)
+                            let codeModel = MessageText(context: CoreDataManager.shared.container.viewContext)
+                            codeModel.text = content
+                            codeModel.id = UUID()
+                            codeModel.textType = .text
+                            array.append(codeModel)
+                        }
+                        if idx == 0 {
+                            idx = 1
+                        }else {
+                            idx = 0
+                        }
+                    }
+    
+                }
+            }
+            return array
+        }
+    
+        private func createMessageCodeModel(text: String) -> MessageText {
+            let lines = text.components(separatedBy: "\n")
+            let secondLine = lines[0]
+            var content = String(text)
+            let startIndex = text.index(text.startIndex, offsetBy: 0)
+            let endIndex = text.index(text.startIndex, offsetBy: secondLine.count)
+            let range = startIndex..<endIndex
+            content = text.replacingCharacters(in: range, with: "")
+            content = content.trimmingCharacters(in: .whitespacesAndNewlines)
+            let codeModel = MessageText(context: CoreDataManager.shared.container.viewContext)
+            codeModel.text = content
+            codeModel.id = UUID()
+            codeModel.textType = .code
+            return codeModel
+        }
 }
 
 extension ViewModel {

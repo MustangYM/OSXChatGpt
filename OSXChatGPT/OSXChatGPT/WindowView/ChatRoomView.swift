@@ -41,7 +41,7 @@ struct ChatRoomView: View {
                         ForEach(viewModel.messages, id: \.id) { message in
                             ChatRoomCellView(message: message).environmentObject(viewModel)
                                 .id(message.id) // 添加唯一标识符
-                                .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
+                                .padding(EdgeInsets(top: 10, leading: 0, bottom: 5, trailing: 0))
                                 .onAppear {
                                     if viewModel.messages.count > 1 {
                                         if viewModel.messages[1] == message && self.isOnAppear {
@@ -51,6 +51,8 @@ struct ChatRoomView: View {
                                     }
                                 }
                         }
+                        
+                        .padding(.bottom, 10)
                     }
                     .removeBackground()
                     .onChange(of: viewModel.changeMsgText) { _ in
@@ -191,7 +193,7 @@ struct ChatRoomCellView: View {
                         .cornerRadius(6)
                 }
                 else {
-//                    MarkdownView(message.text ?? "", theme: markdownTheme)//自定义
+//                    MarkdownView(message.textModel.array as? [MessageText] ?? [], theme: markdownTheme)//自定义
                     MarkdownContentView {
                         Markdown(message.text ?? "")
                             .padding(12)

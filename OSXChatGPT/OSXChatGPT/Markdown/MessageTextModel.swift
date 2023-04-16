@@ -8,10 +8,10 @@
 import Foundation
 
 
-enum MessageTextType {
-    case text
-    case code
-}
+//enum MessageTextType {
+//    case text
+//    case code
+//}
 
 struct MessageTextModel: Hashable {
     var id: UUID = UUID()
@@ -19,4 +19,5 @@ struct MessageTextModel: Hashable {
     var text: String = ""
     var headText: String = ""
     var attText: AttributedString = ""
+    var isFull: Bool = false
 }

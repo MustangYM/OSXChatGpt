@@ -193,10 +193,10 @@ extension MarkdownTheme {
                 .preprocessing: Color(red: 0.392, green: 0.391, blue: 0.52)
             ],
             backgroundColor: Color(
-                red: 1,
+                red: 0.9,
                 green: 0.9,
                 blue: 0.9,
-                opacity: 0.5
+                opacity: 1
             )
         )
     }

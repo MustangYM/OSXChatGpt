@@ -12,6 +12,7 @@ struct ChatGPTResponse {
     var request: ChatGPTRequest
     var state: State
     var text: String
+    var stream: String//流
     enum State {
         case replyStart
         case replying
@@ -287,39 +288,32 @@ extension ChatGPTManager {
         Task {
             do {
                 let stream = try await httpClient.postStream(chatRequest: request)
-                let res = ChatGPTResponse(request: request ,state: .replyStart, text: "")
+                let res = ChatGPTResponse(request: request ,state: .replyStart, text: "", stream: "")
                 await tempMessagePool.reset()
                 if self.chatGPTSpeaking == false {
                     return
                 }
-                DispatchQueue.main.async {
-                    complete?(res)
-                }
+                complete?(res)
                 var newMsg: String = ""
                 for try await line in stream {
                     await tempMessagePool.append(line: line)
                     let newMessage = await tempMessagePool.message
-                    print("回复：\(newMessage)")
+                    print("回复1：\(line)")
+                    print("回复2：\(newMessage)")
                     newMsg += newMessage
-                    let res = ChatGPTResponse(request: request ,state: .replying, text: newMessage)
-                    DispatchQueue.main.async {
-                        complete?(res)
-                    }
+                    let res = ChatGPTResponse(request: request ,state: .replying, text: newMessage, stream: line)
+                    complete?(res)
                 }
-                let re = ChatGPTResponse(request: request ,state: .replyFinish, text: newMsg)
+                let re = ChatGPTResponse(request: request ,state: .replyFinish, text: newMsg, stream: newMsg)
                 await tempMessagePool.reset()
-                DispatchQueue.main.async {
-                    self.chatGPTSpeaking = false
-                    complete?(re)
-                }
+                self.chatGPTSpeaking = false
+                complete?(re)
             }catch let err {
                 await tempMessagePool.reset()
                 if let error = err as? HTTPError {
-                    let res = ChatGPTResponse(request: request ,state: .replyFial, text: error.message)
-                    DispatchQueue.main.async {
-                        self.chatGPTSpeaking = false
-                        complete?(res)
-                    }
+                    let res = ChatGPTResponse(request: request ,state: .replyFial, text: error.message, stream: "")
+                    self.chatGPTSpeaking = false
+                    complete?(res)
                 }
                 
             }

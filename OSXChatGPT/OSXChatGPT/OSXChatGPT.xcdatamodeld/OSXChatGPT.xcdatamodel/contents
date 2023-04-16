@@ -14,6 +14,14 @@
         <attribute name="role" optional="YES" attributeType="String"/>
         <attribute name="sesstionId" attributeType="String"/>
         <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="textType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="textModel" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MessageText"/>
+    </entity>
+    <entity name="MessageText" representedClassName=".MessageText" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isFull" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Prompt" representedClassName=".Prompt" syncable="YES">
