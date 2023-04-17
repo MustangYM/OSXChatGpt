@@ -66,8 +66,8 @@ struct ChatRoomView: View {
                         self.scrollView = scrollView
                     }
                 }
+                .frame(maxHeight: geometry.size.height) // 限制高度以便滚动
                 .background(Color.clear)
-            .frame(maxHeight: geometry.size.height - inputViewHeight) // 限制高度以便滚动
             Divider()
             GeometryReader { toolBarGeometry in
                 Spacer()
@@ -160,21 +160,21 @@ struct ChatRoomCellView: View {
                         }
                     }
 
-                VStack {
-                    Image("User")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(0)
-                    Spacer()
-                }
+//                VStack {
+//                    Image("User")
+//                        .resizable()
+//                        .frame(width: 30, height: 30)
+//                        .padding(0)
+//                    Spacer()
+//                }
             } else {
-                VStack {
-                    Image("openAI_icon")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(0)
-                    Spacer()
-                }
+//                VStack {
+//                    Image("openAI_icon")
+//                        .resizable()
+//                        .frame(width: 30, height: 30)
+//                        .padding(0)
+//                    Spacer()
+//                }
                 if message.msgType == .waitingReply {
                     //等待chatGPT回复的动画
                     ThinkingAnimationView()
@@ -222,8 +222,8 @@ struct ChatRoomCellView: View {
                 Spacer()
             }
         }
-        .padding(.trailing, (message.role == ChatGPTManager.shared.gptRoleString) ? 70 : 0)
-        .padding(.leading, (message.role != ChatGPTManager.shared.gptRoleString) ? 70 : 0)
+        .padding(.trailing, (message.role == ChatGPTManager.shared.gptRoleString) ? 30 : 0)
+        .padding(.leading, (message.role != ChatGPTManager.shared.gptRoleString) ? 30 : 0)
     }
 }
 

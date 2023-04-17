@@ -165,10 +165,11 @@ struct AIPromptView: View {
                         }
                     }
                     .background(Color.clear)
+                    .padding(.leading, 16)
+                    .padding(.trailing, 16)
                 }
-                .padding(.leading, 16)
-                .padding(.trailing, 16)
-                .frame(width: geometry.size.width, height: geometry.size.height - 50)
+                .frame(width: geometry.size.width, height: geometry.size.height)
+                
                 
                 .onAppear {
                     
