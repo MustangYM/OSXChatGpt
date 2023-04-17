@@ -326,8 +326,7 @@ extension ViewModel {
                     if newMsg == nil {
                         return
                     }
-                    self.scrollID = newMsg!.id!
-                    newMsg?.text = rsp.text
+                    
 //                    stream += rsp.stream
 //                    if stream.contains("```") {//有代码块
 //                        let arr = stream.components(separatedBy: "```")
@@ -379,6 +378,8 @@ extension ViewModel {
 
                     DispatchQueue.main.async {
                         if self.currentConversation?.sesstionId == sesstionId {
+                            self.scrollID = newMsg!.id!
+                            newMsg?.text = rsp.text
                             self.messages[self.messages.count - 1] = newMsg!//更新UI
                             self.changeMsgText = rsp.text//更新滚动
                         }
