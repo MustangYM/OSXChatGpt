@@ -8,7 +8,6 @@
 import SwiftUI
 import AppKit
 import MarkdownUI
-import Introspect
 
 
 
@@ -54,7 +53,6 @@ struct ChatRoomView: View {
                         
                         .padding(.bottom, 10)
                     }
-                    .removeBackground()
                     .onChange(of: viewModel.changeMsgText) { _ in
                         withAnimation {
                             if let msgId = viewModel.messages.last?.id {
@@ -117,14 +115,6 @@ struct ChatRoomView: View {
     }
 
 
-}
-extension List {
-    func removeBackground() -> some View {
-        return introspectTableView { tableView in
-            tableView.backgroundColor = .clear
-            tableView.enclosingScrollView!.drawsBackground = false
-        }
-    }
 }
 
 struct ChatRoomCellView: View {

@@ -48,7 +48,6 @@
 		CB1F014D29E9A4CC009CF942 /* MessageTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F014C29E9A4CC009CF942 /* MessageTextModel.swift */; };
 		CB1F014F29E9B6BC009CF942 /* CodeHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F014E29E9B6BC009CF942 /* CodeHighlighter.swift */; };
 		CB1F015129E9BC8C009CF942 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F015029E9BC8C009CF942 /* Tokenizer.swift */; };
-		CB1F015429EAD9E9009CF942 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = CB1F015329EAD9E9009CF942 /* Introspect */; };
 		CB1F015B29EAFBF5009CF942 /* MessageText+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F015729EAFBF5009CF942 /* MessageText+CoreDataClass.swift */; };
 		CB1F015C29EAFBF5009CF942 /* MessageText+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F015829EAFBF5009CF942 /* MessageText+CoreDataProperties.swift */; };
 		CB1F015F29EB9D05009CF942 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F015D29EB9D05009CF942 /* Message+CoreDataClass.swift */; };
@@ -151,7 +150,6 @@
 			files = (
 				CB0F5A5B29D057FF005B71D2 /* SplashMarkdown in Frameworks */,
 				182B42C929BBB1C500F06778 /* Colorful in Frameworks */,
-				CB1F015429EAD9E9009CF942 /* Introspect in Frameworks */,
 				CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */,
 				CB0F5A5929D057FF005B71D2 /* Splash in Frameworks */,
 			);
@@ -388,7 +386,6 @@
 				CB2F971E29CE12B6004EBD96 /* MarkdownUI */,
 				CB0F5A5829D057FF005B71D2 /* Splash */,
 				CB0F5A5A29D057FF005B71D2 /* SplashMarkdown */,
-				CB1F015329EAD9E9009CF942 /* Introspect */,
 			);
 			productName = OSXChatGPT;
 			productReference = CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */;
@@ -421,7 +418,6 @@
 				182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */,
 				CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */,
-				CB1F015229EAD9E9009CF942 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = CB1DCABF29B4F09D00B1D4E1 /* Products */;
 			projectDirPath = "";
@@ -724,14 +720,6 @@
 				minimumVersion = 0.9.0;
 			};
 		};
-		CB1F015229EAD9E9009CF942 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.3;
-			};
-		};
 		CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
@@ -757,11 +745,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */;
 			productName = SplashMarkdown;
-		};
-		CB1F015329EAD9E9009CF942 /* Introspect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CB1F015229EAD9E9009CF942 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = Introspect;
 		};
 		CB2F971E29CE12B6004EBD96 /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;
