@@ -63,6 +63,8 @@
 		CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27657429D33D7A00897E0E /* AIPromptInputView.swift */; };
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
+		CB2D438929F0183A007742AE /* ChatGPT+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */; };
+		CB2D438A29F0183A007742AE /* ChatGPT+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */; };
 		CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = CB2F971E29CE12B6004EBD96 /* MarkdownUI */; };
 		CB2F972029CE1ADC004EBD96 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
 		CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */; };
@@ -132,6 +134,8 @@
 		CB27657429D33D7A00897E0E /* AIPromptInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptInputView.swift; sourceTree = "<group>"; };
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
+		CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGPT+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGPT+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInputView.swift; sourceTree = "<group>"; };
 		CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomToolBar.swift; sourceTree = "<group>"; };
 		CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -332,6 +336,8 @@
 		CBC4B11429B8CB1B00650296 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */,
+				CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */,
 				CB1F015D29EB9D05009CF942 /* Message+CoreDataClass.swift */,
 				CB1F015E29EB9D05009CF942 /* Message+CoreDataProperties.swift */,
 				CB1F015729EAFBF5009CF942 /* MessageText+CoreDataClass.swift */,
@@ -463,6 +469,7 @@
 				182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */,
 				188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */,
 				CB27656A29D1E65100897E0E /* Conversation+CoreDataProperties.swift in Sources */,
+				CB2D438929F0183A007742AE /* ChatGPT+CoreDataClass.swift in Sources */,
 				CB1F014229E99B5E009CF942 /* CharacterSet+Contains.swift in Sources */,
 				CB1F014629E99B5E009CF942 /* String+IsNumber.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
@@ -498,6 +505,7 @@
 				CBD5AB6629E6EFE3007B6625 /* MarkdownView.swift in Sources */,
 				CBD5AB6B29E707F0007B6625 /* MarkdownTokenType.swift in Sources */,
 				182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */,
+				CB2D438A29F0183A007742AE /* ChatGPT+CoreDataProperties.swift in Sources */,
 				CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */,
 				CB1F014529E99B5E009CF942 /* String+Removing.swift in Sources */,
 				CB2F972829CEFB65004EBD96 /* ChatRoomToolBar.swift in Sources */,

@@ -22,6 +22,7 @@ extension Conversation {
     @NSManaged public var updateData: Date?
     @NSManaged public var lastMessage: Message?
     @NSManaged public var prompt: Prompt?
+    @NSManaged public var chatGPT: ChatGPT?
 
 }
 

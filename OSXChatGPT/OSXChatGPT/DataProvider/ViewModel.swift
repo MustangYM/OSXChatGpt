@@ -53,6 +53,21 @@ import Splash
     init() {
         fetchConversations()
     }
+    func checkGPT(sesstion: Conversation?) {
+        if sesstion?.chatGPT == nil {
+            var gpt = ChatGPT(context: CoreDataManager.shared.container.viewContext)
+            configChatGPT(&gpt)
+            sesstion?.chatGPT = gpt
+            if let idx = conversations.firstIndex(where: {$0.sesstionId == sesstion?.sesstionId}) {
+                conversations[idx] = sesstion!
+            }
+            CoreDataManager.shared.saveData()
+        }
+    }
+    func updateConversation(sesstion: Conversation?) {
+        CoreDataManager.shared.saveData()
+    }
+    
     func updateConversation(sesstionId: String, prompt: Prompt) {
         var con = fetchConversation(sesstionId: sesstionId)
         if con == nil {
@@ -62,6 +77,7 @@ import Splash
         }
         con!.updateData = Date()
         con?.prompt = prompt
+        
         CoreDataManager.shared.saveData()
         if let index = conversations.firstIndex(where: { $0.sesstionId == sesstionId}) {
             conversations[index] = con!
@@ -100,21 +116,24 @@ import Splash
             conversations[index] = con!
         }
     }
-    class func addNewConversation() -> Conversation {
-        let con = Conversation(context: CoreDataManager.shared.container.viewContext)
-        con.sesstionId = createSesstionId()
-        con.id = UUID()
-        con.updateData = Date()
-        return con
-    }
     //**这里是一个Fake会话, 不需要存入数据库
     func addNewConversation() -> Conversation {
         let con = Conversation(context: CoreDataManager.shared.container.viewContext)
         con.sesstionId = createSesstionId()
         con.id = UUID()
         con.updateData = Date()
+        if con.chatGPT == nil {
+            var gpt = ChatGPT(context: CoreDataManager.shared.container.viewContext)
+            configChatGPT(&gpt)
+            con.chatGPT = gpt
+        }
         currentConversation = con
         return con
+    }
+    func configChatGPT(_ gpt: inout ChatGPT) {
+        gpt.temperature = 1
+        gpt.context = .context3
+        gpt.modelType = .gpt35turbo
     }
     func addConversation() {
         let con = Conversation(context: CoreDataManager.shared.container.viewContext)
@@ -293,7 +312,7 @@ extension ViewModel {
             self.showStopAnswerBtn = true
         }
         var stream: String = ""
-        ChatGPTManager.shared.askChatGPTStream(messages: messages, prompt: prompt) { rsp in
+        ChatGPTManager.shared.askChatGPTStream(messages: messages, prompt: prompt, chatGpt: currentConversation?.chatGPT) { rsp in
             if rsp.request.answerType == .stream {
                 isFeedback = true
                 //流式请求
@@ -394,6 +413,9 @@ extension ViewModel {
                             newMsg?.id = UUID()
                             newMsg?.msgType = .fialMsg
                             newMsg?.createdDate = Date()
+                            if self.currentConversation?.sesstionId == sesstionId {
+                                self.messages.append(newMsg!)
+                            }
                         }
                         newMsg?.text = rsp.text
                         //失败
@@ -607,6 +629,14 @@ extension ViewModel {
         let remove = aa.filter { $0.lastMessage == nil && $0.prompt == nil }
         CoreDataManager.shared.delete(objects: remove)
         aa.removeAll { $0.lastMessage == nil && $0.prompt == nil}
+        aa.forEach { con in
+            if con.chatGPT == nil {
+                var gpt = ChatGPT(context: CoreDataManager.shared.container.viewContext)
+                configChatGPT(&gpt)
+                con.chatGPT = gpt
+            }
+        }
+        CoreDataManager.shared.saveData()
         conversations = aa
     }
     private func fetchConversation(sesstionId: String) -> Conversation? {

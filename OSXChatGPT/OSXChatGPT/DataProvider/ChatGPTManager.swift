@@ -22,12 +22,27 @@ struct ChatGPTResponse {
     
 }
 struct ChatGPTRequest {
-    let model: ChatGPTModel
-    let temperature: Double = 0.5
+    let gpt: ChatGPT?
+    var model: ChatGPTModel = .gpt35turbo
+    var temperature: String = "1"
     let messages: [Message]
     let answerType: ChatGPTAnswerType//是否流式回答
-    let contextCount: ChatGPTContext
+    var contextCount: ChatGPTContext = .context3
     let systemMsg: String?//修饰语
+    let apiKey: String
+    
+    init(gpt: ChatGPT?, messages: [Message], answerType: ChatGPTAnswerType, apiKey: String, systemMsg: String?) {
+        self.gpt = gpt
+        if let chatG = gpt {
+            self.model = chatG.modelType
+            self.contextCount = chatG.context
+            self.temperature = chatG.temperatureValue
+        }
+        self.messages = messages
+        self.answerType = answerType
+        self.systemMsg = systemMsg
+        self.apiKey = apiKey
+    }
     
 //    static let completions = URL(string: "https://api.openai.com/v1/completions")!
 //    static let images = URL(string: "https://api.openai.com/v1/images/generations")!
@@ -47,7 +62,7 @@ struct ChatGPTRequest {
             
         }
     }
-    let apiKey: String
+    
     var headers: [String: String] {
         let dict = ["Content-Type": "application/json",
                     "Authorization": "Bearer \(apiKey)"]
@@ -76,8 +91,10 @@ struct ChatGPTRequest {
             let par = [
                 "model": model.value,
                 "messages": msg,
-                "stream": answerType.valueBool
+                "stream": answerType.valueBool,
+                "temperature": Float(temperature) ?? 1
             ] as [String : Any]
+            print("请求参数：\(par)")
             return par
         }
     }
@@ -100,8 +117,8 @@ enum ChatGPTAnswerType: CaseIterable, ToolBarMenuProtocol {
         return [.stream, .oneTime]
     }
 }
-enum ChatGPTContext: CaseIterable, ToolBarMenuProtocol {
-    case context0
+enum ChatGPTContext: Int16, CaseIterable, ToolBarMenuProtocol {
+    case context0 = 0
     case context1
     case context2
     case context3
@@ -116,30 +133,10 @@ enum ChatGPTContext: CaseIterable, ToolBarMenuProtocol {
     
     var value: String {
         switch self {
-        case .context0:
-            return "0"
-        case .context1:
-            return "1"
-        case .context2:
-            return "2"
-        case .context3:
-            return "3"
-        case .context4:
-            return "4"
-        case .context5:
-            return "5"
-        case .context6:
-            return "6"
-        case .context7:
-            return "7"
-        case .context8:
-            return "8"
-        case .context9:
-            return "9"
-        case .context10:
-            return "10"
         case .infinite:
             return "999"
+        default:
+            return "\(self.rawValue)"
         }
     }
     var valyeInt: Int {
@@ -160,7 +157,7 @@ enum ChatGPTContext: CaseIterable, ToolBarMenuProtocol {
                 .infinite]
     }
 }
-enum ChatGPTModel: CaseIterable, ToolBarMenuProtocol {
+enum ChatGPTModel: Int16, CaseIterable, ToolBarMenuProtocol {
     var value: String {
         switch self {
         case .textDavinci001:
@@ -278,13 +275,12 @@ extension ChatGPTManager {
         
         
     }
-    func askChatGPTStream(messages: [Message], prompt: String?, complete:((ChatGPTResponse) -> ())?) {
+    func askChatGPTStream(messages: [Message], prompt: String?, chatGpt: ChatGPT?, complete:((ChatGPTResponse) -> ())?) {
         if chatGPTSpeaking == true {
             return
         }
         chatGPTSpeaking = true
-        let request = ChatGPTRequest(model: model, messages: messages, answerType: answerType, contextCount: askContextCount, systemMsg: prompt, apiKey: apiKey)
-        
+        let request = ChatGPTRequest(gpt: chatGpt, messages: messages, answerType: answerType, apiKey: apiKey, systemMsg: prompt)
         Task {
             do {
                 let stream = try await httpClient.postStream(chatRequest: request)
@@ -319,6 +315,47 @@ extension ChatGPTManager {
             }
         }
     }
+//    func askChatGPTStream(messages: [Message], prompt: String?, complete:((ChatGPTResponse) -> ())?) {
+//        if chatGPTSpeaking == true {
+//            return
+//        }
+//        chatGPTSpeaking = true
+//        let request = ChatGPTRequest(model: model, messages: messages, answerType: answerType, contextCount: askContextCount, systemMsg: prompt, apiKey: apiKey)
+//
+//        Task {
+//            do {
+//                let stream = try await httpClient.postStream(chatRequest: request)
+//                let res = ChatGPTResponse(request: request ,state: .replyStart, text: "", stream: "")
+//                await tempMessagePool.reset()
+//                if self.chatGPTSpeaking == false {
+//                    return
+//                }
+//                complete?(res)
+//                var newMsg: String = ""
+//                for try await line in stream {
+//                    await tempMessagePool.append(line: line)
+//                    let newMessage = await tempMessagePool.message
+//                    print("回复1：\(line)")
+//                    print("回复2：\(newMessage)")
+//                    newMsg += newMessage
+//                    let res = ChatGPTResponse(request: request ,state: .replying, text: newMessage, stream: line)
+//                    complete?(res)
+//                }
+//                let re = ChatGPTResponse(request: request ,state: .replyFinish, text: newMsg, stream: newMsg)
+//                await tempMessagePool.reset()
+//                self.chatGPTSpeaking = false
+//                complete?(re)
+//            }catch let err {
+//                await tempMessagePool.reset()
+//                if let error = err as? HTTPError {
+//                    let res = ChatGPTResponse(request: request ,state: .replyFial, text: error.message, stream: "")
+//                    self.chatGPTSpeaking = false
+//                    complete?(res)
+//                }
+//
+//            }
+//        }
+//    }
     
     /// 提问
     func askChatGPT(messages: [Message], complete:(([String: Any]?, String?) -> ())?) {

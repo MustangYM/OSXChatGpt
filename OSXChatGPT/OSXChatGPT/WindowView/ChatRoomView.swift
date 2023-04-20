@@ -89,6 +89,7 @@ struct ChatRoomView: View {
             KeyboardMonitor.shared.startMonitorPasteboard()
             KeyboardMonitor.shared.startMonitorShiftKey()
             viewModel.currentConversation = conversation
+            viewModel.checkGPT(sesstion: conversation)
             viewModel.fetchFirstMessage(sesstionId: conversation?.sesstionId ?? "")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
