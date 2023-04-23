@@ -103,9 +103,9 @@ enum ChatGPTAnswerType: CaseIterable, ToolBarMenuProtocol {
     var value: String {
         switch self {
         case .stream:
-            return "流式"
+            return Localization.AnswerStream.localized
         case .oneTime:
-            return "单式"
+            return Localization.AnswerOneTime.localized
         }
     }
     case stream

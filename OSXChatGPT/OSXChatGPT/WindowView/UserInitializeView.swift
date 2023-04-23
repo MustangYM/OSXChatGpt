@@ -43,19 +43,19 @@ struct UserInitializeView: View {
 
                 VStack(alignment: .leading, spacing: 10){
                     HStack {
-                        Text("✅ Faster response      ✅ Local Chat History")
+                        Text(Localization.fasterResponse.localized)
                             .fixedSize(horizontal: true, vertical: false)
                     }
                     HStack {
-                        Text("✅ Prompt Library        ✅ Run locally on desktop")
+                        Text(Localization.PromptLibrary.localized)
                             .fixedSize(horizontal: true, vertical: false)
                     }
                     HStack {
-                        Text("✅ No login required    ✅ Use your own API key")
+                        Text(Localization.NoLoginRequired.localized)
                             .fixedSize(horizontal: true, vertical: false)
                     }
                     HStack {
-                        Text("✅ No monthly fee        and more soon...")
+                        Text(Localization.NoMonthlyFee.localized)
                             .fixedSize(horizontal: true, vertical: false)
                     }
                 }
@@ -69,7 +69,7 @@ struct UserInitializeView: View {
                     }) {
                         HStack(spacing: 0, content:{
                             Image("github-fill 1")
-                            Text("A Better macOS application for ChatGPT")
+                            Text(Localization.BetterApplication.localized)
                                 .foregroundColor(.blue)
                                 .frame(maxWidth: 250, alignment: .leading)
                                 .padding(.horizontal, 5)
@@ -83,7 +83,7 @@ struct UserInitializeView: View {
                     }) {
                         HStack(spacing: 0, content:{
                             Image(systemName: "play.tv.fill")
-                            Text("湖畔机械厂电影院")
+                            Text(Localization.adMovie.localized)
                                 .foregroundColor(.blue)
                                 .frame(maxWidth: 250, alignment: .leading)
                                 .padding(.horizontal, 5)
@@ -97,7 +97,7 @@ struct UserInitializeView: View {
                     }) {
                         HStack(spacing: 0, content:{
                             Image(systemName: "desktopcomputer.and.arrow.down")
-                            Text("湖畔机械厂员工搬运Mac软件资源网")
+                            Text(Localization.adWebsite.localized)
                                 .foregroundColor(.blue)
                                 .frame(maxWidth: 250, alignment: .leading)
                                 .padding(.horizontal, 5)
@@ -112,10 +112,10 @@ struct UserInitializeView: View {
                     HStack(spacing: 8) {
                         if apiKey.count > 0 {
                             Image(systemName: "person.fill.checkmark")
-                            Text("Update API Key")
+                            Text(Localization.UpdateAPIKey.localized)
                         } else {
                             Image(systemName: "key.radiowaves.forward.fill")
-                            Text("Enter API Key")
+                            Text(Localization.EnterAPIKey.localized)
                         }
                     }
                     .foregroundColor(.white)

@@ -28,7 +28,7 @@ struct AIPromptPopView: View {
         ZStack {
             VStack {
                 Spacer()
-                Text("选择提示")
+                Text(Localization.SelectPrompt.localized)
                     .font(.title3)
                     .foregroundColor(titleColor)
                 Spacer()
@@ -41,7 +41,7 @@ struct AIPromptPopView: View {
                     }
                     self.showPopover = false
                 } label: {
-                    Text("确定")
+                    Text(Localization.Confirm.localized)
                 }.padding(10)
                 Spacer()
                 Button {
@@ -51,7 +51,7 @@ struct AIPromptPopView: View {
                         viewModel.showAIPrompt = true
                     }
                 } label: {
-                    Text("词库")
+                    Text(Localization.Library.localized)
                 }
                 .padding(10)
             }
@@ -67,7 +67,7 @@ struct AIPromptPopView: View {
                             data.deletePrompt(prompt: item)
                         }
                     }) {
-                        Text("移除快捷方式")
+                        Text(Localization.RemoveShortcuts.localized)
                     }
                 }
         }.frame(width: 560, height: 380)
@@ -104,22 +104,22 @@ struct AIPromptPopCellView: View {
             if item.promptType == .hint {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
-                        Text("【默认无修饰语】")
+                        Text(Localization.DefaultNoPrompt.localized)
                             .font(Font.system(size: 15))
                             .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
                             .padding(.trailing, 6)
                             .padding(.bottom, 6)
-                        Text("当前选中的修饰语")
+                        Text(Localization.CurrentSelectPrompt.localized)
                             .font(Font.system(size: 14))
                             .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
                             .padding(.bottom, 6)
                         Spacer()
-                        Text("(没有修饰语请到词库添加)")
+                        Text(Localization.NoPromptToLibraryAdd.localized)
                             .font(Font.system(size: 11))
                             .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
                             .padding(.bottom, 6)
                     }
-                    Text("每个会话只能选择一个修饰语, 也可以自定义添加修饰语")
+                    Text(Localization.SelectOnlyOnePromptPerSession.localized)
                         .font(.subheadline)
                         .foregroundColor((colorScheme == .dark) ? .white.opacity(0.6) : .white)
                 }.padding(.leading, 2)

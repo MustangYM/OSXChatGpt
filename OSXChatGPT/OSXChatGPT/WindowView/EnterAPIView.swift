@@ -14,13 +14,13 @@ struct EnterAPIView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("Enter Your OpenAI API Key:")
+            Text(Localization.EnterYourAPIKey.localized)
                 .font(.title)
                 .fontWeight(.bold)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.top, 20)
             
-            Text("You need a working OpenAI Api Key in order to use OSXChatGPT")
+            Text(Localization.YouNeedApiKey.localized)
                 .foregroundColor(.gray)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, 20)
@@ -30,14 +30,14 @@ struct EnterAPIView: View {
                     NSWorkspace.shared.open(url)
                 }
             }) {
-                Text("🌏 Get your API key from Open AI dashboard")
+                Text(Localization.GetYourAPIKey.localized)
                     .foregroundColor(.blue)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.horizontal, 20)
             }
             .buttonStyle(BorderlessButtonStyle())//删除背景色
             
-            TextField("Enter your API key", text: $p_apiKey)
+            TextField(Localization.EnterYourAPIKey.localized, text: $p_apiKey)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 400, height: 50)
             
@@ -45,7 +45,7 @@ struct EnterAPIView: View {
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
-                    Text("Cancel")
+                    Text(Localization.Cancel.localized)
                         .foregroundColor(.white)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 20)
@@ -61,7 +61,7 @@ struct EnterAPIView: View {
                     self.presentationMode.wrappedValue.dismiss()
                     
                 }) {
-                    Text("Save")
+                    Text(Localization.Save.localized)
                         .foregroundColor(.white)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 20)
@@ -74,7 +74,7 @@ struct EnterAPIView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.top, 0)
             
-            Text("The app will connect to OpenAI API server to check if your API Key is working properly.")
+            Text(Localization.TheAppWillConnectOpenAIServer.localized)
                 .font(.footnote)
                 .fontWeight(.bold)
                 .frame(maxWidth: .infinity, alignment: .center)

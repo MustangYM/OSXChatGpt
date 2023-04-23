@@ -43,7 +43,7 @@ struct AIPromptDetailView: View {
                                                 .frame(width: 10, height: 10)
                                                 .foregroundColor(.white)
                                                 .padding(0)
-                                            Text("移除快捷方式")
+                                            Text(Localization.RemoveShortcuts.localized)
                                                 .padding(0)
                                                 .foregroundColor(.white)
                                         }else {
@@ -53,7 +53,7 @@ struct AIPromptDetailView: View {
                                                     .frame(width: 10, height: 10)
                                                     .foregroundColor(.white)
                                                     .padding(0)
-                                                Text("添加快捷方式")
+                                                Text(Localization.AddShortcuts.localized)
                                                     .padding(0)
                                                     .foregroundColor(.white)
                                             }
@@ -78,7 +78,7 @@ struct AIPromptDetailView: View {
                                                 .frame(width: 10, height: 10)
                                                 .foregroundColor(.white)
                                                 .padding(0)
-                                            Text("删除数据")
+                                            Text(Localization.DeleteData.localized)
                                                 .padding(0)
                                                 .foregroundColor(.white)
                                         }
@@ -176,7 +176,7 @@ struct AIPromptView: View {
                 }
             }else {
                 VStack(alignment: .center) {
-                    Text("请点击右上角自定义添加新的修饰语")
+                    Text(Localization.PleaseClickUpperRightAddCustomPrompt.localized)
                 }.frame(width: geometry.size.width, height: geometry.size.height - 50)
             }
             

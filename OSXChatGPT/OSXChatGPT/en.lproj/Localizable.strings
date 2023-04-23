@@ -1,0 +1,65 @@
+/* 
+  Localizable.strings
+  OSXChatGPT
+
+  Created by CoderChan on 2023/4/20.
+  
+*/
+
+
+"newChat" = "New Chat        ";
+"Prompt" = "[Prompt]%@";
+"editRemark" = "editRemark";
+"deleteSession" = "deleteSession";
+"EditConversationRemark" = "Edit Conversation Remark:";
+"EnterRemark" = "Enter remark";
+
+"FasterResponse" = "✅ Faster response      ✅ Local Chat History";
+"PromptLibrary" = "✅ Prompt Library        ✅ Run locally on desktop";
+"NoLoginRequired" = "✅ No login required    ✅ Use your own API key";
+"NoMonthlyFee" = "✅ No monthly fee        and more soon...";
+"BetterApplication" = "A Better macOS application for ChatGPT";
+"adMovie" = "湖畔机械厂电影院";
+"adWebsite" = "湖畔机械厂员工搬运Mac软件资源网";
+"UpdateAPIKey" = "Update API Key";
+"EnterAPIKey" = "Enter API Key";
+"EnterYourAPIKey" = "Enter Your OpenAI API Key:";
+"YouNeedApiKey" = "You need a working OpenAI Api Key in order to use OSXChatGPT";
+"GetYourAPIKey" = "🌏 Get your API key from Open AI dashboard";
+"Cancel" = "Cancel";
+"Save" = "Save";
+"TheAppWillConnectOpenAIServer" = "The app will connect to OpenAI API server to check if your API Key is working properly.";
+
+"deleteMessage" = "delete message";
+"copyMessage" = "copy message";
+"ParameterAdjustment" = "Parameter";
+"TemperatureT" = "Temperature(%@)";
+"ModelT" = "Model(%@)";
+"ContextT" = "Context(%@dialog)";
+"Answer" = "Answer";
+"Prompts" = "Prompts";
+"ClearMessage" = "Clear message";
+"StopAnswer" = "Stop answer";
+"Empty" = "Empty";
+"CurrentTemperature" = "Current temperature:";
+
+"RemoveShortcuts" = "Remove shortcuts";
+"AddShortcuts" = "Add shortcuts";
+"DeleteData" = "Delete data";
+"PleaseClickUpperRightAddCustomPrompt" = "Please click in the upper right corner to add a new custom Prompt";
+"SelectPrompt" = "Select prompt";
+"Confirm" = "Confirm";
+"Library" = "Library";
+"DefaultNoPrompt" = "【Default no prompt】";
+"CurrentSelectPrompt" = "Current select prompt";
+"NoPromptToLibraryAdd" = "(No prompt, please add to library)";
+"SelectOnlyOnePromptPerSession" = "You can select only one prompt per session, or you can add custom prompt";
+"CustomAdd" = "Custom add";
+"Title" = "Title";
+"Required" = "*Required";
+"Author" = "Author";
+"ShareYourPromptToLibrary" = "Share your prompt with library";
+"ShareOrNot" = "Share or not";
+
+"AnswerStream" = "Stream";
+"AnswerOneTime" = "OneTime";

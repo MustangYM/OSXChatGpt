@@ -157,7 +157,7 @@ struct ChatRoomCellView: View {
                         Button(action: {
                             viewModel.deleteMessage(message: message)
                         }) {
-                            Text("删除消息")
+                            Text(Localization.deleteMessage.localized)
                         }
                     }
 
@@ -198,13 +198,13 @@ struct ChatRoomCellView: View {
                         Button(action: {
                             viewModel.deleteMessage(message: message)
                         }) {
-                            Text("删除消息")
+                            Text(Localization.deleteMessage.localized)
                         }
                         Button(action: {
                             NSPasteboard.general.prepareForNewContents()
                             NSPasteboard.general.setString(message.text ?? "", forType: .string)
                         }) {
-                            Text("复制消息")
+                            Text(Localization.copyMessage.localized)
                         }
                     }
                     if message.msgType == .fialMsg && viewModel.messages.last?.id == message.id {

@@ -13,13 +13,13 @@ struct EidtSessionRemarkView: View {
     @EnvironmentObject var viewModel: ViewModel
     var body: some View {
         VStack(spacing: 20) {
-            Text("Edit Conversation Remark:")
+            Text(Localization.EditConversationRemark.localized)
                 .font(.title3)
                 .fontWeight(.bold)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.top, 20)
             
-            TextField("Enter remark", text: $remark)
+            TextField(Localization.EnterRemark.localized, text: $remark)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 200, height: 50)
             
@@ -27,7 +27,7 @@ struct EidtSessionRemarkView: View {
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
-                    Text("Cancel")
+                    Text(Localization.Cancel.localized)
                         .foregroundColor(.white)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 20)
@@ -43,7 +43,7 @@ struct EidtSessionRemarkView: View {
                     self.presentationMode.wrappedValue.dismiss()
                     
                 }) {
-                    Text("Save")
+                    Text(Localization.Save.localized)
                         .foregroundColor(.white)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 20)

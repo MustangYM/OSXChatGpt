@@ -33,7 +33,7 @@ struct SessionsView: View {
                         HStack(spacing: 0) {
                             Text(" ")
                             Image(systemName: "plus.message.fill")
-                            Text("New Chat        ")
+                            Text(Localization.newChat.localized)
                         }
                         .padding(10)
                         .foregroundColor(.white)
@@ -141,12 +141,23 @@ struct ChatRowView: View {
                 .padding(.leading, 5)
             VStack(alignment: .leading) {
                 if let prompt = chat.prompt?.title {
-                    Text("[修饰]\(prompt)")
+                    Text(Localization.prompt(prompt).localized)
                         .font(.headline)
                         .foregroundColor(NSColor(r: 224, g: 87, b: 114).toColor())
                 }else {
-                    Text(chat.prompt?.title ?? chat.remark ?? chat.lastMessage?.text ?? "New Chat")
-                        .font(.headline)
+                    if chat.prompt?.title != nil {
+                        Text(chat.prompt?.title ?? "")
+                            .font(.headline)
+                    }else if chat.remark != nil {
+                        Text(chat.remark ?? "")
+                            .font(.headline)
+                    }else if chat.lastMessage?.text != nil {
+                        Text(chat.lastMessage?.text ?? "")
+                            .font(.headline)
+                    }else {
+                        Text(Localization.newChat.localized)
+                            .font(.headline)
+                    }
                 }
                 
                 Spacer()
@@ -201,10 +212,10 @@ struct ChatRowContentNSView: NSViewRepresentable {
         @objc func handleRightClick(_ sender: NSClickGestureRecognizer) {
             if sender.state == .ended {
                 print("右键鼠标")
-                let menu = NSMenu(title: "123")
+                let menu = NSMenu(title: "")
                 menu.delegate = self
-                let editMenuItem = NSMenuItem(title: "编辑备注", action: #selector(edit), keyEquivalent: "")
-                let deleteMenuItem = NSMenuItem(title: "删除会话", action: #selector(delete), keyEquivalent: "")
+                let editMenuItem = NSMenuItem(title: Localization.editRemark.localized, action: #selector(edit), keyEquivalent: "")
+                let deleteMenuItem = NSMenuItem(title: Localization.deleteSession.localized, action: #selector(delete), keyEquivalent: "")
                 editMenuItem.target = self
                 deleteMenuItem.target = self
                 menu.addItem(editMenuItem)

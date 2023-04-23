@@ -22,7 +22,7 @@ struct AIPromptInputView: View {
         VStack {
             VStack {
                 Spacer()
-                Text("自定义添加")
+                Text(Localization.CustomAdd.localized)
                     .font(.title3)
                     .foregroundColor((colorScheme == .dark) ? .white.opacity(0.9) :.black.opacity(0.9))
                 Spacer()
@@ -32,13 +32,13 @@ struct AIPromptInputView: View {
             
             VStack {
                 HStack {
-                    Text("标题")
+                    Text(Localization.Title.localized)
                         .font(.title3)
                         .padding(.top, 5)
                         .padding(.leading, 20)
                         .padding(.bottom, 0)
                         .frame(height: 18)
-                    Text("*必填")
+                    Text(Localization.Required.localized)
                         .font(Font.system(size: 11))
                         .padding(.top, 5)
                         .foregroundColor(.gray.opacity(0.6))
@@ -58,13 +58,13 @@ struct AIPromptInputView: View {
                     .padding(.trailing, 20)
                 
                 HStack {
-                    Text("修饰语")
+                    Text(Localization.Prompts.localized)
                         .font(.title3)
                         .padding(.top, 5)
                         .padding(.leading, 20)
                         .padding(.bottom, 0)
                         .frame(height: 18)
-                    Text("*必填")
+                    Text(Localization.Required.localized)
                         .font(Font.system(size: 11))
                         .padding(.top, 5)
                         .foregroundColor(.gray.opacity(0.6))
@@ -84,7 +84,7 @@ struct AIPromptInputView: View {
                     .padding(.trailing, 20)
                 
                 HStack {
-                    Text("作者")
+                    Text(Localization.Author.localized)
                         .font(.title3)
                         .padding(.top, 5)
                         .padding(.leading, 20)
@@ -95,7 +95,7 @@ struct AIPromptInputView: View {
 //                        .padding(.top, 5)
 //                        .foregroundColor(.gray.opacity(0.6))
 //                        .frame(height: 18)
-                    Text("分享您的修饰语到词库")
+                    Text(Localization.ShareYourPromptToLibrary.localized)
                         .font(Font.system(size: 10))
                         .padding(.top, 5)
                         .foregroundColor(.gray.opacity(0.6))
@@ -119,7 +119,7 @@ struct AIPromptInputView: View {
             
             VStack {
                 HStack {
-                    Toggle("是否分享", isOn: $isToggleOn)
+                    Toggle(Localization.ShareOrNot.localized, isOn: $isToggleOn)
                                     .padding()
                                     .foregroundColor(.gray)
                                     .font(Font.system(size: 13))
@@ -128,7 +128,7 @@ struct AIPromptInputView: View {
                     Button {
                         self.isPresented = false
                     } label: {
-                        Text("取消")
+                        Text(Localization.Cancel.localized)
                     }
                     
                     Button {
@@ -140,7 +140,7 @@ struct AIPromptInputView: View {
                         self.isPresented = false
                         
                     } label: {
-                        Text("确定")
+                        Text(Localization.Confirm.localized)
                         
                     }
                     .padding(.trailing, 20)

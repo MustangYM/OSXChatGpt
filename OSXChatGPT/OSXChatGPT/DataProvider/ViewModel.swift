@@ -311,6 +311,7 @@ extension ViewModel {
         if ChatGPTManager.shared.answerType.valueBool {
             self.showStopAnswerBtn = true
         }
+        
         var stream: String = ""
         ChatGPTManager.shared.askChatGPTStream(messages: messages, prompt: prompt, chatGpt: currentConversation?.chatGPT) { rsp in
             if rsp.request.answerType == .stream {
@@ -417,9 +418,8 @@ extension ViewModel {
                                 self.messages.append(newMsg!)
                             }
                         }
-                        newMsg?.text = rsp.text
-                        //失败
                         CoreDataManager.shared.saveData()
+                        //失败
                         newMsg?.text = rsp.text
                         if self.currentConversation?.sesstionId == sesstionId {
                             if self.messages.count > 0 {

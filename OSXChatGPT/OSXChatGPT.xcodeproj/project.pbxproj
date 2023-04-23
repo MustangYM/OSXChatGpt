@@ -69,6 +69,8 @@
 		CB2F972029CE1ADC004EBD96 /* OSXChatGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */; };
 		CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */; };
 		CB2F972829CEFB65004EBD96 /* ChatRoomToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */; };
+		CB373A9B29F56CFF00B8D9BE /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB373A9A29F56CFF00B8D9BE /* Localization.swift */; };
+		CB4D1FC429F195E60010D063 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB4D1FC629F195E60010D063 /* Localizable.strings */; };
 		CB53A3BE29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */; };
 		CB53A3BF29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */; };
 		CBD5AB6429E6DE9A007B6625 /* ProjectSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5AB6329E6DE9A007B6625 /* ProjectSettingManager.swift */; };
@@ -138,6 +140,9 @@
 		CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGPT+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInputView.swift; sourceTree = "<group>"; };
 		CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomToolBar.swift; sourceTree = "<group>"; };
+		CB373A9A29F56CFF00B8D9BE /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		CB4D1FC529F195E60010D063 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CB4D1FC729F195EA0010D063 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
@@ -214,6 +219,7 @@
 				182B437129BC5D1B00F06778 /* ChatGPTManager.swift */,
 				182B436F29BC5D1B00F06778 /* CoreDataManager.swift */,
 				182B437029BC5D1B00F06778 /* ViewModel.swift */,
+				CB373A9A29F56CFF00B8D9BE /* Localization.swift */,
 				CBD5AB6329E6DE9A007B6625 /* ProjectSettingManager.swift */,
 				CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */,
 				CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */,
@@ -261,6 +267,7 @@
 				CBC4B11429B8CB1B00650296 /* Models */,
 				182B42B529BBA82800F06778 /* Storyboard.storyboard */,
 				CBC4B0FD29B8BF9600650296 /* OSXChatGPT.xcdatamodeld */,
+				CB4D1FC629F195E60010D063 /* Localizable.strings */,
 				CB1DCAC529B4F09F00B1D4E1 /* Assets.xcassets */,
 				CB1DCACA29B4F09F00B1D4E1 /* OSXChatGPT.entitlements */,
 				CB1DCAC729B4F09F00B1D4E1 /* Preview Content */,
@@ -418,6 +425,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = CB1DCAB529B4F09D00B1D4E1;
 			packageReferences = (
@@ -440,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB1DCAC929B4F09F00B1D4E1 /* Preview Assets.xcassets in Resources */,
+				CB4D1FC429F195E60010D063 /* Localizable.strings in Resources */,
 				CB1DCAC629B4F09F00B1D4E1 /* Assets.xcassets in Resources */,
 				182B42B629BBA82800F06778 /* Storyboard.storyboard in Resources */,
 			);
@@ -454,6 +463,7 @@
 			files = (
 				CB1F012F29E999EF009CF942 /* Segment.swift in Sources */,
 				CB1F015C29EAFBF5009CF942 /* MessageText+CoreDataProperties.swift in Sources */,
+				CB373A9B29F56CFF00B8D9BE /* Localization.swift in Sources */,
 				CB1F015129E9BC8C009CF942 /* Tokenizer.swift in Sources */,
 				CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */,
 				CB1F014829E99B5E009CF942 /* Int+IsOdd.swift in Sources */,
@@ -517,6 +527,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CB4D1FC629F195E60010D063 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB4D1FC529F195E60010D063 /* en */,
+				CB4D1FC729F195EA0010D063 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		CB1DCACB29B4F09F00B1D4E1 /* Debug */ = {

@@ -19,13 +19,13 @@ struct ChatRoomToolBar: View {
     @State private var isAnswerTypeTrue = ChatGPTManager.shared.answerType.valueBool
     var body: some View {
         HStack {
-            MenuButton("参数调节") {
-                Button("温度调节(\(temperature))") {
+            MenuButton(Localization.ParameterAdjustment.localized) {
+                Button(Localization.TemperatureT(temperature).localized) {
                     showDragView.toggle()
                 }
                 .padding(.leading, 0)
                 
-                BrowserView(items: ChatGPTModel.allCases, title: "模型(\(model))", item: viewModel.currentConversation?.chatGPT?.modelType ?? .gpt35turbo) { model in
+                BrowserView(items: ChatGPTModel.allCases, title: Localization.ModelT(model).localized, item: viewModel.currentConversation?.chatGPT?.modelType ?? .gpt35turbo) { model in
                     viewModel.currentConversation?.chatGPT?.modelType = model
                     viewModel.updateConversation(sesstion: viewModel.currentConversation)
                     self.model = model.value
@@ -33,7 +33,7 @@ struct ChatRoomToolBar: View {
                 .padding(.leading, 0)
                 .frame(width: 100)
                 
-                BrowserView(items: ChatGPTContext.allCases, title: "上下文(\(context)组对话)", item: viewModel.currentConversation?.chatGPT?.context ?? .context3) { model in
+                BrowserView(items: ChatGPTContext.allCases, title: Localization.ContextT(context).localized, item: viewModel.currentConversation?.chatGPT?.context ?? .context3) { model in
                     viewModel.currentConversation?.chatGPT?.context = model
                     viewModel.updateConversation(sesstion: viewModel.currentConversation)
                     context = model.value
@@ -43,18 +43,18 @@ struct ChatRoomToolBar: View {
                 
             }
             .padding(.leading, 0)
-            .frame(width: 85)
+            .frame(width: (Locale.current.languageCode == "zh") ? 85 : 95)
             .popover(isPresented: $showDragView, arrowEdge: .top) {
                 TemperatureSliderView(temperature: $temperature).environmentObject(viewModel)
             }
             
-            BrowserView(items: ChatGPTAnswerType.allCases, title: "应答", item: ChatGPTManager.shared.answerType) { model in
+            BrowserView(items: ChatGPTAnswerType.allCases, title: Localization.Answer.localized, item: ChatGPTManager.shared.answerType) { model in
                 ChatGPTManager.shared.answerType = model
             }
             
-            .frame(width: 60)
+            .frame(width: (Locale.current.languageCode == "zh") ? 60 : 77)
 
-            Button("修饰语") {
+            Button(Localization.Prompts.localized) {
                 showPopover.toggle()
             }
             .popover(isPresented: $showPopover) {
@@ -62,7 +62,7 @@ struct ChatRoomToolBar: View {
             }
 
             
-            Button("清空消息") {
+            Button(Localization.ClearMessage.localized) {
                 viewModel.messages.removeAll()
                 viewModel.deleteAllMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "")
                 viewModel.updateConversation(sesstionId: viewModel.currentConversation?.sesstionId ?? "", message: nil)
@@ -70,7 +70,7 @@ struct ChatRoomToolBar: View {
             
             Spacer()
             if viewModel.showStopAnswerBtn {
-                Button("停止生成") {
+                Button(Localization.StopAnswer.localized) {
                     viewModel.cancel()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         viewModel.showStopAnswerBtn = false
@@ -88,11 +88,11 @@ struct ChatRoomToolBar: View {
         
         
         .onAppear {
-            let formattedValue = viewModel.currentConversation?.chatGPT?.temperatureValue ?? "空"
+            let formattedValue = viewModel.currentConversation?.chatGPT?.temperatureValue ?? Localization.Empty.localized
             self.temperature = formattedValue
             
-            self.model = viewModel.currentConversation?.chatGPT?.modelType.value ?? "空"
-            self.context = viewModel.currentConversation?.chatGPT?.context.value ?? "空"
+            self.model = viewModel.currentConversation?.chatGPT?.modelType.value ?? Localization.Empty.localized
+            self.context = viewModel.currentConversation?.chatGPT?.context.value ?? Localization.Empty.localized
         }
         
     }
@@ -143,7 +143,7 @@ struct TemperatureSliderView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("当前温度：")
+                Text(Localization.CurrentTemperature.localized)
                 Text(change)
                     .frame(width: 30)
             }
