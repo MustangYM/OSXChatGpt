@@ -84,7 +84,7 @@ struct ChatRoomView: View {
             
         
         .onAppear {
-            print("View appeared!")
+//            print("View appeared!")
             newMessageText = conversation?.lastInputText ?? ""
             KeyboardMonitor.shared.startMonitorPasteboard()
             KeyboardMonitor.shared.startMonitorShiftKey()
@@ -103,7 +103,7 @@ struct ChatRoomView: View {
             ServerManager.shared.checkToken()//获取最新teton
         }
         .onDisappear {
-            print("View disappeared!")
+//            print("View disappeared!")
             self.isOnAppear = false
             conversation?.lastInputText = newMessageText
             
@@ -158,6 +158,12 @@ struct ChatRoomCellView: View {
                             viewModel.deleteMessage(message: message)
                         }) {
                             Text(Localization.deleteMessage.localized)
+                        }
+                        Button(action: {
+                            NSPasteboard.general.prepareForNewContents()
+                            NSPasteboard.general.setString(message.text ?? "", forType: .string)
+                        }) {
+                            Text(Localization.copyMessage.localized)
                         }
                     }
 

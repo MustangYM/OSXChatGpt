@@ -14,10 +14,10 @@
 "EditConversationRemark" = "Edit Conversation Remark:";
 "EnterRemark" = "Enter remark";
 
-"FasterResponse" = "✅ Faster response      ✅ Local Chat History";
-"PromptLibrary" = "✅ Prompt Library        ✅ Run locally on desktop";
+"FasterResponse" =  "✅ Faster response      ✅ Local Chat History";
+"PromptLibrary" =   "✅ Prompt Library       ✅ Run locally on desktop";
 "NoLoginRequired" = "✅ No login required    ✅ Use your own API key";
-"NoMonthlyFee" = "✅ No monthly fee        and more soon...";
+"NoMonthlyFee" =    "✅ No monthly fee        and more soon...";
 "BetterApplication" = "A Better macOS application for ChatGPT";
 "adMovie" = "湖畔机械厂电影院";
 "adWebsite" = "湖畔机械厂员工搬运Mac软件资源网";
@@ -54,7 +54,7 @@
 "CurrentSelectPrompt" = "Current select prompt";
 "NoPromptToLibraryAdd" = "(No prompt, please add to library)";
 "SelectOnlyOnePromptPerSession" = "You can select only one prompt per session, or you can add custom prompt";
-"CustomAdd" = "Custom add";
+"CustomAdd" = "Add a custom";
 "Title" = "Title";
 "Required" = "*Required";
 "Author" = "Author";
@@ -63,3 +63,9 @@
 
 "AnswerStream" = "Stream";
 "AnswerOneTime" = "OneTime";
+
+"Setting" = "Setting";
+"HideDynamicBackground" = "Hide dynamic background";
+"DisplayDynamicBackground" = "Display dynamic background";
+"Displayed" = "Displayed";
+"Hidden" = "Hidden";

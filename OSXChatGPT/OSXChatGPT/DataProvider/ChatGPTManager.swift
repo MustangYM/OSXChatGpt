@@ -294,8 +294,8 @@ extension ChatGPTManager {
                 for try await line in stream {
                     await tempMessagePool.append(line: line)
                     let newMessage = await tempMessagePool.message
-                    print("回复1：\(line)")
-                    print("回复2：\(newMessage)")
+//                    print("回复1：\(line)")
+//                    print("回复2：\(newMessage)")
                     newMsg += newMessage
                     let res = ChatGPTResponse(request: request ,state: .replying, text: newMessage, stream: line)
                     complete?(res)

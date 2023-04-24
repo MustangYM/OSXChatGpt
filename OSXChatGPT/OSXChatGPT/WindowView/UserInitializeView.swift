@@ -23,6 +23,7 @@ struct UserInitializeView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 80)
+                    .padding(.top, 50)
 
                 HStack(spacing: 0) {
                     Text("OSXChatGPT")
@@ -40,7 +41,7 @@ struct UserInitializeView: View {
                                 .foregroundColor(.white)
                         )
                 }
-
+                .padding(.bottom, 20)
                 VStack(alignment: .leading, spacing: 10){
                     HStack {
                         Text(Localization.fasterResponse.localized)
@@ -71,9 +72,9 @@ struct UserInitializeView: View {
                             Image("github-fill 1")
                             Text(Localization.BetterApplication.localized)
                                 .foregroundColor(.blue)
-                                .frame(maxWidth: 250, alignment: .leading)
+                                .frame(maxWidth: 300, alignment: .leading)
                                 .padding(.horizontal, 5)
-                        })
+                        }).padding(.leading, 60)
                     }.buttonStyle(PlainButtonStyle())//删除背景色
 
                     Button(action: {
@@ -85,9 +86,9 @@ struct UserInitializeView: View {
                             Image(systemName: "play.tv.fill")
                             Text(Localization.adMovie.localized)
                                 .foregroundColor(.blue)
-                                .frame(maxWidth: 250, alignment: .leading)
+                                .frame(maxWidth: 300, alignment: .leading)
                                 .padding(.horizontal, 5)
-                        })
+                        }).padding(.leading, 60)
                     }.buttonStyle(PlainButtonStyle())//删除背景色
 
                     Button(action: {
@@ -99,9 +100,9 @@ struct UserInitializeView: View {
                             Image(systemName: "desktopcomputer.and.arrow.down")
                             Text(Localization.adWebsite.localized)
                                 .foregroundColor(.blue)
-                                .frame(maxWidth: 250, alignment: .leading)
+                                .frame(maxWidth: 300, alignment: .leading)
                                 .padding(.horizontal, 5)
-                        })
+                        }).padding(.leading, 60)
                     }.buttonStyle(PlainButtonStyle())//删除背景色
                 })
                 

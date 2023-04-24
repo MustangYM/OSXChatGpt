@@ -6,28 +6,28 @@
   
 */
 
-"newChat" = "新会话        ";
+"newChat" = "新会话            ";
 "Prompt" = "[修饰]%@";
 "editRemark" = "编辑备注";
 "deleteSession" = "删除会话";
 "EditConversationRemark" = "编辑会话备注:";
 "EnterRemark" = "输入备注";
 
-"FasterResponse" = "✅ 更快的响应      ✅ 本地聊天记录";
-"PromptLibrary" = "✅ 修饰词库        ✅ 在桌面上本地运行";
-"NoLoginRequired" = "✅ 无需登陆    ✅ 使用您的API密钥";
-"NoMonthlyFee" = "✅ 没有任何费用        还有更多...";
-"BetterApplication" = "一个优秀的macOS应用程序的ChatGPT";
+"FasterResponse" =  "✅ 快速响应                 ✅ 本地保存记录";
+"PromptLibrary" =   "✅ 修饰词库                 ✅ 随意参数调节";
+"NoLoginRequired" = "✅ 无需登陆                 ✅ 一键清空会话";
+"NoMonthlyFee" =    "✅ 没有费用                 更多敬请期待...";
+"BetterApplication" = "OSXChatGPT应用程序唯一官方地址";
 "adMovie" = "湖畔机械厂电影院";
 "adWebsite" = "湖畔机械厂员工搬运Mac软件资源网";
 "UpdateAPIKey" = "更新 API Key";
 "EnterAPIKey" = "填入 API Key";
 "EnterYourAPIKey" = "填入你的 API Key:";
-"YouNeedApiKey" = "使用OSXChatGPT之前你需要OpenAI的Api Key";
-"GetYourAPIKey" = "🌏 去OpenAI官网获取Api Key";
+"YouNeedApiKey" = "使用OSXChatGPT之前你需要填入OpenAI的Api Key";
+"GetYourAPIKey" = "🌏 OpenAI官网获取Api Key";
 "Cancel" = "取消";
 "Save" = "保存";
-"TheAppWillConnectOpenAIServer" = "该应用程序将连接到OpenAI API服务器，需要检查您的API密钥是否正常工作。";
+"TheAppWillConnectOpenAIServer" = "该应用程序将请求OpenAI API服务器，请确保您的API密钥是否正常工作。";
 
 "deleteMessage" = "删除消息";
 "copyMessage" = "复制消息";
@@ -43,7 +43,7 @@
 "CurrentTemperature" = "当前温度：";
 
 "RemoveShortcuts" = "删除快捷方式";
-"AddShortcuts" = "移除快捷方式";
+"AddShortcuts" = "添加快捷方式";
 "DeleteData" = "删除数据";
 "PleaseClickUpperRightAddCustomPrompt" = "请点击右上角自定义添加新的修饰语";
 "SelectPrompt" = "选择修饰语";
@@ -62,3 +62,9 @@
 
 "AnswerStream" = "流式";
 "AnswerOneTime" = "单式";
+
+"Setting" = "设置";
+"HideDynamicBackground" = "隐藏动态背景";
+"DisplayDynamicBackground" = "显示动态背景";
+"Displayed" = "已显示";
+"Hidden" = "已隐藏";

@@ -145,10 +145,10 @@ struct ChatRowView: View {
                         .font(.headline)
                         .foregroundColor(NSColor(r: 224, g: 87, b: 114).toColor())
                 }else {
-                    if chat.prompt?.title != nil {
+                    if chat.prompt?.title != nil && !chat.prompt!.title!.isEmpty {
                         Text(chat.prompt?.title ?? "")
                             .font(.headline)
-                    }else if chat.remark != nil {
+                    }else if chat.remark != nil && !chat.remark!.isEmpty {
                         Text(chat.remark ?? "")
                             .font(.headline)
                     }else if chat.lastMessage?.text != nil {
@@ -211,7 +211,6 @@ struct ChatRowContentNSView: NSViewRepresentable {
         
         @objc func handleRightClick(_ sender: NSClickGestureRecognizer) {
             if sender.state == .ended {
-                print("右键鼠标")
                 let menu = NSMenu(title: "")
                 menu.delegate = self
                 let editMenuItem = NSMenuItem(title: Localization.editRemark.localized, action: #selector(edit), keyEquivalent: "")
@@ -227,14 +226,13 @@ struct ChatRowContentNSView: NSViewRepresentable {
         
         @MainActor @objc func handleLeftClick(_ sender: NSClickGestureRecognizer) {
             if sender.state == .ended {
-                print("左边键鼠标")
                 parent.viewModel.currentConversation = parent.chat;
                 parent.viewModel.showUserInitialize = false
             }
         }
         
         func menuDidClose(_ menu: NSMenu) {
-            print("menu menuDidClose!")
+            
         }
         
         @MainActor @objc func edit() {

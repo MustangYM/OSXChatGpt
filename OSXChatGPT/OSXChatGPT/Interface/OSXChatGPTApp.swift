@@ -26,12 +26,13 @@ struct OSXChatGPTApp: App {
         .commands { SidebarCommands() }
         .commands { CommandGroup(replacing: CommandGroupPlacement.newItem) {} }
         .commands {
-            CommandMenu("Setting") {
-                Menu(viewModel.showDynamicBackground ? "隐藏动态背景" : "显示动态背景") {
-                    Text(viewModel.showDynamicBackground ? "已显示" : "已隐藏")
+            CommandMenu(Localization.Setting.localized) {
+                Menu(viewModel.showDynamicBackground ? Localization.HideDynamicBackground.localized : Localization.DisplayDynamicBackground.localized) {
+                    Text(viewModel.showDynamicBackground ? Localization.Displayed.localized : Localization.Hidden.localized)
                 } primaryAction: {
                     viewModel.showDynamicBackground.toggle()
                     ProjectSettingManager.shared.showDynamicBackground = viewModel.showDynamicBackground
+                    viewModel.showDynamicBackground = viewModel.showDynamicBackground
                 }
             }
         }

@@ -159,7 +159,6 @@ struct TemperatureSliderView: View {
         .padding(.top, 10)
         .padding(.bottom, 10)
         .onChange(of: progress) { newValue in
-            print("aaaa\(newValue)")
             let formattedValue = String(format: "%.1f", newValue * 2)
             change = formattedValue
             

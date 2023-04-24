@@ -24,10 +24,10 @@ class KeyboardMonitor {
         }
         shiftKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged, handler: { event in
             if event.modifierFlags.contains(.shift) {
-                print("按下shift健")
+//                print("按下shift健")
                 self.shiftKeyPressed = true
             }else {
-                print("松开shift健")
+//                print("松开shift健")
                 self.shiftKeyPressed = false
             }
             return event

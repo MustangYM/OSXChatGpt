@@ -32,6 +32,6 @@ extension NSTableView {
     super.viewDidMoveToWindow()
 
     backgroundColor = NSColor.clear
-    enclosingScrollView!.drawsBackground = false
+    enclosingScrollView?.drawsBackground = false
   }
 }

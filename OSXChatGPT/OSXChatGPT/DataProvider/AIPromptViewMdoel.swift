@@ -140,7 +140,7 @@ extension AIPromptViewMdoel {
         
         // 获取云端数据
         HTTPClient.getPrompt { [weak self] datas, err in
-            print("云端数据请求成功")
+//            print("云端数据请求成功")
             guard let self = self else { return }
             var temp: [Prompt] = []
             datas.forEach { json in
@@ -190,7 +190,7 @@ extension AIPromptViewMdoel {
                     self.allPrompts += temp
                 }
             }else {
-                print("获取云端数据失败！！！需要更新token")
+//                print("获取云端数据失败！！！需要更新token")
             }
         }
     }

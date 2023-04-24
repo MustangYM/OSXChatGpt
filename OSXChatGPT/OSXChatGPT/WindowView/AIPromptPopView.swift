@@ -84,59 +84,74 @@ struct AIPromptPopCellView: View {
     let item: Prompt
     let isSelected: Bool
     var body: some View {
-        HStack {
-            if self.isSelected {
-                Image(systemName: "checkmark.square.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 20, height: 20)
-                    .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
-                    .background(Color.blue)
-                    .clipShape(Circle())
-                    .padding(5)
-                
-            } else {
-                Circle()
-                    .stroke(Color.blue, lineWidth: 1)
-                    .frame(width: 20, height: 20)
-                    .padding(5)
-            }
-            if item.promptType == .hint {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack {
-                        Text(Localization.DefaultNoPrompt.localized)
-                            .font(Font.system(size: 15))
-                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
-                            .padding(.trailing, 6)
-                            .padding(.bottom, 6)
-                        Text(Localization.CurrentSelectPrompt.localized)
-                            .font(Font.system(size: 14))
-                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
-                            .padding(.bottom, 6)
-                        Spacer()
-                        Text(Localization.NoPromptToLibraryAdd.localized)
-                            .font(Font.system(size: 11))
-                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
-                            .padding(.bottom, 6)
-                    }
-                    Text(Localization.SelectOnlyOnePromptPerSession.localized)
-                        .font(.subheadline)
-                        .foregroundColor((colorScheme == .dark) ? .white.opacity(0.6) : .white)
-                }.padding(.leading, 2)
-            }else {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(item.title ?? "")
-                        .font(.headline)
+        ZStack {
+            HStack {
+                if self.isSelected {
+                    Image(systemName: "checkmark.square.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
                         .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
-                        .foregroundColor(.primary)
-                        .padding(.bottom, 6)
-                    Text(item.prompt ?? "")
-                        .font(.subheadline)
-                        .foregroundColor((colorScheme == .dark) ? .white.opacity(0.6) : .white)
-                }.padding(.leading, 2)
+                        .background(Color.blue)
+                        .clipShape(Circle())
+                        .padding(5)
+                    
+                } else {
+                    Circle()
+                        .stroke(Color.blue, lineWidth: 1)
+                        .frame(width: 20, height: 20)
+                        .padding(5)
+                }
+                if item.promptType == .hint {
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
+                            Text(Localization.DefaultNoPrompt.localized)
+                                .font(Font.system(size: 15))
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
+                                .padding(.trailing, 6)
+                                .padding(.bottom, 6)
+                            Text(Localization.CurrentSelectPrompt.localized)
+                                .font(Font.system(size: 14))
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
+                                .padding(.bottom, 6)
+                            Spacer()
+                            Text(Localization.NoPromptToLibraryAdd.localized)
+                                .font(Font.system(size: 11))
+                                .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
+                                .padding(.bottom, 6)
+                        }
+                        Text(Localization.SelectOnlyOnePromptPerSession.localized)
+                            .font(.subheadline)
+                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.6) : .white)
+                    }.padding(.leading, 2)
+                }else {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(item.title ?? "")
+                            .font(.headline)
+                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
+                            .foregroundColor(.primary)
+                            .padding(.bottom, 5)
+                        Text(item.prompt ?? "")
+                            .font(.subheadline)
+                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.6) : .white.opacity(0.9))
+                    }.padding(.leading, 2)
+                }
+                
+                Spacer()
+                
             }
-            
-            Spacer()
+            if let author = item.author, !author.isEmpty {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Text("@\(author)")
+                            .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
+                            .font(.system(size: 11))
+                            .padding(.top, 5)
+                    }
+                    Spacer()
+                }
+            }
         }
         .frame(height: 60)
         .padding(.vertical, 5)

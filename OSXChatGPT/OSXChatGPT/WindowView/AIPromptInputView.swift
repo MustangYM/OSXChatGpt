@@ -90,11 +90,6 @@ struct AIPromptInputView: View {
                         .padding(.leading, 20)
                         .padding(.bottom, 0)
                         .frame(height: 18)
-//                    Text("(选填)")
-//                        .font(Font.system(size: 11))
-//                        .padding(.top, 5)
-//                        .foregroundColor(.gray.opacity(0.6))
-//                        .frame(height: 18)
                     Text(Localization.ShareYourPromptToLibrary.localized)
                         .font(Font.system(size: 10))
                         .padding(.top, 5)
@@ -133,7 +128,7 @@ struct AIPromptInputView: View {
                     
                     Button {
                         if title.isEmpty || content.isEmpty {
-                            self.isPresented = false
+
                             return
                         }
                         viewModel.addPrompt(title: title, content: content, author: author, isToggleOn: isToggleOn)

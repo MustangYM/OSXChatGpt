@@ -167,6 +167,7 @@ struct AIPromptView: View {
                     .background(Color.clear)
                     .padding(.leading, 16)
                     .padding(.trailing, 16)
+                    .padding(.bottom, 16)
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 
@@ -239,11 +240,11 @@ struct AIPromptCellView: View {
                     
                 }
                 
-                if let author = item.author {
+                if let author = item.author, !author.isEmpty {
                     VStack {
                         HStack {
                             Spacer()
-                            Text("\(author)")
+                            Text("@\(author)")
                                 .foregroundColor((colorScheme == .dark) ? .white.opacity(0.8) : .white)
                                 .font(.system(size: 11))
                                 .padding(.top, 5)

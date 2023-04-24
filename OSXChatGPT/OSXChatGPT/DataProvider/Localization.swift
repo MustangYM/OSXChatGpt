@@ -62,6 +62,11 @@ enum Localization {
     case ShareOrNot
     case AnswerStream
     case AnswerOneTime
+    case Setting
+    case HideDynamicBackground
+    case DisplayDynamicBackground
+    case Displayed
+    case Hidden
     
     var localized: String {
         switch self {
@@ -169,6 +174,16 @@ enum Localization {
             return String(format: NSLocalizedString("AnswerStream", comment: ""))
         case .AnswerOneTime:
             return String(format: NSLocalizedString("AnswerOneTime", comment: ""))
+        case .Setting:
+            return String(format: NSLocalizedString("Setting", comment: ""))
+        case .HideDynamicBackground:
+            return String(format: NSLocalizedString("HideDynamicBackground", comment: ""))
+        case .DisplayDynamicBackground:
+            return String(format: NSLocalizedString("DisplayDynamicBackground", comment: ""))
+        case .Displayed:
+            return String(format: NSLocalizedString("Displayed", comment: ""))
+        case .Hidden:
+            return String(format: NSLocalizedString("Hidden", comment: ""))
         }
         
     }

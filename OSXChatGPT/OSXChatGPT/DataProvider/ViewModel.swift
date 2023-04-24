@@ -312,13 +312,13 @@ extension ViewModel {
             self.showStopAnswerBtn = true
         }
         
-        var stream: String = ""
+//        var stream: String = ""
         ChatGPTManager.shared.askChatGPTStream(messages: messages, prompt: prompt, chatGpt: currentConversation?.chatGPT) { rsp in
             if rsp.request.answerType == .stream {
                 isFeedback = true
                 //流式请求
                 if rsp.state == .replyStart {
-                    stream = ""
+//                    stream = ""
                     DispatchQueue.main.async {
                         self.removeGptThinkMessage()
                         newMsg = Message(context: CoreDataManager.shared.container.viewContext)
