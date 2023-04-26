@@ -76,34 +76,6 @@ struct UserInitializeView: View {
                                 .padding(.horizontal, 5)
                         }).padding(.leading, 60)
                     }.buttonStyle(PlainButtonStyle())//删除背景色
-
-                    Button(action: {
-                        if let url = URL(string: "https://www.yemays.com/") {
-                            NSWorkspace.shared.open(url)
-                        }
-                    }) {
-                        HStack(spacing: 0, content:{
-                            Image(systemName: "play.tv.fill")
-                            Text(Localization.adMovie.localized)
-                                .foregroundColor(.blue)
-                                .frame(maxWidth: 300, alignment: .leading)
-                                .padding(.horizontal, 5)
-                        }).padding(.leading, 60)
-                    }.buttonStyle(PlainButtonStyle())//删除背景色
-
-                    Button(action: {
-                        if let url = URL(string: "https://5imac.net/") {
-                            NSWorkspace.shared.open(url)
-                        }
-                    }) {
-                        HStack(spacing: 0, content:{
-                            Image(systemName: "desktopcomputer.and.arrow.down")
-                            Text(Localization.adWebsite.localized)
-                                .foregroundColor(.blue)
-                                .frame(maxWidth: 300, alignment: .leading)
-                                .padding(.horizontal, 5)
-                        }).padding(.leading, 60)
-                    }.buttonStyle(PlainButtonStyle())//删除背景色
                 })
                 
                 // 添加API密钥按钮
