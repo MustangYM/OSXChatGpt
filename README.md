@@ -3,16 +3,16 @@
 </p>
 
 # OSXChatGpt
-Easy to use OpenAI in your desktop, the whole application is implemented by SwiftUI.
+Easy to use OpenAI in your desktop, the whole application is implemented by SwiftUI. Chinese/English switching support!
 
-## Feature And Bugs
-| Feature/Bug | Status |
-| --- | --- |
-| ~~The paste board content is automatically sent~~ | ✅ |
-| ~~Disable sending NULL content~~ | ✅ |
-| ~~The input state of the GPT~~ | ✅ |
-| ~~The sidebar cannot be displayed~~ | ✅ |
-| ~~The GPT's answer cannot be pasted~~ | ✅ |
+## Customize the prompt
+<p align="center">
+<img src="https://github.com/MustangYM/OSXChatGpt/blob/main/OSXChatGPT/picture/3351682492206_.pic_hd.jpg" width="1000px"/>
+</p>
+
+<p align="center">
+<img src="https://github.com/MustangYM/OSXChatGpt/blob/main/OSXChatGPT/picture/3361682492895_.pic.jpg" width="1000px"/>
+</p>
 
 
 ## Install
