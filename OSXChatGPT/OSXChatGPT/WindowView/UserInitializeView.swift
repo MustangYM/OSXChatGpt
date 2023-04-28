@@ -9,6 +9,7 @@ import SwiftUI
 
 struct UserInitializeView: View {
     @State var openArgumentSeet: Bool = false
+    @State var showGoogleSetting: Bool = false
     @State var apiKey: String = ChatGPTManager.shared.getMaskApiKey()
     static let appVersion: String =
         Bundle
@@ -23,7 +24,7 @@ struct UserInitializeView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 80)
-                    .padding(.top, 50)
+                    .padding(.top, 40)
 
                 HStack(spacing: 0) {
                     Text("OSXChatGPT")
@@ -105,27 +106,44 @@ struct UserInitializeView: View {
                         }).padding(.leading, 60)
                     }.buttonStyle(PlainButtonStyle())//删除背景色
                 })
-                
-                // 添加API密钥按钮
-                Button(action: {
-                    openArgumentSeet.toggle()
-                }) {
-                    HStack(spacing: 8) {
-                        if apiKey.count > 0 {
-                            Image(systemName: "person.fill.checkmark")
-                            Text(Localization.UpdateAPIKey.localized)
-                        } else {
-                            Image(systemName: "key.radiowaves.forward.fill")
-                            Text(Localization.EnterAPIKey.localized)
+                HStack {
+                    // 添加API密钥按钮
+                    Button(action: {
+                        openArgumentSeet.toggle()
+                    }) {
+                        HStack(spacing: 8) {
+                            if apiKey.count > 0 {
+                                Image(systemName: "person.fill.checkmark")
+                                Text(Localization.UpdateAPIKey.localized)
+                            } else {
+                                Image(systemName: "key.radiowaves.forward.fill")
+                                Text(Localization.EnterAPIKey.localized)
+                            }
                         }
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(apiKey.count > 0 ? Color.green : Color.red)
+                        .cornerRadius(10)
                     }
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(apiKey.count > 0 ? Color.green : Color.red)
-                    .cornerRadius(10)
+                    .buttonStyle(PlainButtonStyle()) // 隐藏按钮的默认样式
+                    
+                    
+                    Button(action: {
+                        showGoogleSetting.toggle()
+                    }) {
+                        HStack(spacing: 8) {
+                            Text("谷歌搜索配置")
+                        }
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Color.green)
+                        .cornerRadius(10)
+                        .padding(.leading, 16)
+                    }
+                    .buttonStyle(PlainButtonStyle()) // 隐藏按钮的默认样式
                 }
-                .buttonStyle(PlainButtonStyle()) // 隐藏按钮的默认样式
                 
                 if apiKey.count > 0 {
                     Text(apiKey)
@@ -133,20 +151,27 @@ struct UserInitializeView: View {
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
+                
+                
+                
+                
+                Spacer()
             }
             .sheet(isPresented: $openArgumentSeet) {
                 EnterAPIView(apiKey: $apiKey)
             }
-            
+            .sheet(isPresented: $showGoogleSetting) {
+                GoogleSearchSettingView()
+            }
+            VStack {
+                Spacer()
+                Text("Beta v\(UserInitializeView.appVersion)")
+                    .font(.system(size: 12, weight: .light, design: .rounded))
+                    .opacity(0.5)
+                Spacer().frame(height: 30)
+            }
         }
-        .padding(.bottom,150)
-        VStack {
-            Spacer()
-            Text("Beta v\(UserInitializeView.appVersion)")
-                .font(.system(size: 12, weight: .light, design: .rounded))
-                .opacity(0.5)
-            Spacer().frame(height: 30)
-        }
+//        .padding(.bottom,150)
        
     }
 }

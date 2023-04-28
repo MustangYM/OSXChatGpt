@@ -2,7 +2,7 @@
 //  Conversation+CoreDataProperties.swift
 //  OSXChatGPT
 //
-//  Created by CoderChan on 2023/3/27.
+//  Created by CoderChan on 2023/4/26.
 //
 //
 
@@ -20,9 +20,10 @@ extension Conversation {
     @NSManaged public var remark: String?
     @NSManaged public var sesstionId: String
     @NSManaged public var updateData: Date?
+    @NSManaged public var chatGPT: ChatGPT?
     @NSManaged public var lastMessage: Message?
     @NSManaged public var prompt: Prompt?
-    @NSManaged public var chatGPT: ChatGPT?
+    @NSManaged public var search: GoogleSearch?
 
 }
 

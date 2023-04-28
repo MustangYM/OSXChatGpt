@@ -40,9 +40,20 @@ struct HTTPResponseMessage: Decodable {
     let role: String?
 }
 
+struct GoogleSearchResult: Decodable {
+    let kind: String
+    let items: [GoogleSearchItem]
+}
+
+struct GoogleSearchItem: Decodable {
+    let title: String?
+    let link: String?
+    let snippet: String?
+}
+
 
 class HTTPClient {
-//    static let shared = HTTPClient()
+    static let shared = HTTPClient()
     fileprivate var urlSession: URLSession!
     fileprivate var sessionConfiguration: URLSessionConfiguration!
     private var isCancelStreamRequest: Bool = false
@@ -333,6 +344,57 @@ extension HTTPClient {
         task.resume()
     }
     
+}
+// MARK: - google search
+extension HTTPClient {
+    func googleSearch(_ text: String, cx: String, key: String, callback:@escaping (_ searchResult: GoogleSearchResult?, _ err: String?) -> Void) {
+        let urlStr = "https://customsearch.googleapis.com/customsearch/v1?cx=\(cx)&q=\(text)&key=\(key)"
+        let allowedCharacters = CharacterSet.urlQueryAllowed
+        guard let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: allowedCharacters) else {
+            callback(nil, "error")
+            return
+        }
+        let url = URL(string: encodedStr)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpMethod = "GET"
+        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                callback(nil, error.localizedDescription)
+                return
+            }
+            if let response = response as? HTTPURLResponse {
+                print("statusCode: \(response.statusCode)")
+            }
+            if let da = data,
+                let response = try? JSONDecoder().decode(GoogleSearchResult.self, from: da){
+                callback(response, nil)
+            }else {
+                callback(nil, "error")
+            }
+        }
+        task.resume()
+    }
+    func googleSearchFetchHTML(_ url: String, callback:@escaping (_ result: String?, _ err: String?) -> Void) {
+        let ur = URL(string: url)!
+        let task = URLSession.shared.dataTask(with: ur) { (data, response, error) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                callback(nil, error.localizedDescription)
+                return
+            }
+            if let response = response as? HTTPURLResponse {
+                print("statusCode: \(response.statusCode)")
+            }
+            if let da = data, let html = String(data: da, encoding: .utf8) {
+                callback(html, nil)
+            }else {
+                callback(nil, "error")
+            }
+        }
+        task.resume()
+    }
 }
 
 struct HTTPResponse1: Decodable {

@@ -11,9 +11,11 @@ struct ChatRoomToolBar: View {
     @State private var showPopover = false
     @State private var showInputView = false
     @State private var showDragView = false
+    @State private var showSearchView = false
     @State private var temperature: String = ""
     @State private var model: String = ""
     @State private var context: String = ""
+    @State private var isOn: Bool = false
     @EnvironmentObject var viewModel: ViewModel
     
     @State private var isAnswerTypeTrue = ChatGPTManager.shared.answerType.valueBool
@@ -51,9 +53,8 @@ struct ChatRoomToolBar: View {
             BrowserView(items: ChatGPTAnswerType.allCases, title: Localization.Answer.localized, item: ChatGPTManager.shared.answerType) { model in
                 ChatGPTManager.shared.answerType = model
             }
-            
             .frame(width: (Locale.current.languageCode == "zh") ? 60 : 77)
-
+            
             Button(Localization.Prompts.localized) {
                 showPopover.toggle()
             }
@@ -67,6 +68,20 @@ struct ChatRoomToolBar: View {
                 viewModel.deleteAllMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "")
                 viewModel.updateConversation(sesstionId: viewModel.currentConversation?.sesstionId ?? "", message: nil)
             }
+            
+            Button {
+                showSearchView.toggle()
+                ChatGPTManager.shared.search("中国新冠开放") { searchResult, err in
+                    
+                }
+            } label: {
+                Text("谷歌搜索")
+            }
+            .popover(isPresented: $showSearchView) {
+                GoogleSearchPopView(showSearchView: $showSearchView).environmentObject(viewModel)
+            }
+            
+            
             
             Spacer()
             if viewModel.showStopAnswerBtn {
@@ -155,6 +170,16 @@ struct TemperatureSliderView: View {
                 Text("2.0")
             }.padding(.horizontal)
                 .frame(width: 200)
+            HStack {
+                Text("准确性")
+                    .font(.caption)
+                Spacer()
+                Text("想象力")
+                    .font(.caption)
+            }
+            .padding(.leading, 15)
+            .padding(.trailing, 15)
+            
         }
         .padding(.top, 10)
         .padding(.bottom, 10)

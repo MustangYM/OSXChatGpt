@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import SwiftSoup
 
 private let OSXChatGPTKEY = "OSXChatGPT_apiKey_key"
+private let OSXChatGoogleSearchKEY = "OSXChatGPT_GoogleSearch_apiKey_key"
+private let OSXChatGoogleEngineKEY = "OSXChatGPT_GoogleEngine_apiKey_key"
 struct ChatGPTResponse {
     var request: ChatGPTRequest
     var state: State
@@ -229,6 +232,15 @@ class ChatGPTManager {
         let key = UserDefaults.standard.value(forKey: OSXChatGPTKEY) as? String
         return key ?? ""
     }()
+    private lazy var googleSearchApiKey : String = {
+        let key = UserDefaults.standard.value(forKey: OSXChatGoogleSearchKEY) as? String
+        return key ?? ""
+    }()
+    private lazy var googleSearchEngineID : String = {
+        let key = UserDefaults.standard.value(forKey: OSXChatGoogleEngineKEY) as? String
+        return key ?? ""
+    }()
+    
     @Published var chatGPTSpeaking: Bool = false
     var askContextCount: ChatGPTContext = .context3
     let gptRoleString: String = "assistant"
@@ -261,6 +273,40 @@ extension ChatGPTManager {
     func getMaskApiKey() -> String {
         var key = String(self.apiKey)
         if key.count < 10 {
+            return ""
+        }
+        maskString(&key, startIndex: 4, endIndex: key.count - 4)
+        return key
+    }
+    
+    func updateGoogleSearchApiKey(apiKey: String) {
+        if apiKey.contains("****") {
+            //没有修改
+            return
+        }
+        self.googleSearchApiKey = apiKey
+        UserDefaults.standard.set(apiKey, forKey: OSXChatGoogleSearchKEY)
+    }
+    func getGoogleSearchMaskApiKey() -> String {
+        var key = String(self.googleSearchApiKey)
+        if key.count < 10 {
+            return ""
+        }
+        maskString(&key, startIndex: 4, endIndex: key.count - 4)
+        return key
+    }
+    
+    func updateGoogleSearchEngineID(engineID: String) {
+        if apiKey.contains("****") {
+            //没有修改
+            return
+        }
+        self.googleSearchEngineID = engineID
+        UserDefaults.standard.set(engineID, forKey: OSXChatGoogleEngineKEY)
+    }
+    func getGoogleSearchEngineMaskApiKey() -> String {
+        var key = String(self.googleSearchEngineID)
+        if key.count < 5 {
             return ""
         }
         maskString(&key, startIndex: 4, endIndex: key.count - 4)
@@ -398,6 +444,64 @@ extension ChatGPTManager {
         }
     }
     
+}
+
+// MARK: - search
+extension ChatGPTManager {
+    func search(_ text: String, callback:@escaping (_ searchResult: GoogleSearchResult?, _ err: String?) -> Void) {
+        httpClient.googleSearch(text, cx: googleSearchEngineID, key: googleSearchApiKey) { [weak self] result, error in
+            guard let model = result else {
+                callback(nil, "error")
+                return
+            }
+            var temp : [GoogleSearch] = []
+            let group = DispatchGroup()
+            let queue = DispatchQueue.global(qos: .userInitiated)
+            
+            model.items.forEach { item in
+                if let link = item.link {
+                    group.enter()
+                    self?.fetchHTML(link, callback: { content, err in
+                        if let result = content {
+                            
+                        }
+                        group.leave()
+                    })
+                }
+            }
+            group.notify(queue: DispatchQueue.main) {
+                
+            }
+        }
+    }
+    private func fetchHTML(_ link: String, callback: @escaping (_ content: String?, _ err: String?) -> Void) {
+        httpClient.googleSearchFetchHTML(link) { result, err in
+            if let html = result {
+                do {
+                    let doc = try SwiftSoup.parse(html)
+                    let pTags = try doc.select("p")
+                    var array: [String] = []
+                    for p in pTags {
+                        let text = try p.text()
+                        if !array.contains(text) && !text.isEmpty {
+                            array.append(text)
+                        }
+                    }
+                    var string: String = ""
+                    array.forEach { str in
+                        string.append(str)
+                    }
+                    callback(string, nil)
+                    print("string:\(string)")
+                } catch Exception.Error(let type, let message) {
+                    callback(nil, "error")
+                } catch {
+                    callback(nil, "error")
+                }
+                
+            }
+        }
+    }
 }
 
 extension ChatGPTManager {

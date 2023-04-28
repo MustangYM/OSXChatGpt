@@ -57,12 +57,17 @@
 		CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2449F929D7FE38006EE829 /* ServerManager.swift */; };
 		CB27655C29D1C12C00897E0E /* MarkdownContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27655B29D1C12C00897E0E /* MarkdownContentView.swift */; };
 		CB27656629D1DA9800897E0E /* AIPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27656529D1DA9800897E0E /* AIPromptView.swift */; };
-		CB27656929D1E65100897E0E /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27656729D1E65100897E0E /* Conversation+CoreDataClass.swift */; };
-		CB27656A29D1E65100897E0E /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27656829D1E65100897E0E /* Conversation+CoreDataProperties.swift */; };
 		CB27657329D30F1400897E0E /* AIPromptViewMdoel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */; };
 		CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27657429D33D7A00897E0E /* AIPromptInputView.swift */; };
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
+		CB2A943229F828E500D3A048 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CB2A943129F828E500D3A048 /* SwiftSoup */; };
+		CB2A943529F830B300D3A048 /* GoogleSearch+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943329F830B300D3A048 /* GoogleSearch+CoreDataClass.swift */; };
+		CB2A943629F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943429F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift */; };
+		CB2A943929F830E500D3A048 /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */; };
+		CB2A943A29F830E500D3A048 /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */; };
+		CB2A944029F973F800D3A048 /* GoogleSearchPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */; };
+		CB2A944229F993A200D3A048 /* GoogleSearchSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A944129F993A200D3A048 /* GoogleSearchSettingView.swift */; };
 		CB2D438929F0183A007742AE /* ChatGPT+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */; };
 		CB2D438A29F0183A007742AE /* ChatGPT+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */; };
 		CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = CB2F971E29CE12B6004EBD96 /* MarkdownUI */; };
@@ -130,12 +135,16 @@
 		CB2449F929D7FE38006EE829 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		CB27655B29D1C12C00897E0E /* MarkdownContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownContentView.swift; sourceTree = "<group>"; };
 		CB27656529D1DA9800897E0E /* AIPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptView.swift; sourceTree = "<group>"; };
-		CB27656729D1E65100897E0E /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CB27656829D1E65100897E0E /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptViewMdoel.swift; sourceTree = "<group>"; };
 		CB27657429D33D7A00897E0E /* AIPromptInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptInputView.swift; sourceTree = "<group>"; };
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
+		CB2A943329F830B300D3A048 /* GoogleSearch+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoogleSearch+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CB2A943429F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoogleSearch+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSearchPopView.swift; sourceTree = "<group>"; };
+		CB2A944129F993A200D3A048 /* GoogleSearchSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSearchSettingView.swift; sourceTree = "<group>"; };
 		CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGPT+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGPT+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInputView.swift; sourceTree = "<group>"; };
@@ -161,6 +170,7 @@
 				182B42C929BBB1C500F06778 /* Colorful in Frameworks */,
 				CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */,
 				CB0F5A5929D057FF005B71D2 /* Splash in Frameworks */,
+				CB2A943229F828E500D3A048 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +202,8 @@
 				182B436229BC5C8700F06778 /* ChatRoomView.swift */,
 				CB27655B29D1C12C00897E0E /* MarkdownContentView.swift */,
 				CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */,
+				CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */,
+				CB2A944129F993A200D3A048 /* GoogleSearchSettingView.swift */,
 				CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */,
 				182B436429BC5C8700F06778 /* UserInitializeView.swift */,
 				CB27656529D1DA9800897E0E /* AIPromptView.swift */,
@@ -343,6 +355,10 @@
 		CBC4B11429B8CB1B00650296 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */,
+				CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */,
+				CB2A943329F830B300D3A048 /* GoogleSearch+CoreDataClass.swift */,
+				CB2A943429F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift */,
 				CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */,
 				CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */,
 				CB1F015D29EB9D05009CF942 /* Message+CoreDataClass.swift */,
@@ -351,8 +367,6 @@
 				CB1F015829EAFBF5009CF942 /* MessageText+CoreDataProperties.swift */,
 				CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */,
 				CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */,
-				CB27656729D1E65100897E0E /* Conversation+CoreDataClass.swift */,
-				CB27656829D1E65100897E0E /* Conversation+CoreDataProperties.swift */,
 				182B43A329BF730300F06778 /* NSColor.swift */,
 			);
 			path = Models;
@@ -399,6 +413,7 @@
 				CB2F971E29CE12B6004EBD96 /* MarkdownUI */,
 				CB0F5A5829D057FF005B71D2 /* Splash */,
 				CB0F5A5A29D057FF005B71D2 /* SplashMarkdown */,
+				CB2A943129F828E500D3A048 /* SwiftSoup */,
 			);
 			productName = OSXChatGPT;
 			productReference = CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */;
@@ -432,6 +447,7 @@
 				182B42C729BBB1C500F06778 /* XCRemoteSwiftPackageReference "Colorful" */,
 				CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */,
+				CB2A943029F828E500D3A048 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = CB1DCABF29B4F09D00B1D4E1 /* Products */;
 			projectDirPath = "";
@@ -463,6 +479,7 @@
 			files = (
 				CB1F012F29E999EF009CF942 /* Segment.swift in Sources */,
 				CB1F015C29EAFBF5009CF942 /* MessageText+CoreDataProperties.swift in Sources */,
+				CB2A943929F830E500D3A048 /* Conversation+CoreDataClass.swift in Sources */,
 				CB373A9B29F56CFF00B8D9BE /* Localization.swift in Sources */,
 				CB1F015129E9BC8C009CF942 /* Tokenizer.swift in Sources */,
 				CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */,
@@ -470,20 +487,24 @@
 				CB2F972029CE1ADC004EBD96 /* OSXChatGPT.xcdatamodeld in Sources */,
 				182B436929BC5C8700F06778 /* UserInitializeView.swift in Sources */,
 				CB2449F829D721F3006EE829 /* SystemManager.swift in Sources */,
+				CB2A944229F993A200D3A048 /* GoogleSearchSettingView.swift in Sources */,
 				182B43A429BF730300F06778 /* NSColor.swift in Sources */,
 				CB1F012D29E99982009CF942 /* Grammar.swift in Sources */,
 				CB27656629D1DA9800897E0E /* AIPromptView.swift in Sources */,
 				CB1F014929E99B5E009CF942 /* Sequence+Occurrences.swift in Sources */,
 				182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */,
+				CB2A943629F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift in Sources */,
 				CB1F015B29EAFBF5009CF942 /* MessageText+CoreDataClass.swift in Sources */,
 				182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */,
+				CB2A944029F973F800D3A048 /* GoogleSearchPopView.swift in Sources */,
 				188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */,
-				CB27656A29D1E65100897E0E /* Conversation+CoreDataProperties.swift in Sources */,
 				CB2D438929F0183A007742AE /* ChatGPT+CoreDataClass.swift in Sources */,
 				CB1F014229E99B5E009CF942 /* CharacterSet+Contains.swift in Sources */,
 				CB1F014629E99B5E009CF942 /* String+IsNumber.swift in Sources */,
+				CB2A943A29F830E500D3A048 /* Conversation+CoreDataProperties.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
 				CB1F012929E995BA009CF942 /* MarkdownTextBuilder.swift in Sources */,
+				CB2A943529F830B300D3A048 /* GoogleSearch+CoreDataClass.swift in Sources */,
 				CB1F015F29EB9D05009CF942 /* Message+CoreDataClass.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
 				CB0F5A5F29D059C4005B71D2 /* TextOutputFormat.swift in Sources */,
@@ -498,7 +519,6 @@
 				182B436729BC5C8700F06778 /* ChatRoomView.swift in Sources */,
 				CB1F014B29E99B5E009CF942 /* Equatable+AnyOf.swift in Sources */,
 				CB1F014F29E9B6BC009CF942 /* CodeHighlighter.swift in Sources */,
-				CB27656929D1E65100897E0E /* Conversation+CoreDataClass.swift in Sources */,
 				CB1F014729E99B5E009CF942 /* String+HTMLEntities.swift in Sources */,
 				CB0F5A6029D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				CB1F014D29E9A4CC009CF942 /* MessageTextModel.swift in Sources */,
@@ -750,6 +770,14 @@
 				minimumVersion = 0.9.0;
 			};
 		};
+		CB2A943029F828E500D3A048 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
@@ -775,6 +803,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */;
 			productName = SplashMarkdown;
+		};
+		CB2A943129F828E500D3A048 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB2A943029F828E500D3A048 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
 		};
 		CB2F971E29CE12B6004EBD96 /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;

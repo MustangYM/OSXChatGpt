@@ -14,6 +14,15 @@
         <relationship name="chatGPT" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatGPT"/>
         <relationship name="lastMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message"/>
         <relationship name="prompt" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Prompt" inverseName="sesstion" inverseEntity="Prompt"/>
+        <relationship name="search" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GoogleSearch"/>
+    </entity>
+    <entity name="GoogleSearch" representedClassName=".GoogleSearch" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="maxSearchResult" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="result" optional="YES" attributeType="String"/>
+        <attribute name="snippet" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Message" representedClassName=".Message" syncable="YES">
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
