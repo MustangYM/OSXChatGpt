@@ -13,6 +13,7 @@ enum MessageType: Int16 {
     case normal = 0
     case waitingReply = 1//等待回复
     case fialMsg = 2//错误消息
+    case searching = 3//搜索中
 }
 
 enum MessageTextType: Int16 {

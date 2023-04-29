@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftSoup
+
 
 private let OSXChatGPTKEY = "OSXChatGPT_apiKey_key"
 private let OSXChatGoogleSearchKEY = "OSXChatGPT_GoogleSearch_apiKey_key"
@@ -76,10 +76,14 @@ struct ChatGPTRequest {
         get {
             let arr = messages.suffix(contextCount.valyeInt * 2 + 1)
             var temp: [[String: String]] = []
+            var tokens: Int64 = 0
             arr.forEach { msg in
-                if msg.type != 1 {
-                    //移除错误的回复，不误导gpt
+                if msg.msgType == .normal {
+                    //只上传普通消息
                     temp.append(["role": msg.role ?? "user", "content": msg.text ?? ""])
+                    tokens += Int64("rolecontent".count)
+                    tokens += Int64((msg.role ?? "user").count)
+                    tokens += Int64((msg.text ?? "").count)
                 }
             }
             if let system = systemMsg {
@@ -232,11 +236,11 @@ class ChatGPTManager {
         let key = UserDefaults.standard.value(forKey: OSXChatGPTKEY) as? String
         return key ?? ""
     }()
-    private lazy var googleSearchApiKey : String = {
+    lazy var googleSearchApiKey : String = {
         let key = UserDefaults.standard.value(forKey: OSXChatGoogleSearchKEY) as? String
         return key ?? ""
     }()
-    private lazy var googleSearchEngineID : String = {
+    lazy var googleSearchEngineID : String = {
         let key = UserDefaults.standard.value(forKey: OSXChatGoogleEngineKEY) as? String
         return key ?? ""
     }()
@@ -402,6 +406,16 @@ extension ChatGPTManager {
 //            }
 //        }
 //    }
+    /*
+    Web search results:
+
+    {web_results}
+    Current date: {current_date}
+
+    Instructions: Using the provided web search results, write a comprehensive reply to the given query. Make sure to cite results using [[number](URL)] notation after the reference. If the provided search results refer to multiple subjects with the same name, write separate answers for each subject.
+    Query: {query}
+    Reply in 中文
+     */
     
     /// 提问
     func askChatGPT(messages: [Message], complete:(([String: Any]?, String?) -> ())?) {
@@ -448,58 +462,19 @@ extension ChatGPTManager {
 
 // MARK: - search
 extension ChatGPTManager {
-    func search(_ text: String, callback:@escaping (_ searchResult: GoogleSearchResult?, _ err: String?) -> Void) {
-        httpClient.googleSearch(text, cx: googleSearchEngineID, key: googleSearchApiKey) { [weak self] result, error in
-            guard let model = result else {
-                callback(nil, "error")
-                return
+    func search(search: GoogleSearch?, callback:@escaping (_ searchResult: GoogleSearchResponse?, _ err: String?) -> Void) {
+        if let url = search?.url {
+            httpClient.googleSearch(url) { result, error in
+                callback(result,error)
             }
-            var temp : [GoogleSearch] = []
-            let group = DispatchGroup()
-            let queue = DispatchQueue.global(qos: .userInitiated)
-            
-            model.items.forEach { item in
-                if let link = item.link {
-                    group.enter()
-                    self?.fetchHTML(link, callback: { content, err in
-                        if let result = content {
-                            
-                        }
-                        group.leave()
-                    })
-                }
-            }
-            group.notify(queue: DispatchQueue.main) {
-                
-            }
+        }else {
+            callback(nil,"error")
         }
+        
     }
-    private func fetchHTML(_ link: String, callback: @escaping (_ content: String?, _ err: String?) -> Void) {
+    func fetchHTML(_ link: String, callback: @escaping (_ content: String?, _ err: String?) -> Void) {
         httpClient.googleSearchFetchHTML(link) { result, err in
-            if let html = result {
-                do {
-                    let doc = try SwiftSoup.parse(html)
-                    let pTags = try doc.select("p")
-                    var array: [String] = []
-                    for p in pTags {
-                        let text = try p.text()
-                        if !array.contains(text) && !text.isEmpty {
-                            array.append(text)
-                        }
-                    }
-                    var string: String = ""
-                    array.forEach { str in
-                        string.append(str)
-                    }
-                    callback(string, nil)
-                    print("string:\(string)")
-                } catch Exception.Error(let type, let message) {
-                    callback(nil, "error")
-                } catch {
-                    callback(nil, "error")
-                }
-                
-            }
+            callback(result, err)
         }
     }
 }

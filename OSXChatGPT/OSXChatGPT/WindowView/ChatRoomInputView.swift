@@ -83,6 +83,17 @@ struct ChatRoomInputView: View {
                 return
             }
         }
+//        if let search = viewModel.currentConversation?.search, search.open, !search.searched {
+//            //开启搜索，并且未搜索过才去谷歌搜索
+//            search.search = msg
+//            let result = search.result?.mutableCopy() as? NSMutableOrderedSet
+//            result?.removeAllObjects()
+//            CoreDataManager.shared.saveData()
+//            viewModel.search(search: search) { searchResult, err in
+//                
+//            }
+//        }else {
+//        }
         viewModel.addNewMessage(sesstionId: viewModel.currentConversation?.sesstionId ?? "", text: msg, role: "user", prompt: viewModel.currentConversation?.prompt?.prompt) {
             
         }

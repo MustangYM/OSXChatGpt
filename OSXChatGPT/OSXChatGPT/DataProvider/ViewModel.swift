@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 import Splash
+import SwiftSoup
 
 
 
@@ -31,6 +32,13 @@ import Splash
     private var allChatRoomViews: [String:ChatRoomView] = [:]
     
     @Environment(\.colorScheme) private var colorScheme
+    
+    
+    private let searchQueue = DispatchQueue(label: "google.search.queue")
+    private let semaphore = DispatchSemaphore(value: 1)
+    private var searchResult: GoogleSearchResponse?
+    private var searchIndex: Int = 0
+    private var searchResultMaxCount: Int16 = 0
     
     var theme: Splash.Theme {
         switch colorScheme {
@@ -288,8 +296,127 @@ extension ViewModel {
         print("发送提问：\(text)")
         var sendMsgs = messages
         sendMsgs.removeAll(where: {$0.msgType == .waitingReply})
+        
+        if let search = currentConversation?.search, search.open, !search.searched {
+            //开启搜索状态
+            search.search = text
+            let result = search.result?.mutableCopy() as? NSMutableOrderedSet
+            result?.removeAllObjects()
+            self.addGptThinkMessage(sesstionId: sesstionId)
+            if let lastId = self.messages.last?.id {
+                self.scrollID = lastId
+            }
+            self.changeMsgText = ""
+            self.search(search: search) { [weak self] searchResult, err in
+                guard let self = self else { return }
+                if let result = searchResult {
+                    
+                    if let index = self.messages.firstIndex(where: { $0.msgType == .searching}) {
+                        let message = self.messages[index]
+                        message.text = self.createSearchText(result)
+                        self.messages[index] = message
+                        self.updateConversation(sesstionId: sesstionId, search: result)
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            self.scrollID = self.messages.last!.id!
+                            self.changeMsgText = ""//更新滚动
+                        }
+                    }else {
+                        self.removeGptThinkMessage()
+                        let newMsg = Message(context: CoreDataManager.shared.container.viewContext)
+                        newMsg.sesstionId = sesstionId
+                        newMsg.role = ChatGPTManager.shared.gptRoleString
+                        newMsg.id = UUID()
+                        newMsg.createdDate = Date()
+                        newMsg.msgTextType = .text
+                        newMsg.msgType = .searching
+                        newMsg.text = self.createSearchText(result)
+                        if self.currentConversation?.sesstionId == sesstionId {
+                            self.messages.append(newMsg)
+                            self.scrollID = self.messages.last!.id!
+                            self.changeMsgText = ""//更新滚动
+                        }
+                        self.addGptThinkMessage(sesstionId: sesstionId)
+                        CoreDataManager.shared.saveData()
+                        self.updateConversation(sesstionId: sesstionId, search: result)
+                        
+                    }
+                    
+                }else {
+                    self.removeGptThinkMessage()
+                    var searchText: String?
+                    //没有返回结果，表示错误，或者已经结束
+                    if let search = self.currentConversation?.search {
+                        search.searched = true//已经结束搜索
+                        searchText = self.getSearchText(search)
+                        self.updateConversation(sesstionId: sesstionId, search: search)
+                    }
+                    //开始提问
+                    self.sendMessage(sesstionId: sesstionId, messages: sendMsgs, prompt: searchText, updateBlock: updateBlock)
+                }
+            }
+            
+        }else {
+            var sendMsgs = messages
+            sendMsgs.removeAll(where: {$0.msgType == .waitingReply})
+            sendMessage(sesstionId: sesstionId, messages: sendMsgs, prompt: prompt, updateBlock: updateBlock)
+        }
+        
+        
+    }
+    private func createSearchText(_ search: GoogleSearch) -> String {
+        var text: String = "#### 搜索结果"
+        search.result?.array.forEach({ item in
+            if let result = item as? GoogleSearchResult {
+                text.append("\n\t")
+                text.append("标题: \(result.title ?? "") \n\t")
+                text.append("链接: \(result.link ?? "") \n\t")
+                text.append("内容: \(result.result ?? "") \n\t")
+            }
+        })
+        return text
+    }
+    private func getSearchText(_ search: GoogleSearch) -> String {
+        var text: String = "{"
+        search.result?.array.forEach({ item in
+            if let result = item as? GoogleSearchResult {
+                text.append("\(result.result ?? "")\n")
+            }
+        })
+        text.append("}")
+        return text
+    }
+    func addSearch(sesstionId: String, text: String, role: String, prompt: String?, updateBlock: @escaping(() -> ())) {
+        search(search: currentConversation?.search) { searchResult, err in
+            
+        }
+        
+        
+        return
+        
+        if sesstionId.isEmpty {
+            return
+        }
+        if ChatGPTManager.shared.chatGPTSpeaking {
+            return
+        }
+        let msg = Message(context: CoreDataManager.shared.container.viewContext)
+        msg.sesstionId = sesstionId
+        msg.text = text
+        msg.role = role
+        msg.id = UUID()
+        msg.createdDate = Date()
+        messages.append(msg)
+        CoreDataManager.shared.saveData()
+        updateConversation(sesstionId: sesstionId, message:messages.last)
+        self.scrollID = msg.id!
+        self.changeMsgText = text
+        print("发送提问：\(text)")
+        var sendMsgs = messages
+        sendMsgs.removeAll(where: {$0.msgType == .waitingReply})
         sendMessage(sesstionId: sesstionId, messages: sendMsgs, prompt: prompt, updateBlock: updateBlock)
     }
+    
+    
     func cancel() {
         ChatGPTManager.shared.stopResponse()
         self.removeGptThinkMessage()
@@ -648,7 +775,156 @@ extension ViewModel {
     }
 }
 
-
+// MARK: - search
 extension ViewModel {
+    func cerateDefaultSearch() -> GoogleSearch {
+        let search = GoogleSearch(context: CoreDataManager.shared.container.viewContext)
+        search.id = UUID()
+        search.maxSearchResult = 3
+        search.dateType = .unlimited
+        return search
+    }
+    func updateConversation(sesstionId: String, search: GoogleSearch?) {
+        var con = fetchConversation(sesstionId: sesstionId)
+        if con == nil {
+            con = Conversation(context: CoreDataManager.shared.container.viewContext)
+            con?.sesstionId = sesstionId
+            con?.id = UUID()
+        }
+        con!.search = search
+        CoreDataManager.shared.saveData()
+        
+        if let index = conversations.firstIndex(where: { $0.sesstionId == sesstionId}) {
+            conversations[index] = con!
+        } else {
+            conversations.insert(con!, at: 0)
+        }
+    }
+}
+
+// MARK: - search
+extension ViewModel {
+    func search(search: GoogleSearch?, callback:@escaping (_ searchResult: GoogleSearch?, _ err: String?) -> Void) {
+        guard let searchModel = search else {
+            callback(nil, "error")
+            return
+        }
+        ChatGPTManager.shared.search(search: searchModel) { [weak self] searchResult, err in
+            guard let result = searchResult else {
+                DispatchQueue.main.async {
+                    callback(nil, "error")
+                }
+                return
+            }
+            if err != nil {
+                DispatchQueue.main.async {
+                    callback(nil, "error")
+                }
+                return
+            }
+            self?.searchResult = result
+            self?.searchIndex = 0
+            self?.searchResultMaxCount = searchModel.maxSearchResult
+            self?.fetchHTML(callback: { content, item, err in
+                if let result = content {
+                    let model = GoogleSearchResult(context: CoreDataManager.shared.container.viewContext)
+                    model.result = result
+                    model.link = item?.link
+                    model.snippet = item?.snippet
+                    model.title = item?.title
+                    searchModel.addToResult(model)
+                    CoreDataManager.shared.saveData()
+                    DispatchQueue.main.async {
+                        callback(searchModel, nil)
+                    }
+                }else {
+                    DispatchQueue.main.async {
+                        callback(nil, "error")
+                    }
+                }
+            })
+        }
+    }
     
+    private func fetchHTML(callback: @escaping (_ content: String?, _ item: GoogleSearchItem?, _ err: String?) -> Void) {
+        guard let result = self.searchResult else {
+            print("Not searchResult")
+            callback(nil, nil, "error")
+            return
+        }
+        
+        if result.items.count <= self.searchIndex || self.searchIndex >= self.searchResultMaxCount {
+            print("exceed max count")
+            callback(nil, nil, "error")
+            return
+        }
+        let item = result.items[self.searchIndex]
+        searchQueue.async {
+            self.semaphore.wait()
+            self.fetchHTML(item.link) { [weak self] content, err in
+                self?.semaphore.signal()
+                guard let self = self else {
+                    print("htmlError Not self")
+                    return
+                }
+                guard let html = content else {
+                    print("htmlError Not html")
+                    callback(nil, item, "error")
+                    self.searchIndex += 1
+                    self.fetchHTML(callback: callback)
+                    return
+                }
+//                print("+++html:\(html)")
+//                print("+++htmlNED")
+                guard let doc = try? SwiftSoup.parse(html), let pTags = try? doc.select("p:lt(2)") else {
+                    self.searchIndex += 1
+                    print("htmlError Not parse")
+                    callback(nil, item, "error")
+                    self.fetchHTML(callback: callback)
+                    return
+                }
+                var pArray: [String] = []
+                for p in pTags {
+                    if let text = try? p.text(), !text.isEmpty {
+                        print("+++htmlP:\(text)")
+                        if !pArray.contains(text) {
+                            pArray.append(text)
+                        }
+                    }
+                }
+                var string: String = ""
+                pArray.forEach { p in
+                    string.append(p)
+                }
+                print("htmlString:\(string)")
+                callback(string, item, nil)
+                self.searchIndex += 1
+                self.fetchHTML(callback: callback)
+            }
+            
+        }
+        
+    }
+    private func fetchHTML(_ link: String?, callback: @escaping (_ content: String?, _ err: String?) -> Void) {
+        guard let lin = link, let ur = URL(string: lin) else {
+            callback(nil, "error")
+            return
+        }
+        print("aaaaaaaURL:\(lin)")
+        URLSession.shared.dataTask(with: ur) { (data, response, error) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                callback(nil, error.localizedDescription)
+                return
+            }
+            if let response = response as? HTTPURLResponse {
+                print("statusCode: \(response.statusCode)")
+            }
+            if let da = data, let html = String(data: da, encoding: .utf8) {
+                callback(html, nil)
+            }else {
+                callback(nil, "error")
+            }
+        }.resume()
+    }
 }

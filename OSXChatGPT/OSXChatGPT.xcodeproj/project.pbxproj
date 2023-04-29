@@ -55,6 +55,10 @@
 		CB1F1DD029DDBA0B008CFD0B /* AIPromptPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F1DCF29DDBA0B008CFD0B /* AIPromptPopView.swift */; };
 		CB2449F829D721F3006EE829 /* SystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2449F729D721F3006EE829 /* SystemManager.swift */; };
 		CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2449F929D7FE38006EE829 /* ServerManager.swift */; };
+		CB26A2DF29FC1DCF001EF861 /* GoogleSearch+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB26A2DB29FC1DCF001EF861 /* GoogleSearch+CoreDataClass.swift */; };
+		CB26A2E029FC1DCF001EF861 /* GoogleSearch+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB26A2DC29FC1DCF001EF861 /* GoogleSearch+CoreDataProperties.swift */; };
+		CB26A2E129FC1DCF001EF861 /* GoogleSearchResult+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB26A2DD29FC1DCF001EF861 /* GoogleSearchResult+CoreDataClass.swift */; };
+		CB26A2E229FC1DCF001EF861 /* GoogleSearchResult+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB26A2DE29FC1DCF001EF861 /* GoogleSearchResult+CoreDataProperties.swift */; };
 		CB27655C29D1C12C00897E0E /* MarkdownContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27655B29D1C12C00897E0E /* MarkdownContentView.swift */; };
 		CB27656629D1DA9800897E0E /* AIPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27656529D1DA9800897E0E /* AIPromptView.swift */; };
 		CB27657329D30F1400897E0E /* AIPromptViewMdoel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */; };
@@ -62,8 +66,6 @@
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
 		CB2A943229F828E500D3A048 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CB2A943129F828E500D3A048 /* SwiftSoup */; };
-		CB2A943529F830B300D3A048 /* GoogleSearch+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943329F830B300D3A048 /* GoogleSearch+CoreDataClass.swift */; };
-		CB2A943629F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943429F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift */; };
 		CB2A943929F830E500D3A048 /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */; };
 		CB2A943A29F830E500D3A048 /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */; };
 		CB2A944029F973F800D3A048 /* GoogleSearchPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */; };
@@ -133,14 +135,17 @@
 		CB228EA129CD4949006B3559 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		CB2449F729D721F3006EE829 /* SystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemManager.swift; sourceTree = "<group>"; };
 		CB2449F929D7FE38006EE829 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
+		CB26A2DB29FC1DCF001EF861 /* GoogleSearch+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoogleSearch+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CB26A2DC29FC1DCF001EF861 /* GoogleSearch+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoogleSearch+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CB26A2DD29FC1DCF001EF861 /* GoogleSearchResult+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoogleSearchResult+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CB26A2DE29FC1DCF001EF861 /* GoogleSearchResult+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoogleSearchResult+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CB26A2E329FC399F001EF861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CB27655B29D1C12C00897E0E /* MarkdownContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownContentView.swift; sourceTree = "<group>"; };
 		CB27656529D1DA9800897E0E /* AIPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptView.swift; sourceTree = "<group>"; };
 		CB27657229D30F1400897E0E /* AIPromptViewMdoel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptViewMdoel.swift; sourceTree = "<group>"; };
 		CB27657429D33D7A00897E0E /* AIPromptInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptInputView.swift; sourceTree = "<group>"; };
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
-		CB2A943329F830B300D3A048 /* GoogleSearch+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoogleSearch+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CB2A943429F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoogleSearch+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSearchPopView.swift; sourceTree = "<group>"; };
@@ -270,6 +275,7 @@
 		CB1DCAC029B4F09D00B1D4E1 /* OSXChatGPT */ = {
 			isa = PBXGroup;
 			children = (
+				CB26A2E329FC399F001EF861 /* Info.plist */,
 				CBD5AB6729E7078E007B6625 /* Markdown */,
 				CB0F5A5C29D059C4005B71D2 /* SyntaxHighlighter */,
 				182B436E29BC5D1B00F06778 /* DataProvider */,
@@ -355,10 +361,12 @@
 		CBC4B11429B8CB1B00650296 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CB26A2DB29FC1DCF001EF861 /* GoogleSearch+CoreDataClass.swift */,
+				CB26A2DC29FC1DCF001EF861 /* GoogleSearch+CoreDataProperties.swift */,
+				CB26A2DD29FC1DCF001EF861 /* GoogleSearchResult+CoreDataClass.swift */,
+				CB26A2DE29FC1DCF001EF861 /* GoogleSearchResult+CoreDataProperties.swift */,
 				CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */,
 				CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */,
-				CB2A943329F830B300D3A048 /* GoogleSearch+CoreDataClass.swift */,
-				CB2A943429F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift */,
 				CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */,
 				CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */,
 				CB1F015D29EB9D05009CF942 /* Message+CoreDataClass.swift */,
@@ -485,15 +493,16 @@
 				CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */,
 				CB1F014829E99B5E009CF942 /* Int+IsOdd.swift in Sources */,
 				CB2F972029CE1ADC004EBD96 /* OSXChatGPT.xcdatamodeld in Sources */,
+				CB26A2E029FC1DCF001EF861 /* GoogleSearch+CoreDataProperties.swift in Sources */,
 				182B436929BC5C8700F06778 /* UserInitializeView.swift in Sources */,
 				CB2449F829D721F3006EE829 /* SystemManager.swift in Sources */,
 				CB2A944229F993A200D3A048 /* GoogleSearchSettingView.swift in Sources */,
 				182B43A429BF730300F06778 /* NSColor.swift in Sources */,
 				CB1F012D29E99982009CF942 /* Grammar.swift in Sources */,
 				CB27656629D1DA9800897E0E /* AIPromptView.swift in Sources */,
+				CB26A2E229FC1DCF001EF861 /* GoogleSearchResult+CoreDataProperties.swift in Sources */,
 				CB1F014929E99B5E009CF942 /* Sequence+Occurrences.swift in Sources */,
 				182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */,
-				CB2A943629F830B300D3A048 /* GoogleSearch+CoreDataProperties.swift in Sources */,
 				CB1F015B29EAFBF5009CF942 /* MessageText+CoreDataClass.swift in Sources */,
 				182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */,
 				CB2A944029F973F800D3A048 /* GoogleSearchPopView.swift in Sources */,
@@ -504,7 +513,6 @@
 				CB2A943A29F830E500D3A048 /* Conversation+CoreDataProperties.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
 				CB1F012929E995BA009CF942 /* MarkdownTextBuilder.swift in Sources */,
-				CB2A943529F830B300D3A048 /* GoogleSearch+CoreDataClass.swift in Sources */,
 				CB1F015F29EB9D05009CF942 /* Message+CoreDataClass.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
 				CB0F5A5F29D059C4005B71D2 /* TextOutputFormat.swift in Sources */,
@@ -526,6 +534,7 @@
 				CB1F014429E99B5E009CF942 /* String+PrefixChecking.swift in Sources */,
 				CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */,
 				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
+				CB26A2DF29FC1DCF001EF861 /* GoogleSearch+CoreDataClass.swift in Sources */,
 				CB53A3BF29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift in Sources */,
 				CB1F012729E9832F009CF942 /* MarkdownTextAttributesReader.swift in Sources */,
 				CB1F012C29E99982009CF942 /* SwiftGrammar.swift in Sources */,
@@ -534,6 +543,7 @@
 				CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */,
 				CBD5AB6629E6EFE3007B6625 /* MarkdownView.swift in Sources */,
 				CBD5AB6B29E707F0007B6625 /* MarkdownTokenType.swift in Sources */,
+				CB26A2E129FC1DCF001EF861 /* GoogleSearchResult+CoreDataClass.swift in Sources */,
 				182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */,
 				CB2D438A29F0183A007742AE /* ChatGPT+CoreDataProperties.swift in Sources */,
 				CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */,
@@ -688,6 +698,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OSXChatGPT/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -716,6 +727,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OSXChatGPT/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

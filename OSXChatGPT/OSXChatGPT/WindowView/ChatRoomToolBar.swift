@@ -12,6 +12,7 @@ struct ChatRoomToolBar: View {
     @State private var showInputView = false
     @State private var showDragView = false
     @State private var showSearchView = false
+    @State private var showSearchSettingView = false
     @State private var temperature: String = ""
     @State private var model: String = ""
     @State private var context: String = ""
@@ -71,17 +72,19 @@ struct ChatRoomToolBar: View {
             
             Button {
                 showSearchView.toggle()
-                ChatGPTManager.shared.search("中国新冠开放") { searchResult, err in
-                    
-                }
+//                ChatGPTManager.shared.search("中国新冠开放") { searchResult, err in
+//
+//                }
             } label: {
                 Text("谷歌搜索")
             }
             .popover(isPresented: $showSearchView) {
-                GoogleSearchPopView(showSearchView: $showSearchView).environmentObject(viewModel)
+                GoogleSearchPopView(showSearchView: $showSearchView, showSearchSettingView: $showSearchSettingView).environmentObject(viewModel)
             }
             
-            
+            .popover(isPresented: $showSearchSettingView) {
+                GoogleSearchSettingView().environmentObject(viewModel)
+            }
             
             Spacer()
             if viewModel.showStopAnswerBtn {

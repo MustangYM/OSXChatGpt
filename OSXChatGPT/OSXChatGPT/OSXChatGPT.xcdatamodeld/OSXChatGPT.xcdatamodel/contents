@@ -17,9 +17,17 @@
         <relationship name="search" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GoogleSearch"/>
     </entity>
     <entity name="GoogleSearch" representedClassName=".GoogleSearch" syncable="YES">
+        <attribute name="dateRestrict" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="maxSearchResult" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="open" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="search" optional="YES" attributeType="String"/>
+        <attribute name="searched" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="result" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="GoogleSearchResult"/>
+    </entity>
+    <entity name="GoogleSearchResult" representedClassName=".GoogleSearchResult" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="link" optional="YES" attributeType="String"/>
-        <attribute name="maxSearchResult" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="result" optional="YES" attributeType="String"/>
         <attribute name="snippet" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
