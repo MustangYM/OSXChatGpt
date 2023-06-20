@@ -13,6 +13,7 @@ struct ChatRoomToolBar: View {
     @State private var showDragView = false
     @State private var showSearchView = false
     @State private var showSearchSettingView = false
+    @State private var showExporting = false
     @State private var temperature: String = ""
     @State private var model: String = ""
     @State private var context: String = ""
@@ -56,6 +57,15 @@ struct ChatRoomToolBar: View {
             }
             .frame(width: (Locale.current.languageCode == "zh") ? 60 : 77)
             
+            BrowserView1(items: MessageExportType.allCases, title: Localization.ExportRecord.localized, item: MessageExportType.none) { model in
+                viewModel.exportDataType = model
+                self.showExporting.toggle()
+            }
+            .frame(width: (Locale.current.languageCode == "zh") ? 85 : 73)
+            .sheet(isPresented: $showExporting, content: {
+                ExportView(type: viewModel.exportDataType, messages: ExportMessageViewModel.createDatas(viewModel.messages))
+            })
+            
             Button(Localization.Prompts.localized) {
                 showPopover.toggle()
             }
@@ -72,12 +82,12 @@ struct ChatRoomToolBar: View {
             
             Button {
                 showSearchView.toggle()
-//                ChatGPTManager.shared.search("中国新冠开放") { searchResult, err in
-//
-//                }
             } label: {
                 Text("谷歌搜索")
             }
+            
+            
+            
             .popover(isPresented: $showSearchView) {
                 GoogleSearchPopView(showSearchView: $showSearchView, showSearchSettingView: $showSearchSettingView).environmentObject(viewModel)
             }
@@ -141,6 +151,32 @@ struct BrowserView<T: ToolBarMenuProtocol>: View {
                             if self.item == item {
                                 Image(systemName: checkedSymbol)
                             }
+                            Text("\(item.value)")
+                        }
+                    }
+                }
+            }
+            .menuButtonStyle(DefaultMenuButtonStyle())
+            .padding(0)
+            .foregroundColor(.white)
+        }
+    }
+}
+
+struct BrowserView1<T: ToolBarMenuProtocol>: View {
+    let items: [T]
+    let title: String
+    @State var item: T
+    var callback: ((T) -> Void)
+    
+    var body: some View {
+        VStack() {
+            MenuButton(title) {
+                ForEach(items, id: \.self) { item in
+                    Button {
+                        callback(item)
+                    } label: {
+                        HStack {
                             Text("\(item.value)")
                         }
                     }

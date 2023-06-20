@@ -66,3 +66,14 @@
 "DisplayDynamicBackground" = "显示动态背景";
 "Displayed" = "已显示";
 "Hidden" = "已隐藏";
+
+"ExportRecord" = "导出记录";
+"CheckAll" = "全选";
+"ExportPDF" = "导出PDF";
+"ExportTxt" = "导出Txt";
+"ExportSucceed" = "导出成功!";
+"ExportFailure" = "导出失败!";
+"ExportEmptyTip" = "请选择导出内容!";
+
+
+

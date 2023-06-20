@@ -67,6 +67,13 @@ enum Localization {
     case DisplayDynamicBackground
     case Displayed
     case Hidden
+    case CheckAll
+    case ExportPDF
+    case ExportTxt
+    case ExportSucceed
+    case ExportFailure
+    case ExportEmptyTip
+    case ExportRecord
     
     var localized: String {
         switch self {
@@ -184,6 +191,20 @@ enum Localization {
             return String(format: NSLocalizedString("Displayed", comment: ""))
         case .Hidden:
             return String(format: NSLocalizedString("Hidden", comment: ""))
+        case .CheckAll:
+            return String(format: NSLocalizedString("CheckAll", comment: ""))
+        case .ExportPDF:
+            return String(format: NSLocalizedString("ExportPDF", comment: ""))
+        case .ExportTxt:
+            return String(format: NSLocalizedString("ExportTxt", comment: ""))
+        case .ExportSucceed:
+            return String(format: NSLocalizedString("ExportSucceed", comment: ""))
+        case .ExportFailure:
+            return String(format: NSLocalizedString("ExportFailure", comment: ""))
+        case .ExportEmptyTip:
+            return String(format: NSLocalizedString("ExportEmptyTip", comment: ""))
+        case .ExportRecord:
+            return String(format: NSLocalizedString("ExportRecord", comment: ""))
         }
         
     }

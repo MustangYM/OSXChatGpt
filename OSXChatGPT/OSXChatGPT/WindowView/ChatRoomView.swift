@@ -68,16 +68,16 @@ struct ChatRoomView: View {
                 }
                 .frame(maxHeight: geometry.size.height) // 限制高度以便滚动
                 .background(Color.clear)
-            Divider()
-            GeometryReader { toolBarGeometry in
-                Spacer()
-                ChatRoomToolBar().environmentObject(viewModel)
-                    .frame(width: toolBarGeometry.size.width, height: toolBarGeometry.size.height)
-                    .background(Color.clear)
-                
-            }.frame(height: 28)
-            ChatRoomInputView(inputViewHeight: $inputViewHeight)
-        }
+                Divider()
+                GeometryReader { toolBarGeometry in
+                    Spacer()
+                    ChatRoomToolBar().environmentObject(viewModel)
+                        .frame(width: toolBarGeometry.size.width, height: toolBarGeometry.size.height)
+                        .background(Color.clear)
+                    
+                }.frame(height: 28)
+                ChatRoomInputView(inputViewHeight: $inputViewHeight)
+            }
         }
         .padding(.top, 1)
         

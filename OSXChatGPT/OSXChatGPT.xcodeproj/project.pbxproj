@@ -65,11 +65,13 @@
 		CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB27657429D33D7A00897E0E /* AIPromptInputView.swift */; };
 		CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */; };
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
+		CB298CE52A0A97390022EE6B /* ExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB298CE42A0A97390022EE6B /* ExportView.swift */; };
 		CB2A943229F828E500D3A048 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CB2A943129F828E500D3A048 /* SwiftSoup */; };
 		CB2A943929F830E500D3A048 /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */; };
 		CB2A943A29F830E500D3A048 /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */; };
 		CB2A944029F973F800D3A048 /* GoogleSearchPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */; };
 		CB2A944229F993A200D3A048 /* GoogleSearchSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A944129F993A200D3A048 /* GoogleSearchSettingView.swift */; };
+		CB2AADE42A41AFC100747BEB /* SimpleToast in Frameworks */ = {isa = PBXBuildFile; productRef = CB2AADE32A41AFC100747BEB /* SimpleToast */; };
 		CB2D438929F0183A007742AE /* ChatGPT+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */; };
 		CB2D438A29F0183A007742AE /* ChatGPT+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */; };
 		CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = CB2F971E29CE12B6004EBD96 /* MarkdownUI */; };
@@ -80,6 +82,7 @@
 		CB4D1FC429F195E60010D063 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB4D1FC629F195E60010D063 /* Localizable.strings */; };
 		CB53A3BE29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */; };
 		CB53A3BF29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */; };
+		CB55E0EA2A3AAEA2006EBE2D /* PluginManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB55E0E92A3AAEA2006EBE2D /* PluginManifest.swift */; };
 		CBD5AB6429E6DE9A007B6625 /* ProjectSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5AB6329E6DE9A007B6625 /* ProjectSettingManager.swift */; };
 		CBD5AB6629E6EFE3007B6625 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5AB6529E6EFE3007B6625 /* MarkdownView.swift */; };
 		CBD5AB6929E707A1007B6625 /* MarkdownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5AB6829E707A1007B6625 /* MarkdownTheme.swift */; };
@@ -146,6 +149,7 @@
 		CB27657429D33D7A00897E0E /* AIPromptInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPromptInputView.swift; sourceTree = "<group>"; };
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
+		CB298CE42A0A97390022EE6B /* ExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportView.swift; sourceTree = "<group>"; };
 		CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSearchPopView.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 		CB4D1FC729F195EA0010D063 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CB55E0E92A3AAEA2006EBE2D /* PluginManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManifest.swift; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
 		CBD5AB6329E6DE9A007B6625 /* ProjectSettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSettingManager.swift; sourceTree = "<group>"; };
 		CBD5AB6529E6EFE3007B6625 /* MarkdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
@@ -175,6 +180,7 @@
 				182B42C929BBB1C500F06778 /* Colorful in Frameworks */,
 				CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */,
 				CB0F5A5929D057FF005B71D2 /* Splash in Frameworks */,
+				CB2AADE42A41AFC100747BEB /* SimpleToast in Frameworks */,
 				CB2A943229F828E500D3A048 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,6 +213,7 @@
 				182B436229BC5C8700F06778 /* ChatRoomView.swift */,
 				CB27655B29D1C12C00897E0E /* MarkdownContentView.swift */,
 				CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */,
+				CB298CE42A0A97390022EE6B /* ExportView.swift */,
 				CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */,
 				CB2A944129F993A200D3A048 /* GoogleSearchSettingView.swift */,
 				CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */,
@@ -376,6 +383,7 @@
 				CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */,
 				CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */,
 				182B43A329BF730300F06778 /* NSColor.swift */,
+				CB55E0E92A3AAEA2006EBE2D /* PluginManifest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -422,6 +430,7 @@
 				CB0F5A5829D057FF005B71D2 /* Splash */,
 				CB0F5A5A29D057FF005B71D2 /* SplashMarkdown */,
 				CB2A943129F828E500D3A048 /* SwiftSoup */,
+				CB2AADE32A41AFC100747BEB /* SimpleToast */,
 			);
 			productName = OSXChatGPT;
 			productReference = CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */;
@@ -456,6 +465,7 @@
 				CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */,
 				CB2A943029F828E500D3A048 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				CB2AADE22A41AFC100747BEB /* XCRemoteSwiftPackageReference "SimpleToast" */,
 			);
 			productRefGroup = CB1DCABF29B4F09D00B1D4E1 /* Products */;
 			projectDirPath = "";
@@ -512,6 +522,7 @@
 				CB1F014629E99B5E009CF942 /* String+IsNumber.swift in Sources */,
 				CB2A943A29F830E500D3A048 /* Conversation+CoreDataProperties.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
+				CB55E0EA2A3AAEA2006EBE2D /* PluginManifest.swift in Sources */,
 				CB1F012929E995BA009CF942 /* MarkdownTextBuilder.swift in Sources */,
 				CB1F015F29EB9D05009CF942 /* Message+CoreDataClass.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
@@ -533,6 +544,7 @@
 				182B436529BC5C8700F06778 /* SessionsView.swift in Sources */,
 				CB1F014429E99B5E009CF942 /* String+PrefixChecking.swift in Sources */,
 				CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */,
+				CB298CE52A0A97390022EE6B /* ExportView.swift in Sources */,
 				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
 				CB26A2DF29FC1DCF001EF861 /* GoogleSearch+CoreDataClass.swift in Sources */,
 				CB53A3BF29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift in Sources */,
@@ -705,7 +717,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = MustangYM.OSXChatGPT.OSXChatGPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -734,7 +746,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = MustangYM.OSXChatGPT.OSXChatGPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -790,6 +802,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		CB2AADE22A41AFC100747BEB /* XCRemoteSwiftPackageReference "SimpleToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sanzaru/SimpleToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.1;
+			};
+		};
 		CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
@@ -820,6 +840,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB2A943029F828E500D3A048 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
+		};
+		CB2AADE32A41AFC100747BEB /* SimpleToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB2AADE22A41AFC100747BEB /* XCRemoteSwiftPackageReference "SimpleToast" */;
+			productName = SimpleToast;
 		};
 		CB2F971E29CE12B6004EBD96 /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;

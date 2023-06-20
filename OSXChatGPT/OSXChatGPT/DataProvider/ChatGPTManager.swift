@@ -24,6 +24,9 @@ struct ChatGPTResponse {
     }
     
 }
+
+
+
 struct ChatGPTRequest {
     let gpt: ChatGPT?
     var model: ChatGPTModel = .gpt35turbo
@@ -33,6 +36,7 @@ struct ChatGPTRequest {
     var contextCount: ChatGPTContext = .context3
     let systemMsg: String?//修饰语
     let apiKey: String
+    var functionCall: ChatGPTFunctionCall = .none
     
     init(gpt: ChatGPT?, messages: [Message], answerType: ChatGPTAnswerType, apiKey: String, systemMsg: String?) {
         self.gpt = gpt
@@ -99,13 +103,32 @@ struct ChatGPTRequest {
                 "model": model.value,
                 "messages": msg,
                 "stream": answerType.valueBool,
-                "temperature": Float(temperature) ?? 1
+                "temperature": Float(temperature) ?? 1,
+//                "function_call": functionCall.value,
+//                "functions": []
             ] as [String : Any]
             print("请求参数：\(par)")
             return par
         }
     }
 }
+
+
+
+
+enum ChatGPTFunctionCall {
+    case none
+    case auto
+    var value: String {
+        switch self {
+        case .none:
+            return "none"
+        case .auto:
+            return "auto"
+        }
+    }
+}
+
 enum ChatGPTAnswerType: CaseIterable, ToolBarMenuProtocol {
     var value: String {
         switch self {
@@ -190,11 +213,15 @@ enum ChatGPTModel: Int16, CaseIterable, ToolBarMenuProtocol {
             return "gpt-3.5-turbo"
         case .gpt35turbo0301:
             return "gpt-3.5-turbo-0301"
+        case .gpt35turbo0613:
+            return "gpt-3.5-turbo-0613"
             
         case .gpt4:
             return "gpt-4"
         case .gpt40134:
             return "gpt-4-0314"
+        case .gpt40613:
+            return "gpt-4-0613"
         case .gpt432k:
             return "gpt-4-32k"
         case .gpt432k0314:
@@ -215,14 +242,16 @@ enum ChatGPTModel: Int16, CaseIterable, ToolBarMenuProtocol {
     
     case gpt35turbo
     case gpt35turbo0301
+    case gpt35turbo0613
     
     case gpt4
     case gpt40134
+    case gpt40613
     case gpt432k
     case gpt432k0314
     
     static var allCases: [ChatGPTModel] {
-        return [.gpt35turbo, .gpt35turbo0301, .gpt4, .gpt40134, .gpt432k, .gpt432k0314]
+        return [.gpt35turbo, .gpt35turbo0301, .gpt35turbo0613, .gpt4, .gpt40134, .gpt40613, .gpt432k, .gpt432k0314]
     }
 }
 

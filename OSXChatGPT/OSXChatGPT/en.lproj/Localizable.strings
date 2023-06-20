@@ -67,3 +67,11 @@
 "DisplayDynamicBackground" = "Display dynamic background";
 "Displayed" = "Displayed";
 "Hidden" = "Hidden";
+
+"ExportRecord" = "Export";
+"CheckAll" = "Check all";
+"ExportPDF" = "Export PDF";
+"ExportTxt" = "Export txt";
+"ExportSucceed" = "Export succeed!";
+"ExportFailure" = "Export Failure!";
+"ExportEmptyTip" = "Please select export content!";

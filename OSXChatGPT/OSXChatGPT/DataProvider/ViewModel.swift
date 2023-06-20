@@ -29,6 +29,8 @@ import SwiftSoup
     @State var model: ChatGPTModel = ChatGPTManager.shared.model
     @Published var showStopAnswerBtn: Bool = false
     
+    var exportDataType: MessageExportType = .none//聊天记录导出格式
+    
     private var allChatRoomViews: [String:ChatRoomView] = [:]
     
     @Environment(\.colorScheme) private var colorScheme

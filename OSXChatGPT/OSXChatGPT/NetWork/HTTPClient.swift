@@ -124,6 +124,7 @@ class HTTPClient {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw HTTPError.err(message: "Request Error")
         }
+//        print("resultresult:\(result), httpResponse:\(httpResponse)")
         guard 200...299 ~= httpResponse.statusCode else {
             var errorText = ""
             for try await line in result.lines {
@@ -151,12 +152,15 @@ class HTTPClient {
                            let response = try? self?.jsonDecoder.decode(HTTPResponse.self, from: data),
                            let text = response.choices.first?.delta?.content
                         {
+                            print("AsyncThrowingStreamData:\(text)")
                             continuation.yield(text)
                         }else if let data = line.data(using: .utf8),
                                     let response = try? self?.jsonDecoder.decode(HTTPResponse.self, from: data),
                                     let text = response.choices.first?.message?.content {
+                            print("AsyncThrowingStreamText:\(text)")
                             continuation.yield(text)
-                            
+                        }else {
+                            print("AsyncThrowingStreamElse:\(line)")
                         }
                     }
                     continuation.finish()
