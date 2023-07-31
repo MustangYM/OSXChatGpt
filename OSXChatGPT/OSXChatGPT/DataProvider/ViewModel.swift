@@ -14,14 +14,18 @@ import SwiftSoup
 
 
 @MainActor class ViewModel: ObservableObject {
+    
     @Published var showDynamicBackground: Bool = ProjectSettingManager.shared.showDynamicBackground//动态背景
     @Published var conversations: [Conversation] = []//所有会话
     @Published var messages: [Message] = []//当前会话的消息
     @Published var showUserInitialize: Bool = false//显示设置页
     @Published var showEditRemark: Bool = false//显示编辑备注
     @Published var showAIPrompt: Bool = false //显示自定义提示
+    @Published var showPluginView: Bool = false //显示插件
     var editConversation: Conversation?//编辑备注的会话
     @Published var createNewChat: Bool = false//创建新会话
+    @Published var currentPlugins: [PluginAPIInstall] = []//当前会话的插件
+    @Published var isDisabledPlugin: Bool = true
     @Published var changeMsgText: String = ""
     @State var scrollID = UUID()
     var currentConversation: Conversation?//当前会话
@@ -649,6 +653,36 @@ extension ViewModel {
         }
     }
     
+}
+// MARK: - plugin
+extension ViewModel {
+    func refreshCurrentPlugins() {
+        if let plugins = currentConversation?.plugin?.array as? [PluginAPIInstall] {
+            currentPlugins = plugins
+        }else {
+            currentPlugins = []
+        }
+        
+        if let con = currentConversation, con.lastMessage != nil {
+            isDisabledPlugin = true
+        }else {
+            isDisabledPlugin = false
+        }
+    }
+    func updateCurrentPlugins(plugins: [PluginAPIInstall]) {
+        if let plugin = currentConversation?.plugin {
+            currentConversation?.removeFromPlugin(plugin)
+        }
+        var arr: [[String: Any]] = []
+        plugins.forEach { install in
+            currentConversation?.addToPlugin(install)
+            if let json = install.apiJson {
+                arr.append(json)
+            }
+        }
+        ChatGPTManager.shared.createFunctions(jsonArray: arr)
+        CoreDataManager.shared.saveData()
+    }
 }
 extension ViewModel {
     func getChatRoomView(conversation: Conversation?) -> ChatRoomView {

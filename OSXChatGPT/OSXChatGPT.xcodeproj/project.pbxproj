@@ -67,11 +67,11 @@
 		CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */; };
 		CB298CE52A0A97390022EE6B /* ExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB298CE42A0A97390022EE6B /* ExportView.swift */; };
 		CB2A943229F828E500D3A048 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CB2A943129F828E500D3A048 /* SwiftSoup */; };
-		CB2A943929F830E500D3A048 /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */; };
-		CB2A943A29F830E500D3A048 /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */; };
 		CB2A944029F973F800D3A048 /* GoogleSearchPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */; };
 		CB2A944229F993A200D3A048 /* GoogleSearchSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A944129F993A200D3A048 /* GoogleSearchSettingView.swift */; };
 		CB2AADE42A41AFC100747BEB /* SimpleToast in Frameworks */ = {isa = PBXBuildFile; productRef = CB2AADE32A41AFC100747BEB /* SimpleToast */; };
+		CB2AADE62A41E15600747BEB /* PluginContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2AADE52A41E15600747BEB /* PluginContentView.swift */; };
+		CB2AADE82A42786F00747BEB /* PluginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2AADE72A42786F00747BEB /* PluginViewModel.swift */; };
 		CB2D438929F0183A007742AE /* ChatGPT+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */; };
 		CB2D438A29F0183A007742AE /* ChatGPT+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */; };
 		CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = CB2F971E29CE12B6004EBD96 /* MarkdownUI */; };
@@ -82,11 +82,23 @@
 		CB4D1FC429F195E60010D063 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB4D1FC629F195E60010D063 /* Localizable.strings */; };
 		CB53A3BE29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */; };
 		CB53A3BF29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */; };
-		CB55E0EA2A3AAEA2006EBE2D /* PluginManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB55E0E92A3AAEA2006EBE2D /* PluginManifest.swift */; };
 		CBD5AB6429E6DE9A007B6625 /* ProjectSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5AB6329E6DE9A007B6625 /* ProjectSettingManager.swift */; };
 		CBD5AB6629E6EFE3007B6625 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5AB6529E6EFE3007B6625 /* MarkdownView.swift */; };
 		CBD5AB6929E707A1007B6625 /* MarkdownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5AB6829E707A1007B6625 /* MarkdownTheme.swift */; };
 		CBD5AB6B29E707F0007B6625 /* MarkdownTokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5AB6A29E707F0007B6625 /* MarkdownTokenType.swift */; };
+		CBFBD75A2A4697450090454B /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = CBFBD7592A4697450090454B /* Yams */; };
+		CBFBD7632A4931AD0090454B /* PluginManifestAuth+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD75B2A4931AD0090454B /* PluginManifestAuth+CoreDataClass.swift */; };
+		CBFBD7642A4931AD0090454B /* PluginManifestAuth+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD75C2A4931AD0090454B /* PluginManifestAuth+CoreDataProperties.swift */; };
+		CBFBD7652A4931AD0090454B /* PluginManifestAPI+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD75D2A4931AD0090454B /* PluginManifestAPI+CoreDataClass.swift */; };
+		CBFBD7662A4931AD0090454B /* PluginManifestAPI+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD75E2A4931AD0090454B /* PluginManifestAPI+CoreDataProperties.swift */; };
+		CBFBD7702A528D050090454B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD76F2A528D050090454B /* SettingsView.swift */; };
+		CBFBD7752A57C5400090454B /* PluginAPIInstall+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD7712A57C5400090454B /* PluginAPIInstall+CoreDataClass.swift */; };
+		CBFBD7762A57C5400090454B /* PluginAPIInstall+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD7722A57C5400090454B /* PluginAPIInstall+CoreDataProperties.swift */; };
+		CBFBD7772A57C5400090454B /* PluginManifest+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD7732A57C5400090454B /* PluginManifest+CoreDataClass.swift */; };
+		CBFBD7782A57C5400090454B /* PluginManifest+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD7742A57C5400090454B /* PluginManifest+CoreDataProperties.swift */; };
+		CBFBD77A2A5D0DE70090454B /* PluginPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD7792A5D0DE70090454B /* PluginPopView.swift */; };
+		CBFBD77D2A5E67040090454B /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD77B2A5E67040090454B /* Conversation+CoreDataClass.swift */; };
+		CBFBD77E2A5E67040090454B /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBD77C2A5E67040090454B /* Conversation+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -150,10 +162,10 @@
 		CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingAnimationView.swift; sourceTree = "<group>"; };
 		CB298CE42A0A97390022EE6B /* ExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportView.swift; sourceTree = "<group>"; };
-		CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB2A943F29F973F800D3A048 /* GoogleSearchPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSearchPopView.swift; sourceTree = "<group>"; };
 		CB2A944129F993A200D3A048 /* GoogleSearchSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSearchSettingView.swift; sourceTree = "<group>"; };
+		CB2AADE52A41E15600747BEB /* PluginContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginContentView.swift; sourceTree = "<group>"; };
+		CB2AADE72A42786F00747BEB /* PluginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginViewModel.swift; sourceTree = "<group>"; };
 		CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGPT+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGPT+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CB2F972129CED6AE004EBD96 /* ChatRoomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInputView.swift; sourceTree = "<group>"; };
@@ -163,12 +175,23 @@
 		CB4D1FC729F195EA0010D063 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prompt+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		CB55E0E92A3AAEA2006EBE2D /* PluginManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManifest.swift; sourceTree = "<group>"; };
 		CBC4B0FE29B8BF9600650296 /* OSXChatGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OSXChatGPT.xcdatamodel; sourceTree = "<group>"; };
 		CBD5AB6329E6DE9A007B6625 /* ProjectSettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSettingManager.swift; sourceTree = "<group>"; };
 		CBD5AB6529E6EFE3007B6625 /* MarkdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
 		CBD5AB6829E707A1007B6625 /* MarkdownTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTheme.swift; sourceTree = "<group>"; };
 		CBD5AB6A29E707F0007B6625 /* MarkdownTokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTokenType.swift; sourceTree = "<group>"; };
+		CBFBD75B2A4931AD0090454B /* PluginManifestAuth+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PluginManifestAuth+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CBFBD75C2A4931AD0090454B /* PluginManifestAuth+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PluginManifestAuth+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CBFBD75D2A4931AD0090454B /* PluginManifestAPI+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PluginManifestAPI+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CBFBD75E2A4931AD0090454B /* PluginManifestAPI+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PluginManifestAPI+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CBFBD76F2A528D050090454B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		CBFBD7712A57C5400090454B /* PluginAPIInstall+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PluginAPIInstall+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CBFBD7722A57C5400090454B /* PluginAPIInstall+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PluginAPIInstall+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CBFBD7732A57C5400090454B /* PluginManifest+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PluginManifest+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CBFBD7742A57C5400090454B /* PluginManifest+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PluginManifest+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CBFBD7792A5D0DE70090454B /* PluginPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginPopView.swift; sourceTree = "<group>"; };
+		CBFBD77B2A5E67040090454B /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CBFBD77C2A5E67040090454B /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +204,7 @@
 				CB2F971F29CE12B6004EBD96 /* MarkdownUI in Frameworks */,
 				CB0F5A5929D057FF005B71D2 /* Splash in Frameworks */,
 				CB2AADE42A41AFC100747BEB /* SimpleToast in Frameworks */,
+				CBFBD75A2A4697450090454B /* Yams in Frameworks */,
 				CB2A943229F828E500D3A048 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,6 +234,8 @@
 			children = (
 				182B436329BC5C8700F06778 /* MainContentView.swift */,
 				182B436029BC5C8700F06778 /* SessionsView.swift */,
+				CB2AADE52A41E15600747BEB /* PluginContentView.swift */,
+				CBFBD7792A5D0DE70090454B /* PluginPopView.swift */,
 				182B436229BC5C8700F06778 /* ChatRoomView.swift */,
 				CB27655B29D1C12C00897E0E /* MarkdownContentView.swift */,
 				CB2F972729CEFB65004EBD96 /* ChatRoomToolBar.swift */,
@@ -225,6 +251,7 @@
 				182B437A29BC5FBE00F06778 /* EnterAPIView.swift */,
 				188FB46629C1FA9700E3C18F /* EidtSessionRemarkView.swift */,
 				CB28A52729C1569900F0286A /* ThinkingAnimationView.swift */,
+				CBFBD76F2A528D050090454B /* SettingsView.swift */,
 			);
 			path = WindowView;
 			sourceTree = "<group>";
@@ -243,6 +270,7 @@
 				182B437129BC5D1B00F06778 /* ChatGPTManager.swift */,
 				182B436F29BC5D1B00F06778 /* CoreDataManager.swift */,
 				182B437029BC5D1B00F06778 /* ViewModel.swift */,
+				CB2AADE72A42786F00747BEB /* PluginViewModel.swift */,
 				CB373A9A29F56CFF00B8D9BE /* Localization.swift */,
 				CBD5AB6329E6DE9A007B6625 /* ProjectSettingManager.swift */,
 				CB28A52129C07BE500F0286A /* KeyboardMonitor.swift */,
@@ -368,14 +396,22 @@
 		CBC4B11429B8CB1B00650296 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CBFBD7712A57C5400090454B /* PluginAPIInstall+CoreDataClass.swift */,
+				CBFBD7722A57C5400090454B /* PluginAPIInstall+CoreDataProperties.swift */,
+				CBFBD7732A57C5400090454B /* PluginManifest+CoreDataClass.swift */,
+				CBFBD7742A57C5400090454B /* PluginManifest+CoreDataProperties.swift */,
+				CBFBD75B2A4931AD0090454B /* PluginManifestAuth+CoreDataClass.swift */,
+				CBFBD75C2A4931AD0090454B /* PluginManifestAuth+CoreDataProperties.swift */,
+				CBFBD75D2A4931AD0090454B /* PluginManifestAPI+CoreDataClass.swift */,
+				CBFBD75E2A4931AD0090454B /* PluginManifestAPI+CoreDataProperties.swift */,
 				CB26A2DB29FC1DCF001EF861 /* GoogleSearch+CoreDataClass.swift */,
 				CB26A2DC29FC1DCF001EF861 /* GoogleSearch+CoreDataProperties.swift */,
 				CB26A2DD29FC1DCF001EF861 /* GoogleSearchResult+CoreDataClass.swift */,
 				CB26A2DE29FC1DCF001EF861 /* GoogleSearchResult+CoreDataProperties.swift */,
-				CB2A943729F830E500D3A048 /* Conversation+CoreDataClass.swift */,
-				CB2A943829F830E500D3A048 /* Conversation+CoreDataProperties.swift */,
 				CB2D438729F0183A007742AE /* ChatGPT+CoreDataClass.swift */,
 				CB2D438829F0183A007742AE /* ChatGPT+CoreDataProperties.swift */,
+				CBFBD77B2A5E67040090454B /* Conversation+CoreDataClass.swift */,
+				CBFBD77C2A5E67040090454B /* Conversation+CoreDataProperties.swift */,
 				CB1F015D29EB9D05009CF942 /* Message+CoreDataClass.swift */,
 				CB1F015E29EB9D05009CF942 /* Message+CoreDataProperties.swift */,
 				CB1F015729EAFBF5009CF942 /* MessageText+CoreDataClass.swift */,
@@ -383,7 +419,6 @@
 				CB53A3BC29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift */,
 				CB53A3BD29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift */,
 				182B43A329BF730300F06778 /* NSColor.swift */,
-				CB55E0E92A3AAEA2006EBE2D /* PluginManifest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -431,6 +466,7 @@
 				CB0F5A5A29D057FF005B71D2 /* SplashMarkdown */,
 				CB2A943129F828E500D3A048 /* SwiftSoup */,
 				CB2AADE32A41AFC100747BEB /* SimpleToast */,
+				CBFBD7592A4697450090454B /* Yams */,
 			);
 			productName = OSXChatGPT;
 			productReference = CB1DCABE29B4F09D00B1D4E1 /* OSXChatGPT.app */;
@@ -466,6 +502,7 @@
 				CB0F5A5729D057FF005B71D2 /* XCRemoteSwiftPackageReference "Splash" */,
 				CB2A943029F828E500D3A048 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				CB2AADE22A41AFC100747BEB /* XCRemoteSwiftPackageReference "SimpleToast" */,
+				CBFBD7582A4697450090454B /* XCRemoteSwiftPackageReference "Yams" */,
 			);
 			productRefGroup = CB1DCABF29B4F09D00B1D4E1 /* Products */;
 			projectDirPath = "";
@@ -497,7 +534,6 @@
 			files = (
 				CB1F012F29E999EF009CF942 /* Segment.swift in Sources */,
 				CB1F015C29EAFBF5009CF942 /* MessageText+CoreDataProperties.swift in Sources */,
-				CB2A943929F830E500D3A048 /* Conversation+CoreDataClass.swift in Sources */,
 				CB373A9B29F56CFF00B8D9BE /* Localization.swift in Sources */,
 				CB1F015129E9BC8C009CF942 /* Tokenizer.swift in Sources */,
 				CB2449FA29D7FE38006EE829 /* ServerManager.swift in Sources */,
@@ -509,30 +545,37 @@
 				CB2A944229F993A200D3A048 /* GoogleSearchSettingView.swift in Sources */,
 				182B43A429BF730300F06778 /* NSColor.swift in Sources */,
 				CB1F012D29E99982009CF942 /* Grammar.swift in Sources */,
+				CBFBD77E2A5E67040090454B /* Conversation+CoreDataProperties.swift in Sources */,
+				CBFBD7632A4931AD0090454B /* PluginManifestAuth+CoreDataClass.swift in Sources */,
 				CB27656629D1DA9800897E0E /* AIPromptView.swift in Sources */,
 				CB26A2E229FC1DCF001EF861 /* GoogleSearchResult+CoreDataProperties.swift in Sources */,
 				CB1F014929E99B5E009CF942 /* Sequence+Occurrences.swift in Sources */,
 				182B436B29BC5CBA00F06778 /* AppDelegate.swift in Sources */,
+				CBFBD7782A57C5400090454B /* PluginManifest+CoreDataProperties.swift in Sources */,
 				CB1F015B29EAFBF5009CF942 /* MessageText+CoreDataClass.swift in Sources */,
 				182B437329BC5D1B00F06778 /* CoreDataManager.swift in Sources */,
 				CB2A944029F973F800D3A048 /* GoogleSearchPopView.swift in Sources */,
 				188FB46729C1FA9700E3C18F /* EidtSessionRemarkView.swift in Sources */,
 				CB2D438929F0183A007742AE /* ChatGPT+CoreDataClass.swift in Sources */,
+				CBFBD77A2A5D0DE70090454B /* PluginPopView.swift in Sources */,
+				CBFBD7702A528D050090454B /* SettingsView.swift in Sources */,
 				CB1F014229E99B5E009CF942 /* CharacterSet+Contains.swift in Sources */,
 				CB1F014629E99B5E009CF942 /* String+IsNumber.swift in Sources */,
-				CB2A943A29F830E500D3A048 /* Conversation+CoreDataProperties.swift in Sources */,
 				182B436629BC5C8700F06778 /* View.swift in Sources */,
-				CB55E0EA2A3AAEA2006EBE2D /* PluginManifest.swift in Sources */,
+				CBFBD7752A57C5400090454B /* PluginAPIInstall+CoreDataClass.swift in Sources */,
 				CB1F012929E995BA009CF942 /* MarkdownTextBuilder.swift in Sources */,
 				CB1F015F29EB9D05009CF942 /* Message+CoreDataClass.swift in Sources */,
 				182B437B29BC5FBE00F06778 /* EnterAPIView.swift in Sources */,
+				CB2AADE62A41E15600747BEB /* PluginContentView.swift in Sources */,
 				CB0F5A5F29D059C4005B71D2 /* TextOutputFormat.swift in Sources */,
 				182B437929BC5D6200F06778 /* OSXChatGPTApp.swift in Sources */,
 				CBD5AB6929E707A1007B6625 /* MarkdownTheme.swift in Sources */,
+				CBFBD7762A57C5400090454B /* PluginAPIInstall+CoreDataProperties.swift in Sources */,
 				CB28A52229C07BE500F0286A /* KeyboardMonitor.swift in Sources */,
 				CB1F014A29E99B5E009CF942 /* Sequence+AnyOf.swift in Sources */,
 				182B437429BC5D1B00F06778 /* ViewModel.swift in Sources */,
 				CB1F016029EB9D05009CF942 /* Message+CoreDataProperties.swift in Sources */,
+				CBFBD7662A4931AD0090454B /* PluginManifestAPI+CoreDataProperties.swift in Sources */,
 				CB1F014329E99B5E009CF942 /* Substring+HasSuffix.swift in Sources */,
 				CB53A3BE29D48C8F00A5B8FC /* Prompt+CoreDataClass.swift in Sources */,
 				182B436729BC5C8700F06778 /* ChatRoomView.swift in Sources */,
@@ -541,6 +584,7 @@
 				CB1F014729E99B5E009CF942 /* String+HTMLEntities.swift in Sources */,
 				CB0F5A6029D059C4005B71D2 /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				CB1F014D29E9A4CC009CF942 /* MessageTextModel.swift in Sources */,
+				CBFBD7652A4931AD0090454B /* PluginManifestAPI+CoreDataClass.swift in Sources */,
 				182B436529BC5C8700F06778 /* SessionsView.swift in Sources */,
 				CB1F014429E99B5E009CF942 /* String+PrefixChecking.swift in Sources */,
 				CB27657529D33D7A00897E0E /* AIPromptInputView.swift in Sources */,
@@ -548,15 +592,19 @@
 				182B437229BC5D1B00F06778 /* HTTPClient.swift in Sources */,
 				CB26A2DF29FC1DCF001EF861 /* GoogleSearch+CoreDataClass.swift in Sources */,
 				CB53A3BF29D48C8F00A5B8FC /* Prompt+CoreDataProperties.swift in Sources */,
+				CBFBD7642A4931AD0090454B /* PluginManifestAuth+CoreDataProperties.swift in Sources */,
 				CB1F012729E9832F009CF942 /* MarkdownTextAttributesReader.swift in Sources */,
 				CB1F012C29E99982009CF942 /* SwiftGrammar.swift in Sources */,
 				CBD5AB6429E6DE9A007B6625 /* ProjectSettingManager.swift in Sources */,
 				182B436829BC5C8700F06778 /* MainContentView.swift in Sources */,
 				CB28A52829C1569900F0286A /* ThinkingAnimationView.swift in Sources */,
+				CB2AADE82A42786F00747BEB /* PluginViewModel.swift in Sources */,
 				CBD5AB6629E6EFE3007B6625 /* MarkdownView.swift in Sources */,
 				CBD5AB6B29E707F0007B6625 /* MarkdownTokenType.swift in Sources */,
+				CBFBD77D2A5E67040090454B /* Conversation+CoreDataClass.swift in Sources */,
 				CB26A2E129FC1DCF001EF861 /* GoogleSearchResult+CoreDataClass.swift in Sources */,
 				182B437529BC5D1B00F06778 /* ChatGPTManager.swift in Sources */,
+				CBFBD7772A57C5400090454B /* PluginManifest+CoreDataClass.swift in Sources */,
 				CB2D438A29F0183A007742AE /* ChatGPT+CoreDataProperties.swift in Sources */,
 				CB2F972229CED6AE004EBD96 /* ChatRoomInputView.swift in Sources */,
 				CB1F014529E99B5E009CF942 /* String+Removing.swift in Sources */,
@@ -818,6 +866,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		CBFBD7582A4697450090454B /* XCRemoteSwiftPackageReference "Yams" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpsim/Yams.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -850,6 +906,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB2F971D29CE12B6004EBD96 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		CBFBD7592A4697450090454B /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBFBD7582A4697450090454B /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
 		};
 /* End XCSwiftPackageProductDependency section */
 

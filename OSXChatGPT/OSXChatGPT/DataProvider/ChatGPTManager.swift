@@ -489,6 +489,104 @@ extension ChatGPTManager {
     
 }
 
+// MARK: - plugin
+extension ChatGPTManager {
+    func createFunctions(jsonArray: [[String: Any]]) {
+        var functions: [[String: Any]] = []
+        jsonArray.forEach { json in
+            var function: [String: Any] = [:]
+            if let components = json["components"] as? [String: Any] {
+                let schemas = components["schemas"] as? [String: Any]
+                if let keys = schemas?.keys.forEach({ key in
+                    
+                }) {
+                    print("")
+                }
+                print(schemas)
+            }
+        }
+    }
+    
+}
+//
+//visitWebPageError:
+//  type: object
+//  properties:
+//    code:
+//      type: string
+//      description: error code
+//    message:
+//      type: string
+//      description: error message
+//    detail:
+//      type: string
+//      description: error detail
+
+//functions = [
+//        {
+//            "name": "get_current_weather",
+//            "description": "Get the current weather in a given location",
+//            "parameters": {
+//                "type": "object",
+//                "properties": {
+//                    "location": {
+//                        "type": "string",
+//                        "description": "The city and state, e.g. San Francisco, CA",
+//                    },
+//                    "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+//                },
+//                "required": ["location"],
+//            },
+//        }
+//    ]
+
+//- key : "visitWebPageError"
+//▿ value : 2 elements
+//  ▿ 0 : 2 elements
+//    ▿ key : AnyHashable("properties")
+//      - value : "properties"
+//    ▿ value : 3 elements
+//      ▿ 0 : 2 elements
+//        ▿ key : AnyHashable("message")
+//          - value : "message"
+//        ▿ value : 2 elements
+//          ▿ 0 : 2 elements
+//            ▿ key : AnyHashable("type")
+//              - value : "type"
+//            - value : "string"
+//          ▿ 1 : 2 elements
+//            ▿ key : AnyHashable("description")
+//              - value : "description"
+//            - value : "error message"
+//      ▿ 1 : 2 elements
+//        ▿ key : AnyHashable("code")
+//          - value : "code"
+//        ▿ value : 2 elements
+//          ▿ 0 : 2 elements
+//            ▿ key : AnyHashable("type")
+//              - value : "type"
+//            - value : "string"
+//          ▿ 1 : 2 elements
+//            ▿ key : AnyHashable("description")
+//              - value : "description"
+//            - value : "error code"
+//      ▿ 2 : 2 elements
+//        ▿ key : AnyHashable("detail")
+//          - value : "detail"
+//        ▿ value : 2 elements
+//          ▿ 0 : 2 elements
+//            ▿ key : AnyHashable("type")
+//              - value : "type"
+//            - value : "string"
+//          ▿ 1 : 2 elements
+//            ▿ key : AnyHashable("description")
+//              - value : "description"
+//            - value : "error detail"
+//  ▿ 1 : 2 elements
+//    ▿ key : AnyHashable("type")
+//      - value : "type"
+//    - value : "object"
+
 // MARK: - search
 extension ChatGPTManager {
     func search(search: GoogleSearch?, callback:@escaping (_ searchResult: GoogleSearchResponse?, _ err: String?) -> Void) {

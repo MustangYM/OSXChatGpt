@@ -25,7 +25,7 @@ struct SessionsView: View {
                     Button(action: {
                         viewModel.showUserInitialize = false
                         viewModel.showAIPrompt = false
-                        
+                        viewModel.showPluginView = false
                         // 点击 New Chat 按钮的操作
                         viewModel.currentConversation = viewModel.addNewConversation()
                         viewModel.createNewChat = true
@@ -36,6 +36,7 @@ struct SessionsView: View {
                             Text(Localization.newChat.localized)
                         }
                         .padding(10)
+                        .padding(.leading, 0)
                         .foregroundColor(.white)
                         .background(Color.blue.opacity(0.8))
                         .cornerRadius(5)
@@ -52,6 +53,7 @@ struct SessionsView: View {
                             }
                             viewModel.createNewChat = false
                             viewModel.showAIPrompt = false
+                            viewModel.showPluginView = false
                             viewModel.showUserInitialize = true
                             KeyboardMonitor.shared.stopKeyMonitor()
                             KeyboardMonitor.shared.stopMonitorPasteboard()
@@ -74,6 +76,7 @@ struct SessionsView: View {
                             }
                             viewModel.createNewChat = false
                             viewModel.showUserInitialize = false
+                            viewModel.showPluginView = false
                             viewModel.showAIPrompt = true
                             KeyboardMonitor.shared.stopKeyMonitor()
                             KeyboardMonitor.shared.stopMonitorPasteboard()
@@ -85,10 +88,34 @@ struct SessionsView: View {
                                 .cornerRadius(5)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .padding(.trailing, 10)
+                        .padding(.trailing, 0)
                         
                     }.buttonStyle(PlainButtonStyle())
                     
+                    
+                    NavigationLink(destination: PluginContentView().environmentObject(viewModel), isActive: $viewModel.showPluginView) {
+                        Button(action: {
+                            // 点击右边按钮的操作
+                            if viewModel.currentConversation != nil {
+                                viewModel.currentConversation = nil//先取消会话
+                            }
+                            viewModel.createNewChat = false
+                            viewModel.showUserInitialize = false
+                            viewModel.showAIPrompt = false
+                            viewModel.showPluginView = true
+                            KeyboardMonitor.shared.stopKeyMonitor()
+                            KeyboardMonitor.shared.stopMonitorPasteboard()
+                        }) {
+                            Image(systemName: "powerplug.fill")
+                                .padding(10)
+                                .foregroundColor(.white)
+                                .background(Color.gray)
+                                .cornerRadius(5)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.trailing, 10)
+                        
+                    }.buttonStyle(PlainButtonStyle())
                     
                 })
                 .frame(height: 20)

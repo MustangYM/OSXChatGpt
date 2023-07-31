@@ -101,20 +101,20 @@ struct UserInitializeView: View {
                     .buttonStyle(PlainButtonStyle()) // 隐藏按钮的默认样式
                     
                     
-                    Button(action: {
-                        showGoogleSetting.toggle()
-                    }) {
-                        HStack(spacing: 8) {
-                            Text("谷歌搜索配置")
-                        }
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Color.green)
-                        .cornerRadius(10)
-                        .padding(.leading, 16)
-                    }
-                    .buttonStyle(PlainButtonStyle()) // 隐藏按钮的默认样式
+//                    Button(action: {
+//                        showGoogleSetting.toggle()
+//                    }) {
+//                        HStack(spacing: 8) {
+//                            Text("谷歌搜索配置")
+//                        }
+//                        .foregroundColor(.white)
+//                        .padding(.horizontal, 16)
+//                        .padding(.vertical, 8)
+//                        .background(Color.green)
+//                        .cornerRadius(10)
+//                        .padding(.leading, 16)
+//                    }
+//                    .buttonStyle(PlainButtonStyle()) // 隐藏按钮的默认样式
                 }
                 
                 if apiKey.count > 0 {

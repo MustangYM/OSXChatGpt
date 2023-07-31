@@ -13,6 +13,7 @@
         <attribute name="updateData" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="chatGPT" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatGPT"/>
         <relationship name="lastMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message"/>
+        <relationship name="plugin" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="PluginAPIInstall"/>
         <relationship name="prompt" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Prompt" inverseName="sesstion" inverseEntity="Prompt"/>
         <relationship name="search" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GoogleSearch"/>
     </entity>
@@ -47,6 +48,35 @@
         <attribute name="isFull" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="PluginAPIInstall" representedClassName=".PluginAPIInstall" syncable="YES">
+        <attribute name="apiJsonString" attributeType="String"/>
+        <attribute name="description_for_human" optional="YES" attributeType="String"/>
+        <attribute name="logo_url" optional="YES" attributeType="String"/>
+        <attribute name="name_for_human" optional="YES" attributeType="String"/>
+        <attribute name="schema_version" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PluginManifest" representedClassName=".PluginManifest" syncable="YES">
+        <attribute name="contact_email" optional="YES" attributeType="String"/>
+        <attribute name="description_for_human" optional="YES" attributeType="String"/>
+        <attribute name="description_for_model" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="legal_info_url" optional="YES" attributeType="String"/>
+        <attribute name="logo_url" optional="YES" attributeType="String"/>
+        <attribute name="name_for_human" optional="YES" attributeType="String"/>
+        <attribute name="name_for_model" optional="YES" attributeType="String"/>
+        <attribute name="schema_version" optional="YES" attributeType="String"/>
+        <relationship name="api" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PluginManifestAPI"/>
+        <relationship name="auth" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PluginManifestAuth"/>
+        <relationship name="install" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PluginAPIInstall"/>
+    </entity>
+    <entity name="PluginManifestAPI" representedClassName=".PluginManifestAPI" syncable="YES">
+        <attribute name="has_user_authentication" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PluginManifestAuth" representedClassName=".PluginManifestAuth" syncable="YES">
+        <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Prompt" representedClassName=".Prompt" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String"/>

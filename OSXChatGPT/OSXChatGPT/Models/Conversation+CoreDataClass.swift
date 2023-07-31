@@ -2,7 +2,7 @@
 //  Conversation+CoreDataClass.swift
 //  OSXChatGPT
 //
-//  Created by CoderChan on 2023/4/26.
+//  Created by CoderChan on 2023/7/12.
 //
 //
 

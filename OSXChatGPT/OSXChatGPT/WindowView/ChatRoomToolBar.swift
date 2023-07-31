@@ -18,6 +18,7 @@ struct ChatRoomToolBar: View {
     @State private var model: String = ""
     @State private var context: String = ""
     @State private var isOn: Bool = false
+    @State var showPluginView: Bool = false //显示插件
     @EnvironmentObject var viewModel: ViewModel
     
     @State private var isAnswerTypeTrue = ChatGPTManager.shared.answerType.valueBool
@@ -80,21 +81,24 @@ struct ChatRoomToolBar: View {
                 viewModel.updateConversation(sesstionId: viewModel.currentConversation?.sesstionId ?? "", message: nil)
             }
             
-            Button {
-                showSearchView.toggle()
-            } label: {
-                Text("谷歌搜索")
-            }
+//            Button {
+//                showSearchView.toggle()
+//            } label: {
+//                Text("谷歌搜索")
+//            }
+//            .popover(isPresented: $showSearchSettingView) {
+//                GoogleSearchSettingView().environmentObject(viewModel)
+//            }
+//            .popover(isPresented: $showSearchView) {
+//                GoogleSearchPopView(showSearchView: $showSearchView, showSearchSettingView: $showSearchSettingView).environmentObject(viewModel)
+//            }
+            PluginToolView(showPluginView: $showPluginView, isDisabledPlugin: $viewModel.isDisabledPlugin)
+                .sheet(isPresented: $showPluginView, content: {
+                    PluginPopView(plugins: PluginViewModel.fetchAllInstallPlugins(viewModel.currentConversation?.plugin?.array as? [PluginAPIInstall] ?? [])).environmentObject(viewModel)
+                })
             
             
             
-            .popover(isPresented: $showSearchView) {
-                GoogleSearchPopView(showSearchView: $showSearchView, showSearchSettingView: $showSearchSettingView).environmentObject(viewModel)
-            }
-            
-            .popover(isPresented: $showSearchSettingView) {
-                GoogleSearchSettingView().environmentObject(viewModel)
-            }
             
             Spacer()
             if viewModel.showStopAnswerBtn {

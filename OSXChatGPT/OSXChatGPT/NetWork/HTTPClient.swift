@@ -52,22 +52,32 @@ struct GoogleSearchItem: Decodable {
 }
 
 
-class HTTPClient {
+class HTTPClient: NSObject {
     static let shared = HTTPClient()
     fileprivate var urlSession: URLSession!
     fileprivate var sessionConfiguration: URLSessionConfiguration!
     private var isCancelStreamRequest: Bool = false
     private var currentTask: URLSessionTask?
+    private var downloadProgress: ((Progress) -> Void)?
+    private var downloadComplete: ((URL?, Error?) -> Void)?
     private let jsonDecoder: JSONDecoder = {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         return jsonDecoder
     }()
-    init() {
+    override init() {
         sessionConfiguration = URLSessionConfiguration.default
         urlSession = URLSession(configuration: sessionConfiguration)
     }
-
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "fractionCompleted", let progress = object as? Progress {
+            DispatchQueue.main.async {
+                self.updateProgress(progress)
+            }
+        }
+    }
+    
     func setAdditionalHeaders(_ headers: Dictionary<String, AnyObject>) {
         sessionConfiguration.httpAdditionalHeaders = headers
     }
@@ -393,6 +403,70 @@ extension HTTPClient {
                 callback(html, nil)
             }else {
                 callback(nil, "error")
+            }
+        }
+        task.resume()
+    }
+}
+// MARK: - 下载
+extension HTTPClient {
+    func downloadData(urlStr: String, progress:@escaping ((Progress) -> Void), complete:@escaping ((URL?, Error?) -> Void)) {
+        guard let url = URL(string: urlStr) else {
+            complete(nil, nil)
+            return
+        }
+        downloadProgress = progress
+        let task = urlSession.downloadTask(with: URLRequest(url: url)) { reUrl, rep, err in
+            complete(reUrl, err)
+        }
+        task.resume()
+        task.progress.addObserver(self, forKeyPath: "fractionCompleted", options: .new, context: nil)
+    }
+    
+    func updateProgress(_ progress: Progress) {
+        downloadProgress?(progress)
+    }
+    
+}
+
+// MARK: - plugin manifests
+extension HTTPClient {
+    static func getManifests(callback:@escaping (_ datas: [Any], _ err: String?) -> Void) {
+        let url = URL(string: githubPluginGetUrl)!
+        var request = URLRequest(url: url)
+        let authorizationValue = "Bearer \(ServerManager.shared.getDataToken)"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(authorizationValue, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                callback([], error.localizedDescription)
+                return
+            }
+            var code = 0
+            if let response = response as? HTTPURLResponse {
+                code = response.statusCode
+            }
+            if let data = data,
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let base64Str = json["content"] as? String {
+                    let base64String = base64Str.replacingOccurrences(of: "\n", with: "")
+                    if let da = NSData(base64Encoded: base64String, options: NSData.Base64DecodingOptions.init(rawValue: 0)),
+                       let dataString = String(data: da as Data, encoding: .utf8),
+                       let jsonData = dataString.data(using: .utf8),
+                       let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [Any] {
+                        DispatchQueue.main.async {
+                            callback(jsonObject, nil)
+                        }
+                    }else {
+                        callback([], "data error code:\(code)")
+                    }
+                }else {
+                    //获取不到数据，需要更新token
+                    callback([], "data error code:\(code)")
+                    
+                }
             }
         }
         task.resume()

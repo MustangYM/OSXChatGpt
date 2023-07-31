@@ -50,6 +50,18 @@
             ReferencedContainer = "container:OSXChatGPT.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "PYTHON_LIBRARY"
+            value = "/Library/Frameworks/Python.framework/Versions/3.11/Python"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "PYTHON_LOADER_LOAD"
+            value = "TRUE"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
